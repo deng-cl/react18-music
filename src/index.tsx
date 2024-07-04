@@ -10,6 +10,7 @@ import store from "./store"
 import theme from "./assets/theme"
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement)
+// const ThemeProviderExtendType: Theme = ThemeProvider
 root.render(
     <HashRouter>
         <ThemeProvider theme={theme}>
