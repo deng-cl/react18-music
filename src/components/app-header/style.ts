@@ -46,13 +46,45 @@ export const HeaderWrapper = styled.div`
     > .right {
 
         .search {
+            position: relative;
+            width: 240px;
             height: 32px;
-            margin-right: 24px;
+            margin-right: 18px;
+            padding-left: 10px;
+            box-sizing: border-box;
+
+            input {
+                height: 100%;
+                width: 100%;
+                border-radius: 6px;
+                border: none;
+                outline: none;
+                background-color: rgba(0,0,0,0);
+                color: ${props => props.theme.textColor.primary};
+
+                &:focus {
+                    /* color: ${props => props.theme.color.primary}; */
+                    color: white;
+                }
+
+                &::placeholder {
+                    color: #ffffff66;
+                }
+            }
+
+            > .icon {
+                fill: #ffffff66;
+                margin-right: 6px;
+            }
+
+            .clear {
+                margin-right: 4px;
+                cursor: pointer;
+            }
         }
 
         .info {
             height: 32px;
-
         }
     }
 `
