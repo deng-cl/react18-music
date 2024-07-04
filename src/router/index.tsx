@@ -10,6 +10,8 @@ const Video = React.lazy(() => import("@/views/video"))
 const VideoDetail = React.lazy(() => import("@/views/video-detail"))
 const SettingTheme = React.lazy(() => import("@/views/setting-theme"))
 
+const ShowIconTest = React.lazy(() => import("@/views/show-icon-test"))
+
 const routes: RouteObject[] = [
     {
         path: "/",
@@ -42,6 +44,10 @@ const routes: RouteObject[] = [
     {
         path: "/theme",
         element: <SettingTheme />
+    },
+    { // -- test --> 主要用于展示项目中的 icon 方便选择使用
+        path: "/icon",
+        element: <ShowIconTest />
     }
 ]
 
