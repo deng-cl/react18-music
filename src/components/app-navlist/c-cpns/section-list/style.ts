@@ -12,6 +12,7 @@ export const SectionWrapper = styled.div`
             padding: 12px 0;
             padding-left: 14px;
             margin: 2px 0;
+            border-radius: 6px;
 
             .name {
                 margin-left: 6px;

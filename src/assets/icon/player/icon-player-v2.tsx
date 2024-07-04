@@ -1,9 +1,10 @@
-import React, { memo } from 'react'
+import React, { FC, memo } from 'react'
+import type { ISvgProps } from '../type'
 
-const IconPlayerV2 = memo((props) => {
+const IconPlayerV2: FC<ISvgProps> = memo((props: ISvgProps) => {
     const { width = 16, height = 16 } = props
     return (
-        <svg t="1720076995301" className="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3393" width={width} height={height}>
+        <svg className="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3393" width={width} height={height}>
             <path d="M385.237333 228.266667l350.933334 210.56c55.253333 33.152 55.253333 113.194667 0 146.346666L385.28 795.733333c-40.789333 24.490667-89.6 10.325333-113.92-24.149333l-0.042667 0.042667a42.666667 42.666667 0 1 0-73.216 43.946666l-0.085333 0.042667c47.36 72.533333 147.626667 103.424 231.168 53.333333l350.933333-210.602666c110.506667-66.304 110.506667-226.389333 0-292.693334l-350.933333-210.56C315.392 86.826667 170.666667 168.746667 170.666667 301.44V640a42.666667 42.666667 0 1 0 85.333333 0V301.44C256 235.093333 328.362667 194.133333 385.237333 228.266667z" fill="#14101C" p-id="3394"></path>
         </svg>
     )

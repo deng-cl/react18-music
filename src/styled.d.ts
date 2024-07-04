@@ -6,7 +6,8 @@ declare module 'styled-components' { // and extend them!
             primary: string,
             secondary: string,
             hover_bg: string,
-            active: string
+            active: string,
+            button_bg: string
         },
         textColor: {
             primary: string,

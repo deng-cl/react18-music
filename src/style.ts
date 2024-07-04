@@ -23,6 +23,6 @@ export const AppWrapper = styled.div`
 
     .main-right {
         flex: 1;
-        background-color: orange;
+        /* background-color: orange; */
     }
 `
