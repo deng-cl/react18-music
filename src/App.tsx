@@ -1,14 +1,18 @@
 import { Suspense, memo } from "react"
 import { useRoutes } from "react-router-dom"
 import routes from "./router"
+import AppNavlist from "./components/app-navlist"
+import AppHeader from "./components/app-header"
+import AppFooter from "./components/app-footer"
+import { AppWrapper } from "./style"
 
 const App = memo(() => {
     return (
-        <div className="App">
-            <div className="main-left nav-list">nav list</div>
+        <AppWrapper className="App">
+            <AppNavlist className="main-right" />
 
             <div className="main-right">
-                <div className="header"></div>
+                <AppHeader />
                 <div className="content">
                     <Suspense fallback={<h2>loading...</h2>}>
                         <div className="page">
@@ -16,11 +20,10 @@ const App = memo(() => {
                         </div>
                     </Suspense>
                 </div>
-                <div className="footer"></div>
+                <AppFooter />
             </div>
-        </div>
+        </AppWrapper>
     )
 })
 
 export default App
-// http://codercba.com:9002
