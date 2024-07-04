@@ -3,8 +3,8 @@ import type { ReactNode, FC } from "react"
 import { NavListWrapper } from "./style"
 
 import logoDark from "@/assets/icon/logo/logo-dark.png"
-import NavSection from "./c-cpns/section"
-import { HomeNavItems, SettingNavItems } from "./data-config"
+import NavSectionList from "./c-cpns/section-list"
+import NAV_LIST_DATA from "./data-config"
 
 interface IProps {
     children?: ReactNode,
@@ -18,8 +18,7 @@ const AppNavList: FC<IProps> = () => {
             </div>
 
             <div className="nav-list">
-                <NavSection sectionData={HomeNavItems} />
-                <NavSection sectionData={SettingNavItems} />
+                <NavSectionList NavListData={NAV_LIST_DATA} />
             </div>
         </NavListWrapper>
     )

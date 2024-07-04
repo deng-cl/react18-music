@@ -5,6 +5,7 @@ const theme: DefaultTheme = {
         primary: "#000000",
         secondary: "#9867da",
         hover_bg: "#372a3c",
+        active: "#5e5e5e"
     },
     textColor: {
         primary: "#ffffff",
