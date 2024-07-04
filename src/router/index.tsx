@@ -52,3 +52,5 @@ const routes: RouteObject[] = [
 ]
 
 export default routes
+
+export type IRoutesPath = "/" | "/discover" | "/songs" | "/songs-detail" | "/player-detail" | "/video" | "/video-detail" | "/theme" | "none"

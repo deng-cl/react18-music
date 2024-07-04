@@ -11,9 +11,9 @@ const theme: DefaultTheme = {
         secondary: "#60656b"
     },
     textSize: {
-        larger: "22px", // -- or --> 18px
-        normal: "16px",
-        small: "14px"
+        larger: "18px", // -- or --> 18px
+        normal: "14px",
+        small: "12px"
     },
     mixin: {}
 }

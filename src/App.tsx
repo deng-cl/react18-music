@@ -9,7 +9,9 @@ import { AppWrapper } from "./style"
 const App = memo(() => {
     return (
         <AppWrapper className="App">
-            <AppNavlist className="main-right" />
+            <div className="main-left">
+                <AppNavlist />
+            </div>
 
             <div className="main-right">
                 <AppHeader />

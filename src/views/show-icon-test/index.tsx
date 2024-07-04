@@ -18,6 +18,10 @@ import IconSound from "@/assets/icon/player/icon-sound"
 import IconSoundMute from "@/assets/icon/player/icon-sound-mute"
 import IconStepbackward from "@/assets/icon/player/icon-stepbackward"
 import IconStepforward from "@/assets/icon/player/icon-stepforward"
+
+import logoDark from "@/assets/icon/logo/logo-dark.png"
+import logoLight from "@/assets/icon/logo/logo-light.png"
+
 import { memo } from "react"
 import type { ReactNode, FC } from "react"
 
@@ -55,6 +59,10 @@ const ShowIconTest: FC<IProps> = () => {
                     <IconSoundMute />
                     <IconStepbackward />
                     <IconStepforward />
+                </div>
+                <div className="logo" style={{ background: "orange", display: "flex" }}>
+                    <img src={logoDark} alt="" style={{ width: "200px", marginRight: "20px" }} />
+                    <img src={logoLight} alt="" style={{ width: "200px", marginRight: "20px" }} />
                 </div>
             </div>
             <hr />
