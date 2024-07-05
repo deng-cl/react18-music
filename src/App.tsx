@@ -10,7 +10,6 @@ import usePageName from "./hooks/usePageName"
 
 const App = memo(() => {
     const pagename = usePageName() // -- 获取当前页面名称
-    console.log(pagename, 444);
 
     return (
         <AppWrapper className="App">

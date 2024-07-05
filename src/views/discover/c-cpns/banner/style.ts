@@ -7,6 +7,7 @@ export const BannerWrapper = styled.div`
     /* background: linear-gradient(0.25turn, #3f87a6, #ebf8e1, #f69d3c);    display: flex; */
     justify-content: center;
     border-radius: 6px;
+    background: orange;
 
     > .banners {
         position: absolute;
