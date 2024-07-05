@@ -19,7 +19,7 @@ const routes: RouteObject[] = [
     },
     {
         path: "/discover",
-        element: <Discover />
+        element: <Discover />,
     },
     {
         path: "/songs",
@@ -54,3 +54,12 @@ const routes: RouteObject[] = [
 export default routes
 
 export type IRoutesPath = "/" | "/discover" | "/songs" | "/songs-detail" | "/player-detail" | "/video" | "/video-detail" | "/theme" | "none"
+export enum routepataMapPagename {
+    "/discover" = "Home",
+    "/songs" = "Songs",
+    "/songs-detail" = "SongDetail",
+    "/player-detail" = "PlayerDetail",
+    "/video" = "Video/MV",
+    "/video-detail" = "MVDetail",
+    "/theme" = "Theme"
+}

@@ -1,4 +1,4 @@
-import { memo, useState } from "react"
+import { memo, useRef, useState } from "react"
 import type { ReactNode, FC } from "react"
 import { HeaderWrapper } from "./style"
 import IconArrowLeft from "@/assets/icon/header/icon-arrow-left"
@@ -19,19 +19,19 @@ const AppHeader: FC<IProps> = () => {
         setSearchValue(e.target.value)
     }
 
-    let isComposition = false
+    let isComposition = useRef(true)
     function compositionHandle(e: React.CompositionEvent<HTMLInputElement>) { // -- 用于解决在中文输入的情况按下 Enter 时，不执行对应的 "搜索部分" 逻辑
         if (e.type === "compositionend") {
-            isComposition = true
+            isComposition.current = true
         } else {
-            isComposition = false
+            isComposition.current = false
         }
     }
 
     function searchInputDownEnterHandle(e: React.KeyboardEvent<HTMLInputElement>) { // -- 处理搜索逻辑
         if (e.code === "Enter") {
             if (!searchValue) alert("搜索内容不能为空！")
-            if (isComposition) { // -- ↓ 搜索逻辑
+            if (isComposition.current && searchValue !== "") { // -- ↓ 搜索逻辑
                 console.log("Down Enter --> To Search");
             }
         }

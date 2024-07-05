@@ -1,12 +1,17 @@
-import { Suspense, memo } from "react"
-import { useRoutes } from "react-router-dom"
+import { Suspense, memo, useEffect } from "react"
+import { useLocation, useRoutes } from "react-router-dom"
 import routes from "./router"
 import AppNavlist from "./components/app-navlist"
 import AppHeader from "./components/app-header"
 import AppFooter from "./components/app-footer"
 import { AppWrapper } from "./style"
+import { appShallowEqual, useAppSelector } from "./store/app-react-redux"
+import usePageName from "./hooks/usePageName"
 
 const App = memo(() => {
+    const pagename = usePageName() // -- 获取当前页面名称
+    console.log(pagename, 444);
+
     return (
         <AppWrapper className="App">
             <div className="main-left">
@@ -15,6 +20,7 @@ const App = memo(() => {
 
             <div className="main-right">
                 <AppHeader />
+                <div className="show-page-name">{pagename}</div>
                 <div className="content">
                     <Suspense fallback={<h2>loading...</h2>}>
                         <div className="page">

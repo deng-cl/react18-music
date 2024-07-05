@@ -1,6 +1,6 @@
-import { DefaultTheme } from "styled-components" // -- theme 类型支持
+// import { DefaultTheme } from "styled-components" // -- theme 类型支持
 
-const theme: DefaultTheme = {
+const theme = {
     color: {
         primary: "#000000",
         secondary: "#9867da",
@@ -21,5 +21,7 @@ const theme: DefaultTheme = {
 }
 
 // 播放器进度条: #252525
+
+export type CustomTheme = typeof theme // -- 获取当前 them 类型 --> 在自定义类型文件（styled.d.ts）中配置对应 DefaultTheme 类型 --> 使其后续在样式中使用是可以有更好的支持
 
 export default theme

@@ -24,5 +24,12 @@ export const AppWrapper = styled.div`
     .main-right {
         flex: 1;
         /* background-color: orange; */
+
+        .show-page-name {
+            margin-top: 6px;
+            height: 40px;
+            /* font-size: ${props => props.theme.textSize.larger}; */
+            font-weight: 700;
+        }
     }
 `
