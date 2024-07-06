@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const ItemWrapper = styled.div`
     margin-top: 12px;
+    margin-bottom: 36px;
     > .title {
         font-size: ${props => props.theme.textSize.larger};
         font-weight: 700;

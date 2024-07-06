@@ -6,6 +6,8 @@ export const HeaderWrapper = styled.div`
     justify-content: space-between;
     align-items: center;
     height: 40px;
+    padding-right: 14px;
+    box-sizing: border-box;
 
     > .left, > .right {
         display: flex;
