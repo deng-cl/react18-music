@@ -27,12 +27,6 @@ export const ItemWrapper = styled.div`
         background-color: #5e5e5e5c;
         font-size: ${props => props.theme.textSize.small};
 
-        text-overflow: -o-ellipsis-lastline;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        line-clamp: 2;
-        -webkit-box-orient: vertical;
+        ${props => props.theme.mixin.twoLineClamp}
     }
 `

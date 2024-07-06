@@ -9,7 +9,7 @@ interface IProps {
 
 const ScrollView: FC<IProps> = (props: IProps) => {
     const [showRight, setShowRight] = useState(false)
-    const [showLeft, setShowLeft] = useState(true)
+    const [showLeft, setShowLeft] = useState(false)
 
     const contentRef = useRef<HTMLElement>() // -- 获取 content 容器元素
     const posIndex = useRef(0) // 存储当前可显示的首位 tab 索引

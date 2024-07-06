@@ -15,9 +15,20 @@ const theme = {
     textSize: {
         larger: "18px", // -- or --> 18px
         normal: "14px",
-        small: "12px"
+        small: "12px",
+        v_small: "10px"
     },
-    mixin: {}
+    mixin: {
+        twoLineClamp: `
+            text-overflow: -o-ellipsis-lastline;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+        `
+    }
 }
 
 // 播放器进度条: #252525

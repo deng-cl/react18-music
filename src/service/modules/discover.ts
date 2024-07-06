@@ -15,4 +15,6 @@ export const fetchRecommendSongs = () => {
     return http.get({ url: "/personalized" })
 }
 
-
+export const fetchHotPlaySongInfoList = () => { // -- 获取热歌榜歌曲数据
+    return http.get({ url: "/playlist/detail", params: { id: 3778678 } })
+}

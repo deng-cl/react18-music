@@ -5,7 +5,6 @@ import AppNavlist from "./components/app-navlist"
 import AppHeader from "./components/app-header"
 import AppFooter from "./components/app-footer"
 import { AppWrapper } from "./style"
-import { appShallowEqual, useAppSelector } from "./store/app-react-redux"
 import usePageName from "./hooks/usePageName"
 
 const App = memo(() => {

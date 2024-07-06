@@ -1,4 +1,4 @@
-import { fetchMusicBannerInfo, fetchRecommendSongs } from "@/service/modules/discover";
+import { fetchHotPlaySongInfoList, fetchMusicBannerInfo, fetchRecommendSongs } from "@/service/modules/discover";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export const fetchDiscoverPageDataAction = createAsyncThunk("fetch_discover_data_action", (state, { dispatch }) => {
@@ -8,9 +8,12 @@ export const fetchDiscoverPageDataAction = createAsyncThunk("fetch_discover_data
     fetchRecommendSongs().then((res: any) => {
         dispatch(changeRecommendSongsAction(res.result))
     })
+    fetchHotPlaySongInfoList().then((res: any) => {
+        dispatch(changeHotSongListAction(res.playlist))
+    })
 })
 
-export interface ISongs {
+export interface ISongs { // -- 推荐歌单数据类型
     id: number;
     type: number;
     name: string;
@@ -20,14 +23,17 @@ export interface ISongs {
     // ....
 }
 
+
 interface IState {
     banner: any[],
-    recommendSongs: ISongs[]
+    recommendSongs: ISongs[],
+    hotSongList: any
 }
 
 const initialState: IState = {
     banner: [],
-    recommendSongs: []
+    recommendSongs: [],
+    hotSongList: {}
 }
 
 const discoverSlice = createSlice({
@@ -39,10 +45,17 @@ const discoverSlice = createSlice({
         },
         changeRecommendSongsAction(state, { payload }) {
             state.recommendSongs = payload
+        },
+        changeHotSongListAction(state, { payload }) {
+            state.hotSongList = payload
         }
     }
 })
 
-export const { changeBannerAction, changeRecommendSongsAction } = discoverSlice.actions
+export const {
+    changeBannerAction,
+    changeRecommendSongsAction,
+    changeHotSongListAction
+} = discoverSlice.actions
 
 export default discoverSlice.reducer

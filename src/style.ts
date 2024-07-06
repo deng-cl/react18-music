@@ -24,6 +24,9 @@ export const AppWrapper = styled.div`
     .main-right {
         flex: 1;
         /* background-color: orange; */
+        overflow-y: auto;
+        scrollbar-width: none;
+        -ms-overflow-style: none; /* IE 10+ */
 
         .show-page-name {
             margin-top: 6px;
