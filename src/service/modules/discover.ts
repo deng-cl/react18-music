@@ -11,5 +11,8 @@ export const fetchMusicBannerInfo = (type_id: banner_type_id = 0) => {
     return http.get({ url: "/banner", params: { type_id } })
 }
 
+export const fetchRecommendSongs = () => {
+    return http.get({ url: "/personalized" })
+}
 
 
