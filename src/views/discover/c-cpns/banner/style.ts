@@ -56,7 +56,7 @@ export const BannerWrapper = styled.div`
             }
         }
     }
-
+    /* 弃用 --> 使用 .commom-indicator 进行替换（将对应 indicator 逻辑封装成一个组件） */
     > .indicator {
         position: absolute;
         inset: 0;
@@ -91,5 +91,15 @@ export const BannerWrapper = styled.div`
                     }
                 }
             }
+    }
+
+    > .commom-indicator {
+        position: absolute;
+        inset: 0;
+        margin: auto;
+        top: auto;
+        bottom: 0;
+        width: 200px;
+        height: 20px;
     }
 `

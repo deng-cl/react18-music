@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const ItemWrapper = styled.div`
+    user-select: none;
     flex-shrink: 0;
     position: relative;
     border-radius: 6px;

@@ -30,6 +30,7 @@ export const ViewWrapper = styled.div`
         align-items: center;
         justify-content: center;
         border: none;
+        cursor: pointer;
 
         &:hover {
             background-color: #0000002e;

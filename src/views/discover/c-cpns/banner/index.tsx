@@ -8,6 +8,7 @@ import IconArrowLeft from "@/assets/icon/header/icon-arrow-left"
 import IconArrowRight from "@/assets/icon/header/icon-arrow-right"
 import Indicator from "@/base-ui/indicator"
 import classNames from "classnames"
+import CommomIndicator from "@/components/commom-indicator"
 
 
 interface IProps {
@@ -92,8 +93,8 @@ const Banner: FC<IProps> = (props: IProps) => {
                 </div>
             </div>
 
-            {/* indicator */}
-            <div className="indicator">
+            {/* indicator: 弃用 --> 使用 .commom-indicator 进行替换（将对应 indicator 逻辑封装成一个组件） */}
+            {/* <div className="indicator">
                 <Indicator selectedIndex={curIndex} >
                     {
                         banner.map((item, index) => (
@@ -109,6 +110,10 @@ const Banner: FC<IProps> = (props: IProps) => {
                         ))
                     }
                 </Indicator>
+            </div> */}
+
+            <div className="commom-indicator">
+                <CommomIndicator dogCount={banner.length} curIndex={curIndex} />
             </div>
         </BannerWrapper>
     )

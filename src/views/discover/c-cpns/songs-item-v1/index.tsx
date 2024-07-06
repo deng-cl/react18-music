@@ -12,8 +12,13 @@ interface IProps {
 const SongsItemV1: FC<IProps> = (props: IProps) => {
     const { songsInfo, width = 130, height = 130 } = props
 
+    function songsClickHandle() { // -- 点击歌单出来函数 --> 进入对应歌单的详情页
+        console.log(songsInfo);
+
+    }
+
     return (
-        <ItemWrapper style={{ width, height }}>
+        <ItemWrapper style={{ width, height }} onClick={songsClickHandle}>
             <div className="albun">
                 <img src={songsInfo?.picUrl} alt={songsInfo.name} />
             </div>
