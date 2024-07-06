@@ -23,7 +23,6 @@ export interface ISongs { // -- 推荐歌单数据类型
     // ....
 }
 
-
 interface IState {
     banner: any[],
     recommendSongs: ISongs[],

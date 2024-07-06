@@ -26,7 +26,7 @@ const routes: RouteObject[] = [
         element: <Songs />
     },
     {
-        path: "/songs-detail",
+        path: "/songs-detail/:id",
         element: <SongsDetail />
     },
     {

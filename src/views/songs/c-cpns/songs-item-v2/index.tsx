@@ -2,6 +2,7 @@ import { memo } from "react"
 import type { ReactNode, FC } from "react"
 import { ItemWrapper } from "./style"
 import { formatCount } from "@/utils"
+import { useNavigate } from "react-router-dom"
 
 interface IProps {
     title?: string
@@ -11,8 +12,9 @@ interface IProps {
 const SongsItemV2: FC<IProps> = (props: IProps) => {
     const { songsInfos, title = "Songs Default Title" } = props
 
+    const navigate = useNavigate()
     function songsItemClickHandle(songId: number) { // -- 处理点击歌单
-        console.log(songId);
+        navigate("/songs-detail/" + songId)
     }
 
     return (

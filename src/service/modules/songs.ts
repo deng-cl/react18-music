@@ -8,3 +8,6 @@ export const fetchSongsInfo = ( // -- 获取歌单列表
     return http.get({ url: '/top/playlist', params: { cat, limit, offset } })
 }
 
+export const fetchSongsDetailById = (id: number | string = 6954660951) => { // -- 获取歌单详情
+    return http.get({ url: "/playlist/detail", params: { id } })
+}

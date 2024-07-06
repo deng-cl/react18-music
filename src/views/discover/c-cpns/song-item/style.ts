@@ -6,6 +6,12 @@ export const ItemWrapper = styled.div<{ $height: number }>`
     display: flex;
     flex-flow: row nowrap;
     font-size: ${props => props.theme.textSize.small};
+    cursor: pointer;
+    border-radius: 6px;
+
+    &:hover {
+        background-color:#c20c0c42;
+    }
 
     > div { // -- commom style
         width: 35%;

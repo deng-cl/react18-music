@@ -9,7 +9,7 @@ export const AppWrapper = styled.div`
     color: ${props => props.theme.textColor.primary};
     background-color: ${props => props.theme.color.primary};
     padding:  6px 14px;
-    padding-right: 4px;
+    padding-right: 2px;
     box-sizing: border-box;
     font-size: ${props => props.theme.textSize.normal};
 
@@ -34,17 +34,21 @@ export const AppWrapper = styled.div`
             font-weight: 700;
         }
 
+        .content {
+            padding-right: 4px;
+            box-sizing: border-box;
+        }
 
         /* 滚动条样式设置 */
         &::-webkit-scrollbar {
             width: 2px;
         }
         &::-webkit-scrollbar-track{
-            background-color: #000;
+            background-color: ${props => props.theme.color.primary};
         }
         &::-webkit-scrollbar-thumb{
             width: 2px;
-            background-color: white;
+            background-color: ${props => props.theme.textColor.primary};
         }
     }
 `

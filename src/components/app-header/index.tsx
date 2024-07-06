@@ -40,7 +40,7 @@ const AppHeader: FC<IProps> = () => {
     return (
         <HeaderWrapper>
             <div className="left">
-                <div className="back">
+                <div className="back" onClick={e => window.history.back()}>
                     <IconArrowLeft />
                 </div>
 

@@ -43,7 +43,7 @@ const NavSectionList: FC<IProps> = (props) => {
                                             {
                                                 title: item.isTitle,
                                                 route: item.routePath !== "none",
-                                                active: location.pathname === item.routePath
+                                                active: location.pathname.includes(item.routePath.split("/")[1])
                                             }
                                         )
                                     }
