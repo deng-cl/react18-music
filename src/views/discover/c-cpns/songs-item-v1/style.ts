@@ -5,7 +5,7 @@ export const ItemWrapper = styled.div`
     flex-shrink: 0;
     position: relative;
     border-radius: 6px;
-    background-color: red;
+    /* background-color: red; */
     overflow: hidden;
     display: flex;
     flex-flow: column nowrap;

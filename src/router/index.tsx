@@ -43,7 +43,7 @@ const routes: RouteObject[] = [
         element: <Video />
     },
     {
-        path: "/video-detail",
+        path: "/video-detail/:id",
         element: <VideoDetail />
     },
     {

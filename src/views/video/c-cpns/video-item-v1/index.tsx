@@ -3,6 +3,7 @@ import type { ReactNode, FC } from "react"
 import { ItemWrapper } from "./style"
 import { formatCount, formatTime, joinSongArtistNames } from "@/utils"
 import IconVideo from "@/assets/icon/player/icon-video"
+import { useNavigate } from "react-router-dom"
 // import IconVideo from "@/assets/icon/player/icon-video"
 
 interface IProps {
@@ -12,8 +13,9 @@ interface IProps {
 const VideoItemV1: FC<IProps> = (props: IProps) => {
     const { MVData } = props
 
+    const navigate = useNavigate()
     function toMVDetailPgae() {
-        console.log("toMVDetailPgae", MVData?.id);
+        navigate("/video-detail/" + MVData?.id)
     }
 
     return (

@@ -11,3 +11,4 @@ const IconNextPlayer: FC<ISvgProps> = memo((props: ISvgProps) => {
 })
 
 export default IconNextPlayer
+
