@@ -20,7 +20,7 @@ const Songs: FC<IProps> = () => {
 
     const dispacth = useAppDispatch()
     useEffect(() => { // -- 获取 songs 页面数据
-        dispacth(fetchSongsPageDataAction())
+        if (!chinese[0]) dispacth(fetchSongsPageDataAction())
     }, [])
 
     return (

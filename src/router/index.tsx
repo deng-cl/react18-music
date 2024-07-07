@@ -5,6 +5,7 @@ import { Navigate, RouteObject } from "react-router-dom"
 const Discover = React.lazy(() => import("@/views/discover"))
 const Songs = React.lazy(() => import("@/views/songs"))
 const SongsDetail = React.lazy(() => import("@/views/songs-detail"))
+const SongsEntire = React.lazy(() => import("@/views/songs-entire"))
 const PlayerDetail = React.lazy(() => import("@/views/player-detail"))
 const Video = React.lazy(() => import("@/views/video"))
 const VideoDetail = React.lazy(() => import("@/views/video-detail"))
@@ -28,6 +29,10 @@ const routes: RouteObject[] = [
     {
         path: "/songs-detail/:id",
         element: <SongsDetail />
+    },
+    {
+        path: "/songs-entire/:cat",
+        element: <SongsEntire />
     },
     {
         path: "/player-detail",

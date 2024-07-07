@@ -7,6 +7,18 @@ export const ItemWrapper = styled.div`
         font-size: ${props => props.theme.textSize.larger};
         font-weight: 700;
         margin-bottom: 16px;
+        display: flex;
+        justify-content: space-between;
+        padding-right: 16px;
+        box-sizing: border-box;
+
+        .more {
+            user-select: none;
+            cursor: pointer;
+            font-size: ${props => props.theme.textSize.normal};
+            font-weight: 400;
+            color:${props => props.theme.textColor.secondary};
+        }
     }
 
     > .list {

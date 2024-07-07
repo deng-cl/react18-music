@@ -11,6 +11,7 @@ import ScrollView from "@/base-ui/scroll-view"
 import SongItem from "./c-cpns/song-item"
 
 import { Pagination } from 'antd';
+import CommomPaganition from "@/components/commom-paganition"
 
 
 interface IProps {
@@ -70,15 +71,12 @@ const Discover: FC<IProps> = () => {
                     }
                 </div>
 
-                <div className="pagination">
-                    <Pagination
-                        defaultCurrent={1}
-                        defaultPageSize={10}
-                        total={total}
-                        showSizeChanger={false}
-                        onChange={pageCodeClickHandle}
-                    />
-                </div>
+                <CommomPaganition
+                    defaultCurrent={1}
+                    defaultPageSize={10}
+                    total={total}
+                    onChange={pageCodeClickHandle}
+                />
             </div>
         </DiscoverWrapper>
 

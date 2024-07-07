@@ -10,7 +10,7 @@ export const ItemWrapper = styled.div<{ $height: number }>`
     border-radius: 6px;
 
     &:hover {
-        background-color:#c20c0c42;
+        background-color:#ffffff1c;
     }
 
     > div { // -- commom style

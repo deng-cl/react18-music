@@ -2,12 +2,12 @@ import { fetchSongsInfo } from "@/service/modules/songs"
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 
 interface IState {
+    entire: any,
     chinese: any, // -- 华语
     ancient: any, // -- 古风
     popular: any, // -- 流行
     EA: any // -- 欧美
 }
-
 
 export const fetchSongsPageDataAction = createAsyncThunk("fetch_songs_page_data_action", (state, { dispatch }) => {
     fetchSongsInfo("华语").then((res: any) => {
@@ -22,9 +22,14 @@ export const fetchSongsPageDataAction = createAsyncThunk("fetch_songs_page_data_
     fetchSongsInfo("流行").then((res: any) => {
         dispatch(changePopularAction(res.playlists))
     })
+    fetchSongsInfo("全部").then((res: any) => {
+        dispatch(changeEntireAction(res.playlists))
+    })
 })
 
+
 const initialState: IState = {
+    entire: [],
     chinese: [],
     ancient: [],
     popular: [],
@@ -47,6 +52,9 @@ const songsSlice = createSlice({
         changeEAAction(state, { payload }) {
             state.EA = payload
         },
+        changeEntireAction(state, { payload }) {
+            state.entire = payload
+        },
     }
 })
 
@@ -55,6 +63,7 @@ export const {
     changeChineseAction,
     changeEAAction,
     changePopularAction,
+    changeEntireAction
 } = songsSlice.actions
 
 export default songsSlice.reducer
