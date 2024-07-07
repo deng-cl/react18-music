@@ -36,13 +36,13 @@ export function formatTime(time: number, isMS = true) { // -- 格式化时间
 }
 
 
-export function formatCount(num: number | string) { // -- 格式化 count
+export function formatCount(num: number | string): string { // -- 格式化 count
     num = Number(num)
     if (num > 100000000) {
         return (num / 100000000).toFixed(1) + "亿"
     } else if (num > 10000) {
         return (num / 10000).toFixed(1) + "万"
     } else {
-        return num
+        return num + ""
     }
 }

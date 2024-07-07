@@ -37,7 +37,7 @@ const initialState: IState = {
 }
 
 const songsSlice = createSlice({
-    name: "discover",
+    name: "songs",
     initialState,
     reducers: {
         changeChineseAction(state, { payload }) {

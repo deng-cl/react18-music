@@ -7,7 +7,7 @@ const initialState: IState = {
 }
 
 const mainSlice = createSlice({
-    name: "discover",
+    name: "main",
     initialState,
     reducers: {
     }
