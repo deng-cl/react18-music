@@ -18,6 +18,10 @@ export const ItemWrapper = styled.div`
             font-size: ${props => props.theme.textSize.normal};
             font-weight: 400;
             color:${props => props.theme.textColor.secondary};
+
+            &:hover {
+                text-decoration: underline;
+            }
         }
     }
 

@@ -2,7 +2,7 @@ import { memo } from "react"
 import type { ReactNode, FC } from "react"
 import { ItemWrapper } from "./style"
 import { formatCount } from "@/utils"
-import { useNavigate, useParams } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 interface IProps {
     title?: string
