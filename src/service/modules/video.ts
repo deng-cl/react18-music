@@ -23,13 +23,6 @@ export const fetchMVInfoById = (mvid: number) => { // -- 根据 ID 获取 MV 其
 
 /**
  * @param id 资源 id, 如歌曲 id,mv id
- * @param type 数字 , 资源类型 , 对应歌曲 , mv, 专辑 , 歌单 , 电台, 视频对应以下类型
- * @param sortType 排序方式, 1:按推荐排序, 2:按热度排序, 3:按时间排序
- * @returns
- */
-/**
- *
- * @param id 资源 id, 如歌曲 id,mv id
  * @param sortType 排序方式, 1:按推荐排序, 2:按热度排序, 3:按时间排序 -- 默认 3
  * @param pageSize 分页参数,每页多少条数据,默认 20
  * @param pageNo 分页参数,第 N 页,默认为 1
@@ -44,4 +37,8 @@ export const fetchMVCommentsById = (
     type: number = 1
 ) => {
     return http.get({ url: "/comment/new", params: { id, type, sortType, pageSize, pageNo } })
+}
+
+export const fetchSimiMVById = (mvid: number) => { // --根据 ID 获取对应 MV 相关 MVS
+    return http.get({ url: "/simi/mv", params: { mvid } })
 }

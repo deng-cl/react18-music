@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const VideoDetailWrapper = styled.div`
     display: flex;
     flex-flow: row nowrap;
-    align-items: center;
+    /* align-items: center; */
     width: 100%;
     /* height: 20px; */
 
@@ -145,8 +145,78 @@ export const VideoDetailWrapper = styled.div`
 
     > .right {
         flex-shrink: 0;
-        width: 350px;
-        background-color: purple;
+        width: 400px;
+        /* background-color: purple; */
         height: 100%;
+        padding-left: 12px;
+        box-sizing: border-box;
+
+        .title {
+            font-size: ${props => props.theme.textSize.larger};
+            font-weight: 700;
+            padding-bottom: 8px;
+            /* border-bottom: 1px solid ${props => props.theme.textColor.secondary}; */
+        }
+
+        .list {
+            display: flex;
+            flex-flow: column nowrap;
+            color:${props => props.theme.textColor.secondary};
+            font-size: ${props => props.theme.textSize.small};
+            .item {
+                cursor: pointer;
+                height: 78px;
+                margin-top: 14px;
+                .album {
+                    user-select: none;
+                    position: relative;
+                    border-radius: 6px;
+                    overflow: hidden;
+                    img {
+                        width: 140px;
+                        height: 100%;
+                        border-radius: 6px;
+                    }
+
+                    .t {
+                        position: absolute;
+                        right: 0;
+                        bottom: 0;
+                        border-radius: 2px;
+                        padding: 4px 6px;
+                        background-color: #00000073;
+                        color: white;
+                    }
+                }
+
+                .info {
+                    width: 260px;
+                    display: flex;
+                    flex-flow: column nowrap;
+                    justify-content: space-between;
+                    height: 100%;
+                    padding: 2px;
+                    margin-left: 6px;
+                    box-sizing: border-box;
+
+                    .name {
+                        width: 245px;
+                        font-size: ${props => props.theme.textSize.normal};
+                        color:${props => props.theme.textColor.primary};
+                        ${props => props.theme.mixin.twoLineClamp};
+                    }
+
+                    svg {
+                        fill: ${props => props.theme.textColor.secondary};
+                    }
+
+                    .count {
+                        span {
+                            margin-left: 4px;
+                        }
+                    }
+                }
+            }
+        }
     }
 `

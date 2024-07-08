@@ -1,9 +1,9 @@
 import { memo, useEffect, useState } from "react"
 import type { ReactNode, FC } from "react"
 import { VideoDetailWrapper } from "./style"
-import { useParams } from "react-router-dom"
-import { type IMVInfo, fetchMVDetailById, fetchMVInfoById, fetchMVPlayerURLById, fetchMVCommentsById } from "@/service/modules/video"
-import { formatCount } from "@/utils"
+import { useNavigate, useParams } from "react-router-dom"
+import { type IMVInfo, fetchMVDetailById, fetchMVInfoById, fetchMVPlayerURLById, fetchMVCommentsById, fetchSimiMVById } from "@/service/modules/video"
+import { formatCount, formatTime, joinSongArtistNames } from "@/utils"
 import IconVideo from "@/assets/icon/player/icon-video"
 import IconComment from "@/assets/icon/player/icon-comment"
 import IconStar from "@/assets/icon/header/icon-star"
@@ -25,12 +25,13 @@ const VideoDetail: FC<IProps> = () => {
             const res = await fetchMVDetailById(id as any) as any
             setMVInfo(res.data)
         })();
-    }, [])
+    }, [id])
 
 
     // -- 获取视频播放 URL & 获取视频其它信息（收藏、点赞、评论）
     const [MVPlayerURL, setMVPlayerURL] = useState<string>("")
     const [MVOtherInfo, setMVOtherInfo] = useState<IMVInfo>({ likedCount: 0, shareCount: 0, commentCount: 0 })
+    const [MVSimiMVS, setMVSimiMVS] = useState<any>([])
     useEffect(() => {
         (async () => { // -- fetch MV player URL
             const res = await fetchMVPlayerURLById(id as any) as any
@@ -41,7 +42,12 @@ const VideoDetail: FC<IProps> = () => {
             const res = await fetchMVInfoById(id as any) as IMVInfo
             setMVOtherInfo(res)
         })();
-    }, [])
+
+        (async () => { // -- fetch MV simi MVS
+            const res = await fetchSimiMVById(id as any) as any
+            setMVSimiMVS(res.mvs)
+        })();
+    }, [id])
 
 
     // -- 获取 MV 评论信息
@@ -54,10 +60,17 @@ const VideoDetail: FC<IProps> = () => {
             const res = await fetchMVCommentsById(id as any, sortType, commentCOunt) as any
             setMVCommentList(res?.data?.comments)
         })();
-    }, [sortType])
+    }, [sortType, id])
     function changeCommentSortType(sortType: number) {
         setCommentPage(0)
         setSortType(sortType)
+    }
+
+
+    // -- 处理相关视频的点击
+    const navigate = useNavigate()
+    function toNewMVDetail(id: number) {
+        navigate("/video-detail/" + id)
     }
 
     return (
@@ -148,11 +161,30 @@ const VideoDetail: FC<IProps> = () => {
                 </div>
             </div>
 
-
             <div className="right">
-
+                <div className="title">相关视频</div>
+                <div className="list">
+                    {
+                        MVSimiMVS.map((item: any) => (
+                            <div className="item flex-row" key={item.id} onClick={e => toNewMVDetail(item.id)}>
+                                <div className="album">
+                                    <img src={item.cover} alt="" />
+                                    <div className="t">{formatTime(item.duration)}</div>
+                                </div>
+                                <div className="info">
+                                    <div className="name">{item.name}</div>
+                                    <div className="arts">{joinSongArtistNames(item.artists)}</div>
+                                    <div className="count flex-row">
+                                        <IconVideo />
+                                        <span>{formatCount(item.playCount)}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        ))
+                    }
+                </div>
             </div>
-        </VideoDetailWrapper>
+        </VideoDetailWrapper >
     )
 
 }
