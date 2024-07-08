@@ -10,6 +10,8 @@ export const AppWrapper = styled.div`
     background-color: ${props => props.theme.color.primary};
     padding:  6px 14px;
     padding-right: 2px;
+    /* 该 padding-bottom 值对应 player-bar 播放器工具栏的高度 */
+    padding-bottom: 58px;
     box-sizing: border-box;
     font-size: ${props => props.theme.textSize.normal};
 

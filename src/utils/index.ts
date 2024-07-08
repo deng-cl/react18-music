@@ -5,10 +5,10 @@ interface IAr {
     // ...
 }
 
-export function joinSongArtistNames(ars: IAr[]) {
+export function joinSongArtistNames(ars: IAr[], joinChar: string = "·") {
     if (!ars) return ""
     const joind = ars.map(item => item.name)
-    return joind.join(" / ")
+    return joind.join(` ${joinChar} `)
 }
 
 

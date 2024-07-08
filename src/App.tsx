@@ -1,12 +1,12 @@
-import { Suspense, createContext, memo, useEffect, useRef } from "react"
-import { useLocation, useRoutes } from "react-router-dom"
+import { Suspense, createContext, memo, useRef } from "react"
+import { useRoutes } from "react-router-dom"
 import routes from "./router"
 import AppNavlist from "./components/app-navlist"
 import AppHeader from "./components/app-header"
 import { AppWrapper } from "./style"
 import usePageName from "./hooks/usePageName"
 import AppFooter from "./components/app-footer"
-
+import PlayerBar from "./views/player/player-bar"
 
 export const AppContext = createContext({}) // -- 通过 React 中的 Context 进行对应函数的传递
 
@@ -36,6 +36,9 @@ const App = memo(() => {
                 </div>
                 <AppFooter />
             </div>
+
+            {/* player bar: 播放器工具栏 */}
+            <PlayerBar />
         </AppWrapper>
     )
 })

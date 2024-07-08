@@ -7,7 +7,11 @@ interface IProps {
 }
 
 const Player: FC<IProps> = () => {
-    return <PlayerWrapper>Player</PlayerWrapper>
+    return (
+        <PlayerWrapper>
+            Player
+        </PlayerWrapper>
+    )
 }
 
 export default memo(Player)
