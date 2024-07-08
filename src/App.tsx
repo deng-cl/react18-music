@@ -3,9 +3,9 @@ import { useLocation, useRoutes } from "react-router-dom"
 import routes from "./router"
 import AppNavlist from "./components/app-navlist"
 import AppHeader from "./components/app-header"
-import AppFooter from "./components/app-footer"
 import { AppWrapper } from "./style"
 import usePageName from "./hooks/usePageName"
+import AppFooter from "./components/app-footer"
 
 
 export const AppContext = createContext({}) // -- 通过 React 中的 Context 进行对应函数的传递

@@ -6,8 +6,8 @@ interface IProps {
     children?: ReactNode
 }
 
-const PlayerDetail: FC<IProps> = () => {
-    return <PlayerWrapper>PlayerDetail</PlayerWrapper>
+const Player: FC<IProps> = () => {
+    return <PlayerWrapper>Player</PlayerWrapper>
 }
 
-export default memo(PlayerDetail)
+export default memo(Player)
