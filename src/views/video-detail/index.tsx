@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from "react"
+import { memo, useContext, useEffect, useRef, useState } from "react"
 import type { ReactNode, FC } from "react"
 import { VideoDetailWrapper } from "./style"
 import { useNavigate, useParams } from "react-router-dom"
@@ -11,6 +11,7 @@ import IconShare from "@/assets/icon/player/icon-share"
 import IconTime from "@/assets/icon/player/icon-time"
 import CommomPaganition from "@/components/commom-paganition"
 import classNames from "classnames"
+import { AppContext } from "@/App"
 
 interface IProps {
     children?: ReactNode
@@ -73,10 +74,25 @@ const VideoDetail: FC<IProps> = () => {
         navigate("/video-detail/" + id)
     }
 
+    // -- 切换 comment 分页时，将对应 page 滚动到对应的位置 <评论页面发生改变，动态计算内容所需滚动距离>
+    const leftContentRef = useRef<HTMLElement>() // -- 1. 获取左侧 .left Dom 元素
+    const commentRef = useRef<HTMLElement>() // --  2. 获取 .left 中的 .comment-list Dom 元素 --> 通过 .left 元素高度减去当前评论高度，即可得到评论分页后所要滚动的距离
+    const { pageRef } = useContext(AppContext) as any// -- 3. 获取对应的 App.tsx 中的 page 内容 Dom 元素，进行滚动条的滚动
+    function changeCommentPageCode(pageCode: number) { // -- 4. 在修改对应 comment 页面时，进行相应的滚动
+        setCommentPage(pageCode) // -- 修改页面
+
+        // -- ↓ 进行相应的滚动
+        const baseHeight = leftContentRef.current?.clientHeight ?? 0
+        const commentHeight = commentRef.current?.clientHeight ?? 0
+        const scrollSize = baseHeight - commentHeight
+        console.log(baseHeight, commentHeight, scrollSize);
+        pageRef?.current?.scrollTo(0, scrollSize) // -- 进行相应的滚动
+    }
+
     return (
         <VideoDetailWrapper>
-            <div className="left">
-                <div className="base-info flex-row">
+            <div className="left" ref={leftContentRef as any}>
+                <div className="base-info flex-row" >
                     <div className="title">{MVInfo?.name}</div>
                     <div className="other flex-row">
                         <div className="count flex-row">
@@ -106,7 +122,7 @@ const VideoDetail: FC<IProps> = () => {
                     <video src={MVPlayerURL} autoPlay={true} controls></video>
                 </div>
 
-                <div className="comment-list">
+                <div className="comment-list" ref={commentRef as any}>
                     <div className="top flex-row">
                         <div className="title">评论</div>
                         <div className="count">{formatCount(MVOtherInfo.commentCount)}</div>
@@ -156,7 +172,7 @@ const VideoDetail: FC<IProps> = () => {
                         defaultPageSize={16}
                         current={commentPage + 1}
                         total={MVCommentList?.length || 0}
-                        onChange={(pageCount => { setCommentPage((pageCount - 1)) })}
+                        onChange={(pageCount => changeCommentPageCode(pageCount - 1))}
                     />
                 </div>
             </div>
