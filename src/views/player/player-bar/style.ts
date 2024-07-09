@@ -29,16 +29,18 @@ export const InfoWrapper = styled.div` // -- ↑ PlayerBarWrapper info 子元素
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
-    justify-content: space-between;
-
+    justify-content: flex-start;
 
     > .album {
+        flex-shrink: 0;
         width: 45px;
         height: 45px;
         margin-right: 8px;
+        background-color: ${props => props.theme.textColor.secondary};
+        border-radius: 6px;
+        overflow: hidden;
         img {
             height: 100%;
-            border-radius: 6px;
         }
     }
 
@@ -48,9 +50,9 @@ export const InfoWrapper = styled.div` // -- ↑ PlayerBarWrapper info 子元素
         box-sizing: border-box;
         display: flex;
         flex-flow: column nowrap;
+        flex: 0;
 
-        > div {
-
+        div {
             ${props => props.theme.mixin.singleLineClamp};
         }
 
@@ -61,18 +63,15 @@ export const InfoWrapper = styled.div` // -- ↑ PlayerBarWrapper info 子元素
             overflow: hidden;
             word-break: break-all;
             white-space: nowrap;
-            display: flex;
-            flex-flow: row nowrap;
-            align-items: center;
-
-            .loding {
-                margin-left: 6px;
-            }
         }
 
         .arts {
             font-size: ${props => props.theme.textSize.small};
             color: ${props => props.theme.textColor.secondary};
+        }
+
+        .loding {
+            margin-left:4px
         }
     }
 `

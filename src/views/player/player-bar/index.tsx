@@ -34,6 +34,8 @@ const PlayerBar: FC<IProps> = () => {
     // -- 🔺↓ 音乐播放逻辑代码
     const audioRef = useRef<HTMLAudioElement>(null)
     useEffect(() => { // -- 处理音乐切换播放
+        console.log(currentSong);
+
         // -- 1. 播放音乐
         if (!audioRef.current) return
         audioRef.current!.src = getPlayerURL(currentSong.id)
@@ -93,7 +95,6 @@ const PlayerBar: FC<IProps> = () => {
         setCurrentTime(changeTime)
         setProgress(value)
     }
-
     return (
         <PlayerBarWrapper>
             {/* player bar 展示区 */}
@@ -101,20 +102,20 @@ const PlayerBar: FC<IProps> = () => {
                 {/* left */}
                 <InfoWrapper>
                     <div className="album">
-                        <img src={currentSong?.al.picUrl} alt="" />
+                        <img src={currentSong?.al?.picUrl} alt="" />
                     </div>
                     <div className="msg">
-                        <div className="name">
-                            <span>{currentSong?.name}</span>
-                            {
-                                loading && (
-                                    <div className="loding">
-                                        <Spin size="small" />
-                                    </div>
-                                )
-                            }
-                        </div>
-                        <div className="arts">{joinSongArtistNames(currentSong?.ar)}</div>
+                        <div className="name">{currentSong?.name || "暂无歌曲播放"}</div>
+                        <div className="arts">{joinSongArtistNames(currentSong?.ar) || "coderkxh"}</div>
+                    </div>
+                    <div className="loding">
+                        {
+                            currentSong?.id && loading && ( // -- 歌曲加载中
+                                <div className="loding">
+                                    <Spin size="small" />
+                                </div>
+                            )
+                        }
                     </div>
                 </InfoWrapper>
 
@@ -141,9 +142,10 @@ const PlayerBar: FC<IProps> = () => {
                             <Slider value={progress} step={0.4} tooltip={{ open: false }}
                                 onChangeComplete={sliderChangeCompleteHandle}
                                 onChange={sliderChangeHandle}
+                                disabled={!currentSong?.id && true && !!audioRef.current} // -- 当当前暂无歌曲播放时，禁用 slider 滑块
                             />
                         </div>
-                        <div className="tt" >{formatTime(currentSong?.dt)}</div>
+                        <div className="tt" >{currentSong?.dt ? formatTime(currentSong?.dt) : "00:00"}</div>
                     </div>
                 </ControlWrapper>
 
@@ -155,13 +157,13 @@ const PlayerBar: FC<IProps> = () => {
             </>
 
             {/* 🔺audio: 用于音乐的播放，不进行展示（默认没有 control 属性时，audio 就是不展示的） */}
-            <audio ref={audioRef}
+            < audio ref={audioRef}
                 onTimeUpdate={audioTimeUpdateHandle}
                 onEnded={e => setIsPlaying(false)}
-            // onWaiting={e => { setIsplaying(false), setLoading(true) }}
-            // onCanPlay={e => setLoading(false)}
+                onWaiting={e => { setLoading(true) }}
+                onCanPlay={e => { setLoading(false) }}
             />
-        </PlayerBarWrapper>
+        </PlayerBarWrapper >
     )
 }
 

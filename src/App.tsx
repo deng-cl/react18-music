@@ -1,4 +1,4 @@
-import { Suspense, createContext, memo, useRef } from "react"
+import { Suspense, createContext, memo, useEffect, useRef } from "react"
 import { useRoutes } from "react-router-dom"
 import routes from "./router"
 import AppNavlist from "./components/app-navlist"
@@ -7,6 +7,8 @@ import { AppWrapper } from "./style"
 import usePageName from "./hooks/usePageName"
 import AppFooter from "./components/app-footer"
 import PlayerBar from "./views/player/player-bar"
+import { useAppDispatch } from "./store/app-react-redux"
+import { fetchPlaySongInfoAction } from "./views/player/store"
 
 export const AppContext = createContext({}) // -- 通过 React 中的 Context 进行对应函数的传递
 
@@ -15,6 +17,11 @@ const App = memo(() => {
 
     // -- ↓ 为后代元素注入 pageRef 对象 --> 使其可以操作该 page 元素（目前主要用于操作滚动太到顶部）
     const pageRef = useRef<HTMLElement>()
+
+    const dispatch = useAppDispatch()
+    useEffect(() => {
+        dispatch(fetchPlaySongInfoAction(1959528822))
+    }, [])
 
     return (
         <AppWrapper className="App">
