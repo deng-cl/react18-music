@@ -6,8 +6,8 @@ export const PlayerBarWrapper = styled.div`
     left: 0;
     z-index: 99;
     width: 100%;
-    height: 58px;
-    padding: 6px 8px;
+    height: 66px;
+    padding: 10px 8px;
     box-sizing: border-box;
     background-color: ${props => props.theme.color.primary};
     border-top: 1px solid ${props => props.theme.textColor.secondary};
@@ -16,7 +16,7 @@ export const PlayerBarWrapper = styled.div`
     flex-flow: row nowrap;
     align-items: center;
 
-    > div {
+    > .content div {
         height: 100%;
     }
 `
@@ -61,6 +61,13 @@ export const InfoWrapper = styled.div` // -- ↑ PlayerBarWrapper info 子元素
             overflow: hidden;
             word-break: break-all;
             white-space: nowrap;
+            display: flex;
+            flex-flow: row nowrap;
+            align-items: center;
+
+            .loding {
+                margin-left: 6px;
+            }
         }
 
         .arts {
@@ -81,6 +88,7 @@ export const ControlWrapper = styled.div` // -- ↑ PlayerBarWrapper control 子
     justify-content: space-between;
     padding-bottom: 2px;
     box-sizing: border-box;
+    user-select: none;
 
     > .control {
         display: flex;
@@ -99,16 +107,16 @@ export const ControlWrapper = styled.div` // -- ↑ PlayerBarWrapper control 子
         width: 100%;
         display: flex;
         flex-flow: row nowrap;
-        align-items: start;
+        align-items: center;
         font-size: ${props => props.theme.textSize.small};
         color: ${props => props.theme.textColor.secondary};
 
         .ct {
-            margin-right: 6px;
+            margin-right: 8px;
         }
 
         .tt {
-            margin-left: 6px;
+            margin-left: 8px;
         }
 
         .slider {
@@ -141,6 +149,12 @@ export const ControlWrapper = styled.div` // -- ↑ PlayerBarWrapper control 子
                 }
                 &:focus::after {
                     box-shadow: 0 0 0 2.5px #C20C0C;
+                }
+                &.ant-tooltip-open::after {
+                    content: "333";
+                }
+                &.ant-tooltip-open::before {
+                    content: "333";
                 }
             }
         }

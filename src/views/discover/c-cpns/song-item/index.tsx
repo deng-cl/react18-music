@@ -12,8 +12,12 @@ interface IProps {
 const SongItem: FC<IProps> = (props: IProps) => {
     const { songInfo, height = 40 } = props
 
+    function playerSong(id: number) {
+        console.log(id);
+    }
+
     return (
-        <ItemWrapper $height={height}>
+        <ItemWrapper $height={height} onDoubleClick={e => playerSong(songInfo?.id)}>
             <div className="left">
                 <div className="picture">
                     <img src={songInfo?.al?.picUrl} alt="" />

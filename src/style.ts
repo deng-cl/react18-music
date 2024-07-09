@@ -11,7 +11,7 @@ export const AppWrapper = styled.div`
     padding:  6px 14px;
     padding-right: 2px;
     /* 该 padding-bottom 值对应 player-bar 播放器工具栏的高度 */
-    padding-bottom: 58px;
+    padding-bottom: 66px;
     box-sizing: border-box;
     font-size: ${props => props.theme.textSize.normal};
 
