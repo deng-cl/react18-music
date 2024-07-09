@@ -9,11 +9,12 @@ import IconSound from "@/assets/icon/player/icon-sound"
 import IconStepbackward from "@/assets/icon/player/icon-stepbackward"
 import IconStepforward from "@/assets/icon/player/icon-stepforward"
 import IconPlayerV1 from "@/assets/icon/player/icon-player-v1"
-import { appShallowEqual, useAppSelector } from "@/store/app-react-redux";
+import { appShallowEqual, useAppDispatch, useAppSelector } from "@/store/app-react-redux";
 import { formatTime, joinSongArtistNames } from "@/utils";
 
 import { getPlayerURL } from "@/utils/handle-player";
 import IconPause from "@/assets/icon/player/icon-pause";
+import { changeLyricIndexAction } from "../store";
 
 interface IProps {
     children?: ReactNode
@@ -27,15 +28,17 @@ const PlayerBar: FC<IProps> = () => {
     const [loading, setLoading] = useState(false) // -- 记录正在播放歌曲是否正在加载
     const [isSliding, setIsSliding] = useState(false) // -- 距离当前是否正在拖拽进度
 
-    const { currentSong } = useAppSelector(state => ({ // -- 获取当前播放歌曲信息
-        currentSong: state.player.currentSong
+    const { currentSong, lyrics, lyricIndex } = useAppSelector(state => ({ // -- 获取当前播放歌曲信息
+        currentSong: state.player.currentSong,
+        lyrics: state.player.lyrics,
+        lyricIndex: state.player.lyricIndex
     }), appShallowEqual)
+
+    const dispatch = useAppDispatch()
 
     // -- 🔺↓ 音乐播放逻辑代码
     const audioRef = useRef<HTMLAudioElement>(null)
     useEffect(() => { // -- 处理音乐切换播放
-        console.log(currentSong);
-
         // -- 1. 播放音乐
         if (!audioRef.current) return
         audioRef.current!.src = getPlayerURL(currentSong.id)
@@ -67,6 +70,17 @@ const PlayerBar: FC<IProps> = () => {
             const progress = (currentTime * 1000) / duration * 100 // -- 2， 计算当前进度: (通过当前时间 / 总时长) 获取对应的时间比<区间: [0,1]>，所以需要再乘以 100 使其区间在<区间: [0,100]> --> 更好的记录当前进度
             setProgress(progress)
         }
+
+        // -- 根据时间匹配相应的歌词 --> 并对歌词匹配进行节流（防止过多的进行重复渲染）
+        let index = lyrics.length - 1// -- 特殊情况: 因为该算法在匹配歌词中是通过匹配到大于当前时间的，所以正在的歌词还需要向前一位，所以会有一个问题，就是最后一句歌词是无法获取到的（所以这里给默认值可以是最后一个歌词）
+        for (let i = 0; i < lyrics.length; i++) {
+            if (lyrics[i].time > (currentTime * 1000)) {
+                index = i - 1
+                break
+            }
+        }
+        if (index === lyricIndex) return // -- 避免过多重复渲染
+        dispatch(changeLyricIndexAction(index)) // -- ↑ 当当前 index 与 lyricIndex 不一样是才修改 state 对应的歌词 index --> 🔺节流: 避免组件在同一句歌词中多次 dispatch 该 action，导致页面有过多的没有必要的渲染
     }
 
 
@@ -163,6 +177,11 @@ const PlayerBar: FC<IProps> = () => {
                 onWaiting={e => { setLoading(true) }}
                 onCanPlay={e => { setLoading(false) }}
             />
+
+            {/* 歌词展示: 可能会删，看具体样式... */}
+            <div className="lyric">
+                {lyrics[lyricIndex]?.text}
+            </div>
         </PlayerBarWrapper >
     )
 }

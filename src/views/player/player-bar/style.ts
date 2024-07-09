@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const PlayerBarWrapper = styled.div`
+    position: relative;
     position: fixed;
     bottom: 0;
     left: 0;
@@ -18,6 +19,17 @@ export const PlayerBarWrapper = styled.div`
 
     > .content div {
         height: 100%;
+    }
+
+    > .lyric {
+        position: absolute;
+        left: 50%;
+        top: -35px;
+        transform: translateX(-50%);
+        text-align: center;
+        height: 30px;
+        line-height: 30px;
+        /* background-color: orange; */
     }
 `
 
