@@ -18,11 +18,6 @@ const App = memo(() => {
     // -- ↓ 为后代元素注入 pageRef 对象 --> 使其可以操作该 page 元素（目前主要用于操作滚动太到顶部）
     const pageRef = useRef<HTMLElement>()
 
-    const dispatch = useAppDispatch()
-    useEffect(() => {
-        dispatch(fetchPlaySongInfoAction(1959528822))
-    }, [])
-
     return (
         <AppWrapper className="App">
             <div className="main-left">

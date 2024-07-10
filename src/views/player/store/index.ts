@@ -2,6 +2,7 @@ import { AsyncThunkPayloadCreator, ThunkDispatch, UnknownAction, createAsyncThun
 import { fetchSongInfoById, fetchSongLyricInfo } from "../service"
 import { ILyric, parseLyric } from "@/utils/handle-player"
 import { IRootState } from "@/store/app-react-redux"
+import IStorage from "@/utils/local-storage"
 
 interface IState {
     currentSong: any
@@ -15,380 +16,13 @@ interface IState {
     playMode: 0 | 1 | 2 // -- 0:顺序 1:随机  2:循环（单曲循环只是自然播放下的循环，可以切换新歌）
 }
 
-const initialState: IState = {
-    currentSong: {},
-    lyrics: [],
+const initialState: IState = { // -- 本地存储歌曲播放信息
+    currentSong: IStorage.get("currentSong") !== "" ? IStorage.get("currentSong") : {},
+    lyrics: IStorage.get("lyrics") !== "" ? IStorage.get("lyrics") : [],
     lyricIndex: -1,
-    playSongList: [
-        {
-            "name": "只牵你的手",
-            "id": 109256,
-            "pst": 0,
-            "t": 0,
-            "ar": [
-                {
-                    "id": 3689,
-                    "name": "李玖哲",
-                    "tns": [],
-                    "alias": []
-                }
-            ],
-            "alia": [],
-            "pop": 100,
-            "st": 0,
-            "rt": "600907000000980757",
-            "fee": 1,
-            "v": 31,
-            "crbt": null,
-            "cf": "",
-            "al": {
-                "id": 10830,
-                "name": "Baby是我",
-                "picUrl": "https://p1.music.126.net/jgH1cEVB_o9X4R5I_9-zUA==/40681930233154.jpg",
-                "tns": [],
-                "pic": 40681930233154
-            },
-            "dt": 256522,
-            "h": {
-                "br": 320000,
-                "fid": 0,
-                "size": 10263031,
-                "vd": -42558,
-                "sr": 44100
-            },
-            "m": {
-                "br": 192000,
-                "fid": 0,
-                "size": 6157836,
-                "vd": -39963,
-                "sr": 44100
-            },
-            "l": {
-                "br": 128000,
-                "fid": 0,
-                "size": 4105239,
-                "vd": -38249,
-                "sr": 44100
-            },
-            "sq": null,
-            "hr": null,
-            "a": null,
-            "cd": "1",
-            "no": 7,
-            "rtUrl": null,
-            "ftype": 0,
-            "rtUrls": [],
-            "djId": 0,
-            "copyright": 0,
-            "s_id": 0,
-            "mark": 17179877376,
-            "originCoverType": 1,
-            "originSongSimpleData": null,
-            "tagPicList": null,
-            "resourceState": true,
-            "version": 31,
-            "songJumpInfo": null,
-            "entertainmentTags": null,
-            "awardTags": null,
-            "single": 0,
-            "noCopyrightRcmd": null,
-            "mst": 9,
-            "rtype": 0,
-            "rurl": null,
-            "cp": 489026,
-            "mv": 0,
-            "publishTime": 1143820800000
-        },
-        {
-            "name": "可你听见了",
-            "id": 2605274338,
-            "pst": 0,
-            "t": 0,
-            "ar": [
-                {
-                    "id": 57076584,
-                    "name": "DOUDOU",
-                    "tns": [],
-                    "alias": []
-                }
-            ],
-            "alia": [
-                "《默杀》电影主题曲"
-            ],
-            "pop": 100,
-            "st": 0,
-            "rt": "",
-            "fee": 8,
-            "v": 4,
-            "crbt": null,
-            "cf": "",
-            "al": {
-                "id": 241325374,
-                "name": "可你听见了",
-                "picUrl": "https://p2.music.126.net/7DO7fn5_G7CtSPrTtenvnw==/109951169759746430.jpg",
-                "tns": [],
-                "pic_str": "109951169759746430",
-                "pic": 109951169759746430
-            },
-            "dt": 461500,
-            "h": {
-                "br": 320000,
-                "fid": 0,
-                "size": 18462346,
-                "vd": -34428,
-                "sr": 44100
-            },
-            "m": {
-                "br": 192000,
-                "fid": 0,
-                "size": 11077425,
-                "vd": -31816,
-                "sr": 44100
-            },
-            "l": {
-                "br": 128000,
-                "fid": 0,
-                "size": 7384964,
-                "vd": -30115,
-                "sr": 44100
-            },
-            "sq": {
-                "br": 781777,
-                "fid": 0,
-                "size": 45098774,
-                "vd": -34075,
-                "sr": 44100
-            },
-            "hr": null,
-            "a": null,
-            "cd": "01",
-            "no": 1,
-            "rtUrl": null,
-            "ftype": 0,
-            "rtUrls": [],
-            "djId": 0,
-            "copyright": 0,
-            "s_id": 0,
-            "mark": 17179877376,
-            "originCoverType": 0,
-            "originSongSimpleData": null,
-            "tagPicList": null,
-            "resourceState": true,
-            "version": 4,
-            "songJumpInfo": null,
-            "entertainmentTags": null,
-            "awardTags": null,
-            "single": 0,
-            "noCopyrightRcmd": null,
-            "mv": 0,
-            "rtype": 0,
-            "rurl": null,
-            "mst": 9,
-            "cp": 0,
-            "publishTime": 1720368000000
-        },
-        {
-            "name": "云边的风筝",
-            "id": 2600804126,
-            "pst": 0,
-            "t": 0,
-            "ar": [
-                {
-                    "id": 1030001,
-                    "name": "周深",
-                    "tns": [],
-                    "alias": []
-                }
-            ],
-            "alia": [
-                "又名：我们的王莺莺"
-            ],
-            "pop": 100,
-            "st": 0,
-            "rt": "",
-            "fee": 8,
-            "v": 5,
-            "crbt": null,
-            "cf": "",
-            "al": {
-                "id": 239910371,
-                "name": "云边的风筝",
-                "picUrl": "https://p1.music.126.net/eUKlzMz0XJUlxJe5Gk9CpA==/109951169707527020.jpg",
-                "tns": [
-                    "电影《云边有个小卖部》人物主题曲"
-                ],
-                "pic_str": "109951169707527020",
-                "pic": 109951169707527020
-            },
-            "dt": 262013,
-            "h": {
-                "br": 320001,
-                "fid": 0,
-                "size": 10483245,
-                "vd": -20847,
-                "sr": 48000
-            },
-            "m": {
-                "br": 192001,
-                "fid": 0,
-                "size": 6289965,
-                "vd": -18223,
-                "sr": 48000
-            },
-            "l": {
-                "br": 128001,
-                "fid": 0,
-                "size": 4193325,
-                "vd": -16502,
-                "sr": 48000
-            },
-            "sq": {
-                "br": 812098,
-                "fid": 0,
-                "size": 26597623,
-                "vd": -20945,
-                "sr": 48000
-            },
-            "hr": {
-                "br": 1580095,
-                "fid": 0,
-                "size": 51750840,
-                "vd": -21087,
-                "sr": 48000
-            },
-            "a": null,
-            "cd": "01",
-            "no": 1,
-            "rtUrl": null,
-            "ftype": 0,
-            "rtUrls": [],
-            "djId": 0,
-            "copyright": 0,
-            "s_id": 0,
-            "mark": 536879104,
-            "originCoverType": 1,
-            "originSongSimpleData": null,
-            "tagPicList": null,
-            "resourceState": true,
-            "version": 5,
-            "songJumpInfo": null,
-            "entertainmentTags": null,
-            "awardTags": null,
-            "single": 0,
-            "noCopyrightRcmd": null,
-            "mv": 0,
-            "rtype": 0,
-            "rurl": null,
-            "mst": 9,
-            "cp": 0,
-            "publishTime": 1719072000000,
-            "tns": [
-                "电影《云边有个小卖部》人物主题曲"
-            ]
-        },
-        {
-            "name": "为什么",
-            "id": 2145132841,
-            "pst": 0,
-            "t": 0,
-            "ar": [
-                {
-                    "id": 12853283,
-                    "name": "黄鲲",
-                    "tns": [],
-                    "alias": []
-                },
-                {
-                    "id": 12195788,
-                    "name": "芝麻Mochi",
-                    "tns": [],
-                    "alias": []
-                }
-            ],
-            "alia": [
-                "原曲：《どうして (feat. 野田愛実) 》"
-            ],
-            "pop": 100,
-            "st": 0,
-            "rt": "",
-            "fee": 8,
-            "v": 8,
-            "crbt": null,
-            "cf": "",
-            "al": {
-                "id": 192048860,
-                "name": "为什么",
-                "picUrl": "https://p2.music.126.net/t82mBmXeaxKKij8w3Dmfww==/109951169652039710.jpg",
-                "tns": [],
-                "pic_str": "109951169652039710",
-                "pic": 109951169652039710
-            },
-            "dt": 184400,
-            "h": {
-                "br": 320000,
-                "fid": 0,
-                "size": 7378605,
-                "vd": -67333,
-                "sr": 48000
-            },
-            "m": {
-                "br": 192000,
-                "fid": 0,
-                "size": 4427181,
-                "vd": -64782,
-                "sr": 48000
-            },
-            "l": {
-                "br": 128000,
-                "fid": 0,
-                "size": 2951469,
-                "vd": -63204,
-                "sr": 48000
-            },
-            "sq": {
-                "br": 948840,
-                "fid": 0,
-                "size": 21870766,
-                "vd": -66699,
-                "sr": 48000
-            },
-            "hr": {
-                "br": 1717108,
-                "fid": 0,
-                "size": 39579340,
-                "vd": -67155,
-                "sr": 48000
-            },
-            "a": null,
-            "cd": "01",
-            "no": 1,
-            "rtUrl": null,
-            "ftype": 0,
-            "rtUrls": [],
-            "djId": 0,
-            "copyright": 0,
-            "s_id": 0,
-            "mark": 536879104,
-            "originCoverType": 1,
-            "originSongSimpleData": null,
-            "tagPicList": null,
-            "resourceState": true,
-            "version": 8,
-            "songJumpInfo": null,
-            "entertainmentTags": null,
-            "awardTags": null,
-            "single": 0,
-            "noCopyrightRcmd": null,
-            "rtype": 0,
-            "rurl": null,
-            "mst": 9,
-            "cp": 0,
-            "mv": 0,
-            "publishTime": 1719417600000
-        }
-    ],
-    playSongIndex: -1,
-    playMode: 0
+    playSongList: IStorage.get("songList") !== "" ? IStorage.get("songList") : [],
+    playSongIndex: IStorage.get("songIndex") !== "" ? IStorage.get("songIndex") : [],
+    playMode: IStorage.get("playMode") !== "" ? IStorage.get("playMode") : 0,
 }
 
 const fetchAndDispatchLyricInfo = (id: number, dispatch: ThunkDispatch<unknown, unknown, UnknownAction>) => { // -- 请求歌词函数抽取
@@ -477,9 +111,11 @@ const playerSlice = createSlice({
     initialState,
     reducers: {
         changeCurrentSongAction(state, { payload }) {
+            IStorage.set("currentSong", payload) // -- 缓存当前播放歌曲信息
             state.currentSong = payload
         },
         changeLyricsAction(state, { payload }) {
+            IStorage.set("lyrics", payload) // -- 缓存当前播放歌词
             state.lyrics = payload
         },
         changeLyricIndexAction(state, { payload }) {
@@ -487,14 +123,17 @@ const playerSlice = createSlice({
         },
 
         changePlaySongListAction(state, { payload }) {
+            IStorage.set("songList", payload) // -- 缓存当前播放列表
             state.playSongList = payload
         },
 
         changePlaySongIndexAction(state, { payload }) { // -- 修改下一首/上一首
+            IStorage.set("songIndex", payload) // -- 缓存当前播放索引
             state.playSongIndex = payload
         },
 
         changePlayModeAction(state, { payload }) {
+            IStorage.set("playMode", payload) // -- 缓存当前播放索引
             state.playMode = payload
         }
     }
