@@ -2,7 +2,7 @@ import { type TypedUseSelectorHook, useSelector, useDispatch, shallowEqual } fro
 import store from ".";
 
 type GetStateFnType = typeof store.getState
-type IRootState = ReturnType<GetStateFnType>
+export type IRootState = ReturnType<GetStateFnType>
 export const useAppSelector: TypedUseSelectorHook<IRootState> = useSelector
 
 type IDispatchType = typeof store.dispatch

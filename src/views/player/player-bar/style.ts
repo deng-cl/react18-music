@@ -173,6 +173,7 @@ export const ControlWrapper = styled.div` // -- ↑ PlayerBarWrapper control 子
 `
 
 export const OtherWrapper = styled.div` // -- ↑ PlayerBarWrapper other-control 子元素部分
+    user-select: none;
     flex: 1;
     max-width: 320px;
     min-width: 120px;
@@ -184,12 +185,21 @@ export const OtherWrapper = styled.div` // -- ↑ PlayerBarWrapper other-control
     padding-right: 6px;
     box-sizing: border-box;
 
-    > * {
+    > *, > .playmode *  {
         margin-left: 14px;
         cursor: pointer;
         fill: ${props => props.theme.textColor.secondary} !important;
 
         &:hover {
+            fill: ${props => props.theme.textColor.primary} !important;
+        }
+    }
+
+    > .playmode {
+        display: flex;
+        align-items: center;
+
+        &:hover * {
             fill: ${props => props.theme.textColor.primary} !important;
         }
     }

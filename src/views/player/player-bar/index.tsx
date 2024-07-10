@@ -1,7 +1,6 @@
 import { memo, useEffect, useRef, useState } from "react"
 import type { ReactNode, FC } from "react"
-import { Slider } from 'antd';
-import { Spin } from 'antd';
+import { Slider, Spin, message } from 'antd';
 
 import { ControlWrapper, InfoWrapper, OtherWrapper, PlayerBarWrapper } from "./style"
 import IconMusicList from "@/assets/icon/player/icon-music-list"
@@ -14,7 +13,10 @@ import { formatTime, joinSongArtistNames } from "@/utils";
 
 import { getPlayerURL } from "@/utils/handle-player";
 import IconPause from "@/assets/icon/player/icon-pause";
-import { changeLyricIndexAction } from "../store";
+import { changeLyricIndexAction, changeMusicAction, changePlayModeAction } from "../store";
+import IconPlayerOrder from "@/assets/icon/player/icon-player-order";
+import IconPlayerRandom from "@/assets/icon/player/icon-player-random";
+import IconPlayerRepetetion from "@/assets/icon/player/icon-player-repetetion";
 
 interface IProps {
     children?: ReactNode
@@ -28,10 +30,11 @@ const PlayerBar: FC<IProps> = () => {
     const [loading, setLoading] = useState(false) // -- 记录正在播放歌曲是否正在加载
     const [isSliding, setIsSliding] = useState(false) // -- 距离当前是否正在拖拽进度
 
-    const { currentSong, lyrics, lyricIndex } = useAppSelector(state => ({ // -- 获取当前播放歌曲信息
+    const { currentSong, lyrics, lyricIndex, playMode } = useAppSelector(state => ({ // -- 获取当前播放歌曲信息
         currentSong: state.player.currentSong,
         lyrics: state.player.lyrics,
-        lyricIndex: state.player.lyricIndex
+        lyricIndex: state.player.lyricIndex,
+        playMode: state.player.playMode,
     }), appShallowEqual)
 
     const dispatch = useAppDispatch()
@@ -109,6 +112,38 @@ const PlayerBar: FC<IProps> = () => {
         setCurrentTime(changeTime)
         setProgress(value)
     }
+
+    // -- 切换播放模式
+    function changePlayMode() {
+        let nextModeName = "顺序播放"
+        let newPlayMode = 0
+        if (playMode === 0) {
+            nextModeName = "随机播放"
+            newPlayMode = 1
+        } else if (playMode === 1) {
+            nextModeName = "循环播放"
+            newPlayMode = 2
+        }
+
+        dispatch(changePlayModeAction(newPlayMode)) // -- 修改播放模式
+
+        message.open({
+            content: nextModeName,
+            duration: 0.8
+        })
+    }
+
+    // -- 歌曲切换
+    function changeMusicHandle(isNext = true) {
+        dispatch(changeMusicAction(isNext))
+    }
+
+
+    // -- 监听歌曲自然播放结束 --> 播放下一首
+    function audioPlayEndedHandle() {
+        if (playMode === 2) audioRef.current?.play() // -- 单曲循环
+        else dispatch(changeMusicAction(true))
+    }
     return (
         <PlayerBarWrapper>
             {/* player bar 展示区 */}
@@ -136,7 +171,7 @@ const PlayerBar: FC<IProps> = () => {
                 {/* center */}
                 <ControlWrapper>
                     <div className="control">
-                        <div className="prev">
+                        <div className="prev" onClick={e => changeMusicHandle(false)}>
                             <IconStepbackward width={18} height={18} />
                         </div>
                         <div className="play" onClick={playBtnClickHandle}>
@@ -145,7 +180,7 @@ const PlayerBar: FC<IProps> = () => {
                                 isPlaying ? <IconPause width={30} height={30} /> : <IconPlayerV1 width={30} height={30} />
                             }
                         </div>
-                        <div className="next">
+                        <div className="next" onClick={e => changeMusicHandle(true)}>
                             <IconStepforward width={18} height={18} />
                         </div>
                     </div>
@@ -165,6 +200,12 @@ const PlayerBar: FC<IProps> = () => {
 
                 {/* right */}
                 <OtherWrapper>
+                    <div className="playmode" onClick={changePlayMode}>
+                        {
+                            playMode === 0 ? <IconPlayerOrder width={18} height={18} /> :
+                                playMode === 1 ? <IconPlayerRandom width={18} height={18} /> : <IconPlayerRepetetion width={18} height={18} />
+                        }
+                    </div>
                     <IconMusicList />
                     <IconSound />
                 </OtherWrapper>
@@ -173,7 +214,7 @@ const PlayerBar: FC<IProps> = () => {
             {/* 🔺audio: 用于音乐的播放，不进行展示（默认没有 control 属性时，audio 就是不展示的） */}
             < audio ref={audioRef}
                 onTimeUpdate={audioTimeUpdateHandle}
-                onEnded={e => setIsPlaying(false)}
+                onEnded={e => audioPlayEndedHandle()}
                 onWaiting={e => { setLoading(true) }}
                 onCanPlay={e => { setLoading(false) }}
             />
