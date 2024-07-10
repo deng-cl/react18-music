@@ -404,7 +404,7 @@ const fetchAndDispatchLyricInfo = (id: number, dispatch: ThunkDispatch<unknown, 
 interface IThunkState {
     state: IRootState
 }
-export const fetchPlaySongInfoAction = createAsyncThunk<void, number, IThunkState>("fetch-play-song-info", (id: number, { getState, dispatch }) => {
+export const fetchPlaySongInfoAction = createAsyncThunk<void, number, IThunkState>("fetch-play-song-info", (id: number, { getState, dispatch }) => { // -- 播放
     const state = getState()
 
     // -- 准备播放该 id 这首歌曲，可以先从当前播放列表中查找是否存在该歌曲，不存在时在进行请求对应的歌曲数据
@@ -427,12 +427,6 @@ export const fetchPlaySongInfoAction = createAsyncThunk<void, number, IThunkStat
     }
 
     fetchAndDispatchLyricInfo(id, dispatch) // replace ↓
-    // fetchSongLyricInfo(id).then((res: any) => { // -- 获取歌词信息
-    //     if (!res?.lrc) return
-    //     const lyricString = res.lrc.lyric as string
-    //     const lyrics = parseLyric(lyricString) // -- 歌词解析
-    //     dispatch(changeLyricsAction(lyrics)) // -- 存储解析好的歌词
-    // })
 })
 
 export const changeMusicAction = createAsyncThunk<void, boolean, IThunkState>("change-music", (isNext, { dispatch, getState }) => { // -- 歌曲切换: 上一首/下一首
@@ -445,17 +439,37 @@ export const changeMusicAction = createAsyncThunk<void, boolean, IThunkState>("c
     if (playMode === 1) newIndex = Math.floor(Math.random() * songListLength) // -- 随机
     else { // -- 单曲/顺序
         newIndex = isNext ? playSongIndex + 1 : playSongIndex - 1
-        // -- 边界判断
+        // -- 越界判断
         if (newIndex < 0) newIndex = (songListLength - 1)
         if (newIndex === songListLength) newIndex = 0
     }
 
-    console.log(isNext, ":", newIndex);
     // -- 获取当前歌曲并修改相应 state: currentSong/playSongIndex/ --> 请求新歌歌词
     const song = playSongList[newIndex]
     dispatch(changeCurrentSongAction(song))
     dispatch(changePlaySongIndexAction(newIndex))
     fetchAndDispatchLyricInfo(song.id, dispatch) // -- 请求新歌词
+})
+
+export const playSongListAction = createAsyncThunk<void, { id: number,/* ... */ }[], IThunkState>("change-playsong-list", (songMenu = [], { getState, dispatch }) => { // -- 播放整个歌曲列表
+    const newSongListPromise: Promise<any>[] = []
+
+    songMenu.forEach(item => item?.id && newSongListPromise.push(fetchSongInfoById(item.id))) // -- 遍历请求歌曲列表的每一首歌曲的信息 --> 将其存入 newSongListPromise 中，通过 Promise 进行统一管理请求的发送...
+
+    Promise.all(newSongListPromise).then((values) => { // -- 通过 Promise.all 同时请求多个请求，并确保数据的存放位置
+        const songListInfo: any[] = values.map(item => item.songs[0]) // -- 对歌单所有歌曲请求的数据，映射处里面对应的 song 信息 --> newPlaySongList
+        return songListInfo
+    }).then(newPlaySongList => {
+        dispatch(changePlaySongListAction(newPlaySongList)) // -- 更新播放列表
+
+        // -- ↓ 根据 playMode 对歌单列表进行播放
+        if (getState().player.playMode !== 1) { // -- 非随机播放: 从第一首开始进行播放 --> (随机播放: 直接调用对应的播放方法即可，不需要经过此处理)
+            dispatch(changePlaySongIndexAction(newPlaySongList.length - 1)) // -- playSongIndex: 最后一个 song --> 因为方便下面直接通过 dispatch changeMusicAction 来进行下一曲进行播放第一首
+            fetchAndDispatchLyricInfo(newPlaySongList[0].id, dispatch)// -- lyric
+        }
+
+        dispatch(changeMusicAction(true)) // -- 播放新列表中的歌曲
+    })
 })
 
 const playerSlice = createSlice({

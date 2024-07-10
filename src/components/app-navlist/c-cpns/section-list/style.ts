@@ -27,7 +27,7 @@ export const SectionWrapper = styled.div`
             cursor: pointer;
 
             &:hover {
-                /* background-color: ${props => props.theme.color.hover_bg}; */
+                    
             }
         }
 

@@ -22,6 +22,7 @@ export const PlayerBarWrapper = styled.div`
     }
 
     > .lyric {
+        user-select: none;
         position: absolute;
         left: 50%;
         top: -35px;
@@ -29,7 +30,9 @@ export const PlayerBarWrapper = styled.div`
         text-align: center;
         height: 30px;
         line-height: 30px;
-        /* background-color: orange; */
+        background: #6261617a;
+        padding: 0 8px;
+        border-radius: 3px
     }
 `
 
@@ -185,7 +188,7 @@ export const OtherWrapper = styled.div` // -- ↑ PlayerBarWrapper other-control
     padding-right: 6px;
     box-sizing: border-box;
 
-    > *, > .playmode *  {
+    > *, > .playmode *, > .lyric *   {
         margin-left: 14px;
         cursor: pointer;
         fill: ${props => props.theme.textColor.secondary} !important;
@@ -195,9 +198,10 @@ export const OtherWrapper = styled.div` // -- ↑ PlayerBarWrapper other-control
         }
     }
 
-    > .playmode {
+    > .playmode, > .lyric{
         display: flex;
         align-items: center;
+        margin:0;
 
         &:hover * {
             fill: ${props => props.theme.textColor.primary} !important;

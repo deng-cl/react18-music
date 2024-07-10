@@ -3,6 +3,8 @@ import type { FC } from "react"
 import { ItemWrapper } from "./style"
 import { formatTime, joinSongArtistNames } from "@/utils"
 import IconPlayerV2 from "@/assets/icon/player/icon-player-v2"
+import { useAppDispatch } from "@/store/app-react-redux"
+import { fetchPlaySongInfoAction } from "@/views/player/store"
 
 interface IProps {
     songInfo: any,
@@ -12,12 +14,13 @@ interface IProps {
 const SongItem: FC<IProps> = (props: IProps) => {
     const { songInfo, height = 40 } = props
 
+    const dispatch = useAppDispatch()
     function playerSong(id: number) {
-        console.log(id);
+        dispatch(fetchPlaySongInfoAction(id))
     }
 
     return (
-        <ItemWrapper $height={height} onDoubleClick={e => playerSong(songInfo?.id)}>
+        <ItemWrapper $height={height} onClick={e => playerSong(songInfo?.id)}>
             <div className="left">
                 <div className="picture">
                     <img src={songInfo?.al?.picUrl} alt="" />

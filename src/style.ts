@@ -22,6 +22,14 @@ export const AppWrapper = styled.div`
     .main-left {
         width: 200px;
         height: 100vh;
+        /* 该 padding-bottom 值对应 player-bar 播放器工具栏的高度 */
+        padding-bottom: 66px;
+        box-sizing: border-box;
+        overflow-y: auto;
+
+        &::-webkit-scrollbar {
+            width: 0px;
+        }
     }
 
     .main-right {

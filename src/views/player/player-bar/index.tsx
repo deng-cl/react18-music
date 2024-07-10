@@ -17,6 +17,8 @@ import { changeLyricIndexAction, changeMusicAction, changePlayModeAction } from 
 import IconPlayerOrder from "@/assets/icon/player/icon-player-order";
 import IconPlayerRandom from "@/assets/icon/player/icon-player-random";
 import IconPlayerRepetetion from "@/assets/icon/player/icon-player-repetetion";
+import IconLyricOpen from "@/assets/icon/player/icon-lyric-open";
+import IconLyricNormal from "@/assets/icon/player/icon-lyric-normal";
 
 interface IProps {
     children?: ReactNode
@@ -28,7 +30,8 @@ const PlayerBar: FC<IProps> = () => {
     const [currentTime, setCurrentTime] = useState(0) // -- 记录当前播放时间（ms）
     const [duration, setDuration] = useState(0) // -- 记录歌曲总时长（ms）
     const [loading, setLoading] = useState(false) // -- 记录正在播放歌曲是否正在加载
-    const [isSliding, setIsSliding] = useState(false) // -- 距离当前是否正在拖拽进度
+    const [isSliding, setIsSliding] = useState(false) // -- 记录当前是否正在拖拽进度
+    const [isShowLyric, setIsShowLyric] = useState(false)// -- 记录当前是否显示歌词
 
     const { currentSong, lyrics, lyricIndex, playMode } = useAppSelector(state => ({ // -- 获取当前播放歌曲信息
         currentSong: state.player.currentSong,
@@ -60,7 +63,13 @@ const PlayerBar: FC<IProps> = () => {
     function playBtnClickHandle() { // -- 处理用户点击播放音乐 <播放/暂停>
         isPlaying // -- 1. 播放/暂停 --> 当前状态
             ? audioRef.current!.pause()
-            : audioRef.current!.play().catch(err => setIsPlaying(false))
+            : audioRef.current!.play().catch(err => {
+                setIsPlaying(false)
+                dispatch(changeMusicAction(true))
+                message.error({
+                    content: "此曲播放失败，已自动切换至下一首!"
+                })
+            })
 
         setIsPlaying(!isPlaying) // -- 2. 修改 isPlaying 状态 --> 因为 setIsPlaying 是异步的，所以可以先进行对应的播放或暂停，后再修改对应 isPlaying 状态
     }
@@ -200,14 +209,19 @@ const PlayerBar: FC<IProps> = () => {
 
                 {/* right */}
                 <OtherWrapper>
+                    <div className="lyric" onClick={e => setIsShowLyric(!isShowLyric)}>
+                        {
+                            isShowLyric ? <IconLyricOpen /> : <IconLyricNormal />
+                        }
+                    </div>
                     <div className="playmode" onClick={changePlayMode}>
                         {
                             playMode === 0 ? <IconPlayerOrder width={18} height={18} /> :
                                 playMode === 1 ? <IconPlayerRandom width={18} height={18} /> : <IconPlayerRepetetion width={18} height={18} />
                         }
                     </div>
+                    <IconSound width={18} height={18} />
                     <IconMusicList />
-                    <IconSound />
                 </OtherWrapper>
             </>
 
@@ -220,9 +234,13 @@ const PlayerBar: FC<IProps> = () => {
             />
 
             {/* 歌词展示: 可能会删，看具体样式... */}
-            <div className="lyric">
-                {lyrics[lyricIndex]?.text}
-            </div>
+            {
+                isShowLyric && (
+                    <div className="lyric">
+                        {lyrics[lyricIndex]?.text}
+                    </div>
+                )
+            }
         </PlayerBarWrapper >
     )
 }

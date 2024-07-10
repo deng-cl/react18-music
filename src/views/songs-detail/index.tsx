@@ -5,6 +5,8 @@ import { useParams } from "react-router-dom"
 import { fetchSongsDetailById } from "@/service/modules/songs"
 import * as dayjs from 'dayjs'
 import SongItem from "../discover/c-cpns/song-item"
+import { useAppDispatch } from "@/store/app-react-redux"
+import { playSongListAction } from "../player/store"
 
 interface IProps {
     children?: ReactNode
@@ -12,6 +14,7 @@ interface IProps {
 
 const SongsDetail: FC<IProps> = () => {
     const { id } = useParams() // -- 获取路由跳转传递的参数 --> 歌单 ID
+    const dispatch = useAppDispatch()
 
     const [detailInfo, setDetailInfo] = useState<any>({})
 
@@ -23,6 +26,9 @@ const SongsDetail: FC<IProps> = () => {
         console.log(dayjs.unix(1630769207371 / 1000));
     }, [])
 
+    function playSongsEntireSong() { // -- 播放歌单所有歌曲
+        if (detailInfo?.tracks) dispatch(playSongListAction(detailInfo?.tracks))
+    }
 
     return (
         <SongsDetailWrapper>
@@ -51,7 +57,7 @@ const SongsDetail: FC<IProps> = () => {
 
                     <div className="player">
                         <div className="_">
-                            <div className="btn">播放</div>
+                            <div className="btn" onClick={playSongsEntireSong}>播放</div>
                             <div className="count">歌曲总数: {detailInfo?.trackCount}</div>
                         </div>
                         <div className="c-t">创建时间: {
