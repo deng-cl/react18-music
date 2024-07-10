@@ -20,6 +20,7 @@ import IconPlayerRepetetion from "@/assets/icon/player/icon-player-repetetion";
 import IconLyricOpen from "@/assets/icon/player/icon-lyric-open";
 import IconLyricNormal from "@/assets/icon/player/icon-lyric-normal";
 import IconSoundMute from "@/assets/icon/player/icon-sound-mute";
+import IStorage from "@/utils/local-storage";
 
 interface IProps {
     children?: ReactNode
@@ -34,6 +35,7 @@ const PlayerBar: FC<IProps> = () => {
     const [isSliding, setIsSliding] = useState(false) // -- 记录当前是否正在拖拽进度
     const [isShowLyric, setIsShowLyric] = useState(false)// -- 记录当前是否显示歌词
     const [isShowVolumeSlider, setIsShowVolumeSlider] = useState(false) // -- 记录是否显示修改声音控件
+    const [volume, setVolume] = useState(1)
 
     const { currentSong, lyrics, lyricIndex, playMode } = useAppSelector(state => ({ // -- 获取当前播放歌曲信息
         currentSong: state.player.currentSong,
@@ -57,6 +59,10 @@ const PlayerBar: FC<IProps> = () => {
             setIsPlaying(false)
             console.log("歌曲播放失败:", err); // -- 歌曲播放失败: DOMException: play() failed because the user didn't interact with the document first. --> 不允许在用户没有交互的情况下直接播放音频 / ...
         })
+
+        const volume = IStorage.get("volume")
+        audioRef.current.volume = volume >= 0 && volume <= 1 ? volume : 1
+        setVolume(volume * 100)
 
         // -- 2. 获取音乐总时长
         setDuration(currentSong.dt)
@@ -158,7 +164,12 @@ const PlayerBar: FC<IProps> = () => {
 
     // -- 修改声音 volume 大小
     function changeVolumeSlider(value: number) {
-        if (audioRef.current) audioRef.current.volume = (value / 100) // -- 修改声音大小（audio中的volume取值: [0,1]）
+        if (audioRef.current) { // -- 修改声音大小（audio中的volume取值: [0,1]）
+            const volume = (value / 100)
+            audioRef.current.volume = volume
+            IStorage.set("volume", volume) // -- 对 volume 进行本地存储 --> volume 音量数据持久化
+            setVolume(value)
+        }
     }
 
     return (
@@ -237,7 +248,7 @@ const PlayerBar: FC<IProps> = () => {
                             }
                         </div>
                         {
-                            isShowVolumeSlider && <Slider defaultValue={30} vertical
+                            isShowVolumeSlider && <Slider value={volume} defaultValue={volume} vertical
                                 onChange={changeVolumeSlider}
                             />
                         }
