@@ -19,6 +19,7 @@ import IconPlayerRandom from "@/assets/icon/player/icon-player-random";
 import IconPlayerRepetetion from "@/assets/icon/player/icon-player-repetetion";
 import IconLyricOpen from "@/assets/icon/player/icon-lyric-open";
 import IconLyricNormal from "@/assets/icon/player/icon-lyric-normal";
+import IconSoundMute from "@/assets/icon/player/icon-sound-mute";
 
 interface IProps {
     children?: ReactNode
@@ -32,6 +33,7 @@ const PlayerBar: FC<IProps> = () => {
     const [loading, setLoading] = useState(false) // -- 记录正在播放歌曲是否正在加载
     const [isSliding, setIsSliding] = useState(false) // -- 记录当前是否正在拖拽进度
     const [isShowLyric, setIsShowLyric] = useState(false)// -- 记录当前是否显示歌词
+    const [isShowVolumeSlider, setIsShowVolumeSlider] = useState(false) // -- 记录是否显示修改声音控件
 
     const { currentSong, lyrics, lyricIndex, playMode } = useAppSelector(state => ({ // -- 获取当前播放歌曲信息
         currentSong: state.player.currentSong,
@@ -153,6 +155,12 @@ const PlayerBar: FC<IProps> = () => {
         if (playMode === 2) audioRef.current?.play() // -- 单曲循环
         else dispatch(changeMusicAction(true))
     }
+
+    // -- 修改声音 volume 大小
+    function changeVolumeSlider(value: number) {
+        if (audioRef.current) audioRef.current.volume = (value / 100) // -- 修改声音大小（audio中的volume取值: [0,1]）
+    }
+
     return (
         <PlayerBarWrapper>
             {/* player bar 展示区 */}
@@ -220,7 +228,21 @@ const PlayerBar: FC<IProps> = () => {
                                 playMode === 1 ? <IconPlayerRandom width={18} height={18} /> : <IconPlayerRepetetion width={18} height={18} />
                         }
                     </div>
-                    <IconSound width={18} height={18} />
+                    <div className="volume" >
+                        <div className="icon" onClick={e => {
+                            setIsShowVolumeSlider(!isShowVolumeSlider)
+                        }}>
+                            { // -- 判断是否为 mute 静音，显示对应的 Icon
+                                audioRef.current?.volume === 0 ? <IconSoundMute volume={true} width={18} height={18} /> : <IconSound volume={true} width={18} height={18} />
+                            }
+                        </div>
+                        {
+                            isShowVolumeSlider && <Slider defaultValue={30} vertical
+                                onChange={changeVolumeSlider}
+                            />
+                        }
+
+                    </div>
                     <IconMusicList />
                 </OtherWrapper>
             </>
