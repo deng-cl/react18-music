@@ -7,7 +7,7 @@ import { AppWrapper } from "./style"
 import usePageName from "./hooks/usePageName"
 import AppFooter from "./components/app-footer"
 import PlayerBar from "./views/player/player-bar"
-import { useAppDispatch, useAppSelector } from "./store/app-react-redux"
+import { appShallowEqual, useAppDispatch, useAppSelector } from "./store/app-react-redux"
 import { fetchPlaySongInfoAction } from "./views/player/store"
 import { Spin } from "antd"
 
@@ -18,7 +18,7 @@ const App = memo(() => {
 
     const { loading } = useAppSelector(state => ({
         loading: state.main.loading
-    }))
+    }), appShallowEqual)
 
     // -- ↓ 为后代元素注入 pageRef 对象 --> 使其可以操作该 page 元素（目前主要用于操作滚动太到顶部）
     const pageRef = useRef<HTMLElement>()
@@ -50,7 +50,7 @@ const App = memo(() => {
             {/* loading --> cover */}
             {
                 loading && <div className="loding-cover">
-                    <Spin tip="Loading" />
+                    <Spin />
                 </div>
             }
         </AppWrapper>

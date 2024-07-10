@@ -5,6 +5,8 @@ export const PlayerWrapper = styled.div`
     z-index: 999;
     inset: 0;
     margin:auto;
+    width: 100%;
+    height: 100%;
     background-color: orange;
 `
 

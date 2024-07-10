@@ -6,12 +6,13 @@ import { useDispatch } from "react-redux"
 import { UnknownAction } from "@reduxjs/toolkit"
 import Banner from "./c-cpns/banner"
 import SongsItemV1 from "./c-cpns/songs-item-v1"
-import { appShallowEqual, useAppSelector } from "@/store/app-react-redux"
+import { appShallowEqual, useAppDispatch, useAppSelector } from "@/store/app-react-redux"
 import ScrollView from "@/base-ui/scroll-view"
 import SongItem from "./c-cpns/song-item"
 
 import { Pagination } from 'antd';
 import CommomPaganition from "@/components/commom-paganition"
+import { playSongListAction } from "../player/store"
 
 
 interface IProps {
@@ -24,7 +25,7 @@ const Discover: FC<IProps> = () => {
         hotSongList: state.discover.hotSongList,
     }), appShallowEqual)
 
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     useEffect(() => { // -- comp mounted --> fetch data
         dispatch(fetchDiscoverPageDataAction() as unknown as UnknownAction)
     }, [])
@@ -38,6 +39,12 @@ const Discover: FC<IProps> = () => {
 
     function pageCodeClickHandle(pageCode: number) {
         setCurPageCode(pageCode - 1) // -- 因为 curPageCode 存储的为索引从 0 开始 --> 所以需要减 1
+    }
+
+    // -- 播放列表所有歌曲
+    function playSongListEntire() {
+        const songList = hotSongList?.tracks
+        if (songList) dispatch(playSongListAction(songList))
     }
 
     return (
@@ -55,6 +62,14 @@ const Discover: FC<IProps> = () => {
                 </ScrollView>
             </div>
             <div className="song-list">
+                <div className="title">
+                    <span>
+                        Recommend song
+                        <div className="count">歌曲数量: {hotSongList?.tracks?.length}</div>
+                    </span>
+                    <div className="play-entire btn" onClick={playSongListEntire}>播放全部</div>
+                </div>
+
                 <div className="list">
                     {
                         (function () {

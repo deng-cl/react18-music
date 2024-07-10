@@ -94,7 +94,7 @@ export const playSongListAction = createAsyncThunk<void, { id: number,/* ... */ 
     songMenu.forEach(item => item?.id && newSongListPromise.push(fetchSongInfoById(item.id))) // -- 遍历请求歌曲列表的每一首歌曲的信息 --> 将其存入 newSongListPromise 中，通过 Promise 进行统一管理请求的发送...
 
     Promise.all(newSongListPromise).then((values) => { // -- 通过 Promise.all 同时请求多个请求，并确保数据的存放位置
-        const songListInfo: any[] = values.map(item => item.songs[0]) // -- 对歌单所有歌曲请求的数据，映射处里面对应的 song 信息 --> newPlaySongList
+        const songListInfo: any[] = values.map(item => item?.songs[0]) // -- 对歌单所有歌曲请求的数据，映射处里面对应的 song 信息 --> newPlaySongList
         return songListInfo
     }).then(newPlaySongList => {
         dispatch(changePlaySongListAction(newPlaySongList)) // -- 更新播放列表
@@ -106,9 +106,6 @@ export const playSongListAction = createAsyncThunk<void, { id: number,/* ... */ 
         }
 
         dispatch(changeMusicAction(true)) // -- 播放新列表中的歌曲
-        dispatch(changeLoadingAction(false)) // -- hide loading
-    }).catch(err => {
-        console.log("请求错误:", err);
         dispatch(changeLoadingAction(false)) // -- hide loading
     })
 })

@@ -54,6 +54,7 @@ export const InfoWrapper = styled.div` // -- ↑ PlayerBarWrapper info 子元素
         background-color: ${props => props.theme.textColor.secondary};
         border-radius: 6px;
         overflow: hidden;
+        cursor: pointer;
         img {
             height: 100%;
         }
@@ -257,5 +258,27 @@ export const OtherWrapper = styled.div` // -- ↑ PlayerBarWrapper other-control
                     content: "333";
                 }
             }
+    }
+`
+
+export const DetailWrapper = styled.div` // 播放详情页样式
+
+
+
+    // -- CSSTransition style
+    .player-enter {
+        transform: translateY(100%);
+    }
+    .player-enter-active {
+        transform: translateY(0);
+        transition: all 200ms ease;
+    }
+
+    .player-exit {
+        transform: translateY(0);
+    }
+    .player-exit-active {
+        transform: translateY(100%);
+        transition: all 250ms ease;
     }
 `

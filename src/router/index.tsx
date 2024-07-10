@@ -8,7 +8,6 @@ const SongsDetail = React.lazy(() => import("@/views/songs-detail"))
 const SongsEntire = React.lazy(() => import("@/views/songs-entire"))
 const Video = React.lazy(() => import("@/views/video"))
 const VideoDetail = React.lazy(() => import("@/views/video-detail"))
-const Player = React.lazy(() => import("@/views/player"))
 const SettingTheme = React.lazy(() => import("@/views/setting-theme"))
 
 const ShowIconTest = React.lazy(() => import("@/views/show-icon-test"))
@@ -41,10 +40,6 @@ const routes: RouteObject[] = [
     {
         path: "/video-detail/:id",
         element: <VideoDetail />
-    },
-    {
-        path: "/player",
-        element: <Player />
     },
     {
         path: "/theme",

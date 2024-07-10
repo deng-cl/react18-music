@@ -2,14 +2,17 @@ import { memo } from "react"
 import type { ReactNode, FC } from "react"
 import { PlayerWrapper } from "./style"
 
+
 interface IProps {
-    children?: ReactNode
+    onBackFun: () => void
 }
 
-const Player: FC<IProps> = () => {
+const Player: FC<IProps> = (props: IProps) => {
+    const { onBackFun } = props
     return (
         <PlayerWrapper>
             Player
+            <button onClick={onBackFun}>返回</button>
         </PlayerWrapper>
     )
 }

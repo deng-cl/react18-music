@@ -2,7 +2,7 @@ import { memo, useEffect, useRef, useState } from "react"
 import type { ReactNode, FC } from "react"
 import { Slider, Spin, message } from 'antd';
 
-import { ControlWrapper, InfoWrapper, OtherWrapper, PlayerBarWrapper } from "./style"
+import { ControlWrapper, DetailWrapper, InfoWrapper, OtherWrapper, PlayerBarWrapper } from "./style"
 import IconMusicList from "@/assets/icon/player/icon-music-list"
 import IconSound from "@/assets/icon/player/icon-sound"
 import IconStepbackward from "@/assets/icon/player/icon-stepbackward"
@@ -21,6 +21,9 @@ import IconLyricOpen from "@/assets/icon/player/icon-lyric-open";
 import IconLyricNormal from "@/assets/icon/player/icon-lyric-normal";
 import IconSoundMute from "@/assets/icon/player/icon-sound-mute";
 import IStorage from "@/utils/local-storage";
+import { useNavigate } from "react-router-dom";
+import Player from "..";
+import { CSSTransition } from "react-transition-group";
 
 interface IProps {
     children?: ReactNode
@@ -35,7 +38,9 @@ const PlayerBar: FC<IProps> = () => {
     const [isSliding, setIsSliding] = useState(false) // -- 记录当前是否正在拖拽进度
     const [isShowLyric, setIsShowLyric] = useState(false)// -- 记录当前是否显示歌词
     const [isShowVolumeSlider, setIsShowVolumeSlider] = useState(false) // -- 记录是否显示修改声音控件
-    const [volume, setVolume] = useState(1)
+    const [volume, setVolume] = useState(1) // -- 音量控制
+
+    const [isShowDetail, setIsShoeDetail] = useState(false) // -- 是否显示播放详情页
 
     const { currentSong, lyrics, lyricIndex, playMode } = useAppSelector(state => ({ // -- 获取当前播放歌曲信息
         currentSong: state.player.currentSong,
@@ -45,12 +50,15 @@ const PlayerBar: FC<IProps> = () => {
     }), appShallowEqual)
 
     const dispatch = useAppDispatch()
+    const navigate = useNavigate()
 
     // -- 🔺↓ 音乐播放逻辑代码
     const audioRef = useRef<HTMLAudioElement>(null)
     useEffect(() => { // -- 处理音乐切换播放
         // -- 1. 播放音乐
         if (!audioRef.current) return
+        if (!currentSong.id) return
+
         audioRef.current!.src = getPlayerURL(currentSong.id)
         audioRef.current.play().then(res => {
             setIsPlaying(true)
@@ -58,6 +66,7 @@ const PlayerBar: FC<IProps> = () => {
         }).catch(err => { // -- 捕获首次进入页面时的错误，防止报错导致程序无法运行
             setIsPlaying(false)
             console.log("歌曲播放失败:", err); // -- 歌曲播放失败: DOMException: play() failed because the user didn't interact with the document first. --> 不允许在用户没有交互的情况下直接播放音频 / ...
+            // -- ---------
         })
 
         const volume = IStorage.get("volume")
@@ -75,7 +84,7 @@ const PlayerBar: FC<IProps> = () => {
                 setIsPlaying(false)
                 dispatch(changeMusicAction(true))
                 message.error({
-                    content: "此曲播放失败，已自动切换至下一首!"
+                    content: "播放失败，已自动切换至下一首!（NOT VIP）"
                 })
             })
 
@@ -172,13 +181,18 @@ const PlayerBar: FC<IProps> = () => {
         }
     }
 
+    // -- 跳转至 player 详情页（歌词展示页）
+    // function toPlayerDetailPage() {
+    //     navigate("/player")
+    // }
+
     return (
         <PlayerBarWrapper>
             {/* player bar 展示区 */}
             <>
                 {/* left */}
                 <InfoWrapper>
-                    <div className="album">
+                    <div className="album" onClick={e => setIsShoeDetail(true)}>
                         <img src={currentSong?.al?.picUrl} alt="" />
                     </div>
                     <div className="msg">
@@ -274,6 +288,13 @@ const PlayerBar: FC<IProps> = () => {
                     </div>
                 )
             }
+
+            {/* 播放详情页的展示 */}
+            <DetailWrapper>
+                <CSSTransition classNames="player" in={isShowDetail} timeout={250} unmountOnExit>
+                    <Player onBackFun={() => setIsShoeDetail(false)} />
+                </CSSTransition>
+            </DetailWrapper>
         </PlayerBarWrapper >
     )
 }
