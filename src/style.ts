@@ -61,4 +61,16 @@ export const AppWrapper = styled.div`
             background-color: ${props => props.theme.textColor.primary};
         }
     }
+
+    > .loding-cover {
+        position: fixed;
+        z-index: 1000;
+        inset: 0;
+        margin: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(255,255,255,.2);
+        cursor: not-allowed;
+    }
 `

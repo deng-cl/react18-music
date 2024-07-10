@@ -7,13 +7,18 @@ import { AppWrapper } from "./style"
 import usePageName from "./hooks/usePageName"
 import AppFooter from "./components/app-footer"
 import PlayerBar from "./views/player/player-bar"
-import { useAppDispatch } from "./store/app-react-redux"
+import { useAppDispatch, useAppSelector } from "./store/app-react-redux"
 import { fetchPlaySongInfoAction } from "./views/player/store"
+import { Spin } from "antd"
 
 export const AppContext = createContext({}) // -- 通过 React 中的 Context 进行对应函数的传递
 
 const App = memo(() => {
     const pagename = usePageName() // -- 获取当前页面名称
+
+    const { loading } = useAppSelector(state => ({
+        loading: state.main.loading
+    }))
 
     // -- ↓ 为后代元素注入 pageRef 对象 --> 使其可以操作该 page 元素（目前主要用于操作滚动太到顶部）
     const pageRef = useRef<HTMLElement>()
@@ -41,6 +46,13 @@ const App = memo(() => {
 
             {/* player bar: 播放器工具栏 */}
             <PlayerBar />
+
+            {/* loading --> cover */}
+            {
+                loading && <div className="loding-cover">
+                    <Spin tip="Loading" />
+                </div>
+            }
         </AppWrapper>
     )
 })

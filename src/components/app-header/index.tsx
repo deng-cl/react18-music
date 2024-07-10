@@ -6,6 +6,7 @@ import IconAvatar from "@/assets/icon/header/icon-avatar"
 import IconSharealt from "@/assets/icon/header/icon-sharealt"
 import IconSearch from "@/assets/icon/header/icon-search"
 import IconClear from "@/assets/icon/header/icon-clear"
+import { message } from "antd"
 
 interface IProps {
     children?: ReactNode
@@ -55,7 +56,13 @@ const AppHeader: FC<IProps> = () => {
             </div>
 
             <div className="right">
-                <div className="search">
+                <div className="search" onClick={e => {
+                    message.info({
+                        key: "search",
+                        content: "当前 coderkxh-music v1 版本，暂未去实现搜索功能，后续会实现，敬请期待...",
+                        duration: 5
+                    })
+                }}>
                     <IconSearch />
                     <input type="text" placeholder="音乐/视频/电台/用户"
                         value={searchValue}

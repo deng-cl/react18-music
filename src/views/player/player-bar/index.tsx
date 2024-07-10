@@ -268,7 +268,7 @@ const PlayerBar: FC<IProps> = () => {
 
             {/* 歌词展示: 可能会删，看具体样式... */}
             {
-                isShowLyric && (
+                isShowLyric && lyrics[lyricIndex]?.text && (
                     <div className="lyric">
                         {lyrics[lyricIndex]?.text}
                     </div>

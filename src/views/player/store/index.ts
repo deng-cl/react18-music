@@ -3,6 +3,7 @@ import { fetchSongInfoById, fetchSongLyricInfo } from "../service"
 import { ILyric, parseLyric } from "@/utils/handle-player"
 import { IRootState } from "@/store/app-react-redux"
 import IStorage from "@/utils/local-storage"
+import { changeLoadingAction } from "@/store/modules/main"
 
 interface IState {
     currentSong: any
@@ -88,6 +89,8 @@ export const changeMusicAction = createAsyncThunk<void, boolean, IThunkState>("c
 export const playSongListAction = createAsyncThunk<void, { id: number,/* ... */ }[], IThunkState>("change-playsong-list", (songMenu = [], { getState, dispatch }) => { // -- 播放整个歌曲列表
     const newSongListPromise: Promise<any>[] = []
 
+    dispatch(changeLoadingAction(true)) // -- show loading
+
     songMenu.forEach(item => item?.id && newSongListPromise.push(fetchSongInfoById(item.id))) // -- 遍历请求歌曲列表的每一首歌曲的信息 --> 将其存入 newSongListPromise 中，通过 Promise 进行统一管理请求的发送...
 
     Promise.all(newSongListPromise).then((values) => { // -- 通过 Promise.all 同时请求多个请求，并确保数据的存放位置
@@ -103,6 +106,10 @@ export const playSongListAction = createAsyncThunk<void, { id: number,/* ... */ 
         }
 
         dispatch(changeMusicAction(true)) // -- 播放新列表中的歌曲
+        dispatch(changeLoadingAction(false)) // -- hide loading
+    }).catch(err => {
+        console.log("请求错误:", err);
+        dispatch(changeLoadingAction(false)) // -- hide loading
     })
 })
 
