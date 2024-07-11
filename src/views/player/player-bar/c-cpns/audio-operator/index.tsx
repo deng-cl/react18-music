@@ -43,7 +43,7 @@ const AudioOperator: FC<IProps> = (props: IProps) => {
     const changeShowVolunmeControl = () => dispatch(changeShowVolumeControlAction(!showVolumeControl)) // -- 音量控件显示切换: 显示/隐藏
 
     const changePlayMode = () => { // -- 切换播放模式: 顺序/随机/单曲
-        const playModes = ["顺序播放", "随机播放", "循环播放"]
+        const playModes = ["顺序播放", "随机播放", "单曲循环"]
 
         let newPlayMode = 0
         if (playMode === 0) newPlayMode = 1

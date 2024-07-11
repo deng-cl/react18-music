@@ -1,63 +1,54 @@
 import { memo, useEffect, useRef, useState } from "react"
 import type { ReactNode, FC } from "react"
-import { Slider, Spin, message } from 'antd';
+import { Spin } from 'antd';
+import { CSSTransition } from "react-transition-group";
 
-import { DetailWrapper, InfoWrapper, OtherWrapper, PlayerBarWrapper } from "./style"
-import IconMusicList from "@/assets/icon/player/icon-music-list"
-import IconSound from "@/assets/icon/player/icon-sound"
+// -- custom: utils/hooks...
 import { appShallowEqual, useAppDispatch, useAppSelector } from "@/store/app-react-redux";
 import { joinSongArtistNames } from "@/utils";
-
 import { getPlayerURL } from "@/utils/handle-player";
-import { changeLyricIndexAction, changeMusicAction, changePlayModeAction } from "../store/module/player";
-import IconPlayerOrder from "@/assets/icon/player/icon-player-order";
-import IconPlayerRandom from "@/assets/icon/player/icon-player-random";
-import IconPlayerRepetetion from "@/assets/icon/player/icon-player-repetetion";
-import IconLyricOpen from "@/assets/icon/player/icon-lyric-open";
-import IconLyricNormal from "@/assets/icon/player/icon-lyric-normal";
-import IconSoundMute from "@/assets/icon/player/icon-sound-mute";
-import IStorage from "@/utils/local-storage";
-import Player from "..";
-import { CSSTransition } from "react-transition-group";
+
+// store
+import { changeLyricIndexAction, changeMusicAction } from "../store/module/player";
 import { changeCurrentTimeAction, changeDurationAction, changePlayingAction, changeProgressAction } from "../store/module/audio-control";
+
+// -- comp
+import Player from "..";
 import AudioControl from "./c-cpns/audio-control";
 import AudioOperator from "./c-cpns/audio-operator";
+import { DetailWrapper, InfoWrapper, PlayerBarWrapper } from "./style"
 
-interface IProps {
-    children?: ReactNode
-}
+interface IProps { }
 
 const PlayerBar: FC<IProps> = () => {
-    const { duration, sliding } = useAppSelector(state => ({
+    // -- useState/dispatch/...
+    const dispatch = useAppDispatch()
+    const [loading, setLoading] = useState(false) // -- 记录正在播放歌曲是否正在加载
+    const [isShowDetail, setIsShoeDetail] = useState(false) // -- 是否显示播放详情页
+
+    const audioRef = useRef<HTMLAudioElement>(null) // -- 播放器容器 Ref 对象
+
+
+    // -- Store State
+    const { duration, sliding } = useAppSelector(state => ({ // -- audio-control
         duration: state.audioControl.duration, // -- 记录歌曲总时长（ms）
         sliding: state.audioControl.sliding // -- 记录当前是否正在拖拽进度）
     }), appShallowEqual)
 
-    const { showLyric } = useAppSelector(state => ({
-        showLyric: state.audioOperator.showLyric
+    const { showLyric, volume } = useAppSelector(state => ({ // -- audio-operator
+        showLyric: state.audioOperator.showLyric,
+        volume: state.audioOperator.volume,
     }), appShallowEqual)
 
-    const [loading, setLoading] = useState(false) // -- 记录正在播放歌曲是否正在加载
-
-
-    const [isShowLyric, setIsShowLyric] = useState(false)// -- 记录当前是否显示歌词
-    const [isShowVolumeSlider, setIsShowVolumeSlider] = useState(false) // -- 记录是否显示修改声音控件
-    const [volume, setVolume] = useState(1) // -- 音量控制
-
-
-    const [isShowDetail, setIsShoeDetail] = useState(false) // -- 是否显示播放详情页
-
-    const { currentSong, lyrics, lyricIndex, playMode } = useAppSelector(state => ({ // -- 获取当前播放歌曲信息
+    const { currentSong, lyrics, lyricIndex, playMode } = useAppSelector(state => ({ // -- player
         currentSong: state.player.currentSong,
         lyrics: state.player.lyrics,
         lyricIndex: state.player.lyricIndex,
         playMode: state.player.playMode,
     }), appShallowEqual)
 
-    const dispatch = useAppDispatch()
 
     // -- 🔺↓ 音乐播放逻辑代码
-    const audioRef = useRef<HTMLAudioElement>(null)
     useEffect(() => { // -- 处理音乐切换播放
         // -- 1. 播放音乐
         if (!audioRef.current) return
@@ -73,15 +64,13 @@ const PlayerBar: FC<IProps> = () => {
             // -- ---------
         })
 
-        const volume = IStorage.get("volume")
-        audioRef.current.volume = volume >= 0 && volume <= 1 ? volume : 1
-        setVolume(volume * 100)
+        audioRef.current.volume = volume
 
         // -- 2. 获取音乐总时长
         dispatch(changeDurationAction(currentSong.dt))
     }, [currentSong])
 
-    function audioTimeUpdateHandle() { // -- 音乐播放进度处理
+    const audioTimeUpdateHandle = () => { // -- 音乐播放进度处理
         const currentTime = audioRef.current!.currentTime // -- 1. 获取当前播放时间（s）
 
         if (!sliding) { // -- 设置当前播放时间/进度 --> 判断当前是否正在拖拽进度条
@@ -102,40 +91,9 @@ const PlayerBar: FC<IProps> = () => {
         dispatch(changeLyricIndexAction(index)) // -- ↑ 当当前 index 与 lyricIndex 不一样是才修改 state 对应的歌词 index --> 🔺节流: 避免组件在同一句歌词中多次 dispatch 该 action，导致页面有过多的没有必要的渲染
     }
 
-    // -- 切换播放模式
-    function changePlayMode() {
-        let nextModeName = "顺序播放"
-        let newPlayMode = 0
-        if (playMode === 0) {
-            nextModeName = "随机播放"
-            newPlayMode = 1
-        } else if (playMode === 1) {
-            nextModeName = "循环播放"
-            newPlayMode = 2
-        }
-
-        dispatch(changePlayModeAction(newPlayMode)) // -- 修改播放模式
-
-        message.open({
-            content: nextModeName,
-            duration: 0.8
-        })
-    }
-
-    // -- 监听歌曲自然播放结束 --> 播放下一首
-    function audioPlayEndedHandle() {
+    const audioPlayEndedHandle = () => { // -- 监听歌曲自然播放结束 --> 播放下一首
         if (playMode === 2) audioRef.current?.play() // -- 单曲循环
         else dispatch(changeMusicAction(true))
-    }
-
-    // -- 修改声音 volume 大小
-    function changeVolumeSlider(value: number) {
-        if (audioRef.current) { // -- 修改声音大小（audio中的volume取值: [0,1]）
-            const volume = (value / 100)
-            audioRef.current.volume = volume
-            IStorage.set("volume", volume) // -- 对 volume 进行本地存储 --> volume 音量数据持久化
-            setVolume(value)
-        }
     }
 
     return (
