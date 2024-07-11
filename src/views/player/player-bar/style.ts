@@ -48,6 +48,17 @@ export const PlayerBarWrapper = styled.div`
         padding-right: 6px;
         box-sizing: border-box;
     }
+
+    /* operator */
+    > .operator {
+        display: flex;
+        align-items: center;
+        user-select: none;
+        flex: 1;
+        max-width: 320px;
+        min-width: 120px;
+        justify-content: flex-end;
+    }
 `
 
 export const InfoWrapper = styled.div` // -- ↑ PlayerBarWrapper info 子元素部分
@@ -102,90 +113,6 @@ export const InfoWrapper = styled.div` // -- ↑ PlayerBarWrapper info 子元素
 
         .loding {
             margin-left:4px
-        }
-    }
-`
-
-export const ControlWrapper = styled.div` // -- ↑ PlayerBarWrapper control 子元素部分
-    width: 33%;
-    margin: 0 auto;
-    min-width: 450px;
-    /* background-color: orange; */
-    display: flex;
-    flex-flow: column nowrap;
-    align-items: center;
-    justify-content: space-between;
-    padding-bottom: 2px;
-    box-sizing: border-box;
-    user-select: none;
-
-    > .control {
-        display: flex;
-        margin-bottom: 4px;
-        > * {
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-        }
-        .play {
-            margin: 0 8px;
-        }
-    }
-
-    > .progress {
-        width: 100%;
-        display: flex;
-        flex-flow: row nowrap;
-        align-items: center;
-        font-size: ${props => props.theme.textSize.small};
-        color: ${props => props.theme.textColor.secondary};
-
-        .ct {
-            margin-right: 8px;
-        }
-
-        .tt {
-            margin-left: 8px;
-        }
-
-        .slider {
-            flex: 1;
-            // -- ant design comp style
-            > .ant-slider {
-                margin: 0;
-            }
-
-            .ant-slider-track {
-                /* background-color: ${props => props.theme.textColor.primary}; */
-                background-color: #C20C0C;
-            }
-            .ant-slider-step {
-                z-index: -1;
-                background-color: ${props => props.theme.textColor.secondary};
-            }
-            .ant-slider-handle {
-                background-color: green;
-                &::before {
-                    width: 12px;
-                    height: 12px;
-                    /* background-color: ${props => props.theme.textColor.primary}; */
-                }
-                &::after {
-                    box-shadow: 0 0 0 2px #C20C0C;
-                }
-                &:hover::after {
-                    box-shadow: 0 0 0 2.5px #C20C0C;
-                }
-                &:focus::after {
-                    box-shadow: 0 0 0 2.5px #C20C0C;
-                }
-                &.ant-tooltip-open::after {
-                    content: "333";
-                }
-                &.ant-tooltip-open::before {
-                    content: "333";
-                }
-            }
         }
     }
 `

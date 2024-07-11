@@ -1,9 +1,4 @@
-import { AsyncThunkPayloadCreator, ThunkDispatch, UnknownAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import { fetchSongInfoById, fetchSongLyricInfo } from "../../service"
-import { ILyric, parseLyric } from "@/utils/handle-player"
-import { IRootState } from "@/store/app-react-redux"
-import IStorage from "@/utils/local-storage"
-import { changeLoadingAction } from "@/store/modules/main"
+import { createSlice } from "@reduxjs/toolkit"
 
 interface IState {
     playing: boolean // -- 记录当前是否正在播放

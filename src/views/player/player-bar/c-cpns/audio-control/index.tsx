@@ -9,10 +9,9 @@ import IconPlayerV1 from "@/assets/icon/player/icon-player-v1"
 import IconStepforward from "@/assets/icon/player/icon-stepforward"
 import { Slider, message } from "antd"
 import { formatTime } from "@/utils"
-import { changeCurrentTimeAction, changePlayingAction, changeProgressAction, changeSlidingAction } from "@/views/player/store/module/play-bar"
+import { changeCurrentTimeAction, changePlayingAction, changeProgressAction, changeSlidingAction } from "@/views/player/store/module/audio-control"
 
 interface IProps {
-    children?: ReactNode,
     audioRef: React.RefObject<HTMLAudioElement>
 
 }
@@ -25,11 +24,11 @@ const AudioControl: FC<IProps> = (props: IProps) => {
     const {
         currentTime, playing, progress, duration, sliding
     } = useAppSelector(state => ({
-        currentTime: state.playBar.currentTime, // -- 记录当前播放时间（ms）
-        playing: state.playBar.playing, // -- 记录当前是否正在播放
-        progress: state.playBar.progress, // -- 记录当前播放进度
-        duration: state.playBar.duration, // -- 记录歌曲总时长（ms）
-        sliding: state.playBar.sliding // -- 记录当前是否正在拖拽进度）
+        currentTime: state.audioControl.currentTime, // -- 记录当前播放时间（ms）
+        playing: state.audioControl.playing, // -- 记录当前是否正在播放
+        progress: state.audioControl.progress, // -- 记录当前播放进度
+        duration: state.audioControl.duration, // -- 记录歌曲总时长（ms）
+        sliding: state.audioControl.sliding // -- 记录当前是否正在拖拽进度）
     }), appShallowEqual)
 
 

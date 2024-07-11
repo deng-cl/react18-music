@@ -2,17 +2,13 @@ import { memo, useEffect, useRef, useState } from "react"
 import type { ReactNode, FC } from "react"
 import { Slider, Spin, message } from 'antd';
 
-import { ControlWrapper, DetailWrapper, InfoWrapper, OtherWrapper, PlayerBarWrapper } from "./style"
+import { DetailWrapper, InfoWrapper, OtherWrapper, PlayerBarWrapper } from "./style"
 import IconMusicList from "@/assets/icon/player/icon-music-list"
 import IconSound from "@/assets/icon/player/icon-sound"
-import IconStepbackward from "@/assets/icon/player/icon-stepbackward"
-import IconStepforward from "@/assets/icon/player/icon-stepforward"
-import IconPlayerV1 from "@/assets/icon/player/icon-player-v1"
 import { appShallowEqual, useAppDispatch, useAppSelector } from "@/store/app-react-redux";
-import { formatTime, joinSongArtistNames } from "@/utils";
+import { joinSongArtistNames } from "@/utils";
 
 import { getPlayerURL } from "@/utils/handle-player";
-import IconPause from "@/assets/icon/player/icon-pause";
 import { changeLyricIndexAction, changeMusicAction, changePlayModeAction } from "../store/module/player";
 import IconPlayerOrder from "@/assets/icon/player/icon-player-order";
 import IconPlayerRandom from "@/assets/icon/player/icon-player-random";
@@ -21,28 +17,34 @@ import IconLyricOpen from "@/assets/icon/player/icon-lyric-open";
 import IconLyricNormal from "@/assets/icon/player/icon-lyric-normal";
 import IconSoundMute from "@/assets/icon/player/icon-sound-mute";
 import IStorage from "@/utils/local-storage";
-import { useNavigate } from "react-router-dom";
 import Player from "..";
 import { CSSTransition } from "react-transition-group";
-import { changeCurrentTimeAction, changeDurationAction, changePlayingAction, changeProgressAction } from "../store/module/play-bar";
+import { changeCurrentTimeAction, changeDurationAction, changePlayingAction, changeProgressAction } from "../store/module/audio-control";
 import AudioControl from "./c-cpns/audio-control";
+import AudioOperator from "./c-cpns/audio-operator";
 
 interface IProps {
     children?: ReactNode
 }
 
 const PlayerBar: FC<IProps> = () => {
-    const {
-        duration, sliding
-    } = useAppSelector(state => ({
-        duration: state.playBar.duration, // -- 记录歌曲总时长（ms）
-        sliding: state.playBar.sliding // -- 记录当前是否正在拖拽进度）
+    const { duration, sliding } = useAppSelector(state => ({
+        duration: state.audioControl.duration, // -- 记录歌曲总时长（ms）
+        sliding: state.audioControl.sliding // -- 记录当前是否正在拖拽进度）
+    }), appShallowEqual)
+
+    const { showLyric } = useAppSelector(state => ({
+        showLyric: state.audioOperator.showLyric
     }), appShallowEqual)
 
     const [loading, setLoading] = useState(false) // -- 记录正在播放歌曲是否正在加载
+
+
     const [isShowLyric, setIsShowLyric] = useState(false)// -- 记录当前是否显示歌词
     const [isShowVolumeSlider, setIsShowVolumeSlider] = useState(false) // -- 记录是否显示修改声音控件
     const [volume, setVolume] = useState(1) // -- 音量控制
+
+
     const [isShowDetail, setIsShoeDetail] = useState(false) // -- 是否显示播放详情页
 
     const { currentSong, lyrics, lyricIndex, playMode } = useAppSelector(state => ({ // -- 获取当前播放歌曲信息
@@ -165,36 +167,10 @@ const PlayerBar: FC<IProps> = () => {
                     <AudioControl audioRef={audioRef} />
                 </div>
 
-                {/* right */}
-                <OtherWrapper>
-                    <div className="lyric" onClick={e => setIsShowLyric(!isShowLyric)}>
-                        {
-                            isShowLyric ? <IconLyricOpen /> : <IconLyricNormal />
-                        }
-                    </div>
-                    <div className="playmode" onClick={changePlayMode}>
-                        {
-                            playMode === 0 ? <IconPlayerOrder width={18} height={18} /> :
-                                playMode === 1 ? <IconPlayerRandom width={18} height={18} /> : <IconPlayerRepetetion width={18} height={18} />
-                        }
-                    </div>
-                    <div className="volume" >
-                        <div className="icon" onClick={e => {
-                            setIsShowVolumeSlider(!isShowVolumeSlider)
-                        }}>
-                            { // -- 判断是否为 mute 静音，显示对应的 Icon
-                                audioRef.current?.volume === 0 ? <IconSoundMute volume={true} width={18} height={18} /> : <IconSound volume={true} width={18} height={18} />
-                            }
-                        </div>
-                        {
-                            isShowVolumeSlider && <Slider value={volume} defaultValue={volume} vertical
-                                onChange={changeVolumeSlider}
-                            />
-                        }
-
-                    </div>
-                    <IconMusicList />
-                </OtherWrapper>
+                {/* right --> audio operation */}
+                <div className="operator">
+                    <AudioOperator audioRef={audioRef} />
+                </div>
             </>
 
             {/* 🔺audio: 用于音乐的播放，不进行展示（默认没有 control 属性时，audio 就是不展示的） */}
@@ -207,7 +183,7 @@ const PlayerBar: FC<IProps> = () => {
 
             {/* 歌词展示: 可能会删，看具体样式... */}
             {
-                isShowLyric && lyrics[lyricIndex]?.text && (
+                showLyric && lyrics[lyricIndex]?.text && (
                     <div className="lyric">
                         {lyrics[lyricIndex]?.text}
                     </div>
