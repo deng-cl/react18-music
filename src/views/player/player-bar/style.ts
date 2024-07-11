@@ -16,6 +16,7 @@ export const PlayerBarWrapper = styled.div`
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
+    justify-content: space-between;
 
     > .content div {
         height: 100%;
@@ -33,6 +34,19 @@ export const PlayerBarWrapper = styled.div`
         background: #6261617a;
         padding: 0 8px;
         border-radius: 3px
+    }
+
+    /* control */
+    > .control {
+        width: 33%;
+        user-select: none;
+        flex: 1;
+        margin: auto;
+        max-width:380px;
+        min-width: 120px;
+        /* background-color: yellow; */
+        padding-right: 6px;
+        box-sizing: border-box;
     }
 `
 
@@ -262,9 +276,6 @@ export const OtherWrapper = styled.div` // -- ↑ PlayerBarWrapper other-control
 `
 
 export const DetailWrapper = styled.div` // 播放详情页样式
-
-
-
     // -- CSSTransition style
     .player-enter {
         transform: translateY(100%);

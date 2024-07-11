@@ -8,7 +8,7 @@ import usePageName from "./hooks/usePageName"
 import AppFooter from "./components/app-footer"
 import PlayerBar from "./views/player/player-bar"
 import { appShallowEqual, useAppDispatch, useAppSelector } from "./store/app-react-redux"
-import { fetchPlaySongInfoAction } from "./views/player/store"
+import { fetchPlaySongInfoAction } from "./views/player/store/module/player"
 import { Spin } from "antd"
 
 export const AppContext = createContext({}) // -- 通过 React 中的 Context 进行对应函数的传递

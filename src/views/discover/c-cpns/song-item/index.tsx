@@ -4,7 +4,7 @@ import { ItemWrapper } from "./style"
 import { formatTime, joinSongArtistNames } from "@/utils"
 import IconPlayerV2 from "@/assets/icon/player/icon-player-v2"
 import { useAppDispatch } from "@/store/app-react-redux"
-import { fetchPlaySongInfoAction } from "@/views/player/store"
+import { fetchPlaySongInfoAction } from "@/views/player/store/module/player"
 
 interface IProps {
     songInfo: any,

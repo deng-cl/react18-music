@@ -6,7 +6,7 @@ import { fetchSongsDetailById } from "@/service/modules/songs"
 import * as dayjs from 'dayjs'
 import SongItem from "../discover/c-cpns/song-item"
 import { useAppDispatch } from "@/store/app-react-redux"
-import { playSongListAction } from "../player/store"
+import { playSongListAction } from "../player/store/module/player"
 
 interface IProps {
     children?: ReactNode

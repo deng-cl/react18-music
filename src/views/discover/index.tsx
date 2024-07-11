@@ -12,7 +12,7 @@ import SongItem from "./c-cpns/song-item"
 
 import { Pagination } from 'antd';
 import CommomPaganition from "@/components/commom-paganition"
-import { playSongListAction } from "../player/store"
+import { playSongListAction } from "../player/store/module/player"
 
 
 interface IProps {
