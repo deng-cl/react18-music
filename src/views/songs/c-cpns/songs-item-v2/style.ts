@@ -49,6 +49,7 @@ export const ItemWrapper = styled.div`
                     background-color: #00000073;
                     border-radius: 4px;
                     font-size: ${props => props.theme.textSize.small};
+                    color: white;
                 }
             }
 

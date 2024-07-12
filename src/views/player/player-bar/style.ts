@@ -11,7 +11,8 @@ export const PlayerBarWrapper = styled.div`
     padding: 10px 8px;
     box-sizing: border-box;
     background-color: ${props => props.theme.color.primary};
-    border-top: 1px solid ${props => props.theme.textColor.secondary};
+    /* border-top: 1px solid ${props => props.theme.textColor.secondary}; */
+    border-top: 1px solid ${props => props.theme.color.button_bg};
     /* ↓ 对子元素的布局 */
     display: flex;
     flex-flow: row nowrap;
@@ -33,7 +34,8 @@ export const PlayerBarWrapper = styled.div`
         line-height: 30px;
         background: #6261617a;
         padding: 0 8px;
-        border-radius: 3px
+        border-radius: 3px;
+        color: white;
     }
 
     /* control */

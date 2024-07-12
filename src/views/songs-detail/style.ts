@@ -87,6 +87,7 @@ export const SongsDetailWrapper = styled.div`
                         background-color: #C20C0C;
                         cursor: pointer;
                         margin-right: 6px;
+                        color: white;
                     }
                     .count{
                         color: ${props => props.theme.textColor.secondary};

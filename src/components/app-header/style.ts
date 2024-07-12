@@ -70,13 +70,15 @@ export const HeaderWrapper = styled.div`
                 }
 
                 &::placeholder {
-                    color: #ffffff66;
+                    color: ${props => props.theme.color.primary === "#000000" ? "#ffffff66" : "#00000061"};
+                    /* color: #ffffff66; */
                 }
             }
 
             > .icon {
-                fill: #ffffff66;
+                /* fill: #ffffff66; */
                 margin-right: 6px;
+                fill: ${props => props.theme.color.primary === "#000000" ? "#ffffff66" : "#00000061"};
             }
 
             .clear {

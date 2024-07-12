@@ -13,6 +13,10 @@ export const DiscoverWrapper = styled.div`
             margin-right: 10px;
             cursor: pointer;
         }
+
+        svg {
+            fill: white;
+        }
     }
 
     > .song-list {
@@ -44,9 +48,10 @@ export const DiscoverWrapper = styled.div`
                 display: flex;
                 align-items: center;
                 font-size: ${props => props.theme.textSize.small};
-                padding: 6px 8px;
+                padding: 8px 12px;
                 border-radius: 6px;
                 background-color: #C20C0C;
+                color: white;
                 color: white;
                 cursor: pointer;
             }

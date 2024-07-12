@@ -18,12 +18,13 @@ export const SongsWrapper = styled.div`
         .item {
             font-size: ${props => props.theme.textSize.small};
             cursor: pointer;
-            padding: 2px 4px;
+            padding: 4px 8px;
             margin-right: 8px;
             border-radius: 4px;
 
             &.active {
                 background-color: #C20C0C;
+                color: white;
             }
         }
 

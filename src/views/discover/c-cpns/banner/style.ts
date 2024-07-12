@@ -102,4 +102,8 @@ export const BannerWrapper = styled.div`
         width: 200px;
         height: 20px;
     }
+
+    svg {
+        fill: white;
+    }
 `

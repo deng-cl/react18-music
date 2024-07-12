@@ -1,14 +1,16 @@
+// import { DefaultTheme } from "styled-components" // -- theme 类型支持
+
 const theme = {
     color: {
-        primary: "#ffffff",
+        primary: "#000000",
         secondary: "#9867da",
-        hover_bg: "#71717114",
-        active: "#71717136",
-        button_bg: "#7171711c",
+        hover_bg: "#ffffff1c",
+        active: "#5e5e5e",
+        button_bg: "#5e5e5e",
 
     },
     textColor: {
-        primary: "#000000",
+        primary: "#ffffff",
         secondary: "#60656b"
     },
     textSize: {

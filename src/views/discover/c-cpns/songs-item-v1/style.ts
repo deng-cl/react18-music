@@ -9,6 +9,7 @@ export const ItemWrapper = styled.div`
     overflow: hidden;
     display: flex;
     flex-flow: column nowrap;
+    color: white;
 
     > .albun {
         img {

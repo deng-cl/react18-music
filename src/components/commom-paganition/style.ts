@@ -7,6 +7,8 @@ export const PaganationWrapper = styled.div`
     justify-content: center;
     /* transition: all 0ms ease !important; */
     .ant-pagination-item {
+        border: none;
+
         a {
             color: ${props => props.theme.textColor.primary};
             transition: color 0s;
