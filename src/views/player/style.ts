@@ -56,7 +56,7 @@ export const PlayerWrapper = styled.div`
         .lyric-content {
             transition: all 200ms ease;
             justify-content: flex-start;
-            /* transform: translateY(calc(35% - 34px)); // -- 18 + 4 * 2  --> 30px ↓ .line */
+            /* transform: translateY(calc(35% - 34px)); // -- 18 + 4 * 2  --> 24px ↓ .line */
             .line {
                 transition: all 200ms ease;
                 height: 18px;

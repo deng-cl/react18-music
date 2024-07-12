@@ -15,6 +15,8 @@ interface IState {
     playSongIndex: number
 
     playMode: 0 | 1 | 2, // -- 0:顺序 1:随机  2:循环（单曲循环只是自然播放下的循环，可以切换新歌）
+
+    showDetail: boolean
 }
 
 const initialState: IState = { // -- 本地存储歌曲播放信息
@@ -24,6 +26,7 @@ const initialState: IState = { // -- 本地存储歌曲播放信息
     playSongList: IStorage.get("songList") !== "" ? IStorage.get("songList") : [],
     playSongIndex: IStorage.get("songIndex") !== "" ? IStorage.get("songIndex") : [],
     playMode: IStorage.get("playMode") !== "" ? IStorage.get("playMode") : 0,
+    showDetail: false
 }
 
 const fetchAndDispatchLyricInfo = (id: number, dispatch: ThunkDispatch<unknown, unknown, UnknownAction>) => { // -- 请求歌词函数抽取
@@ -139,6 +142,10 @@ const playerSlice = createSlice({
         changePlayModeAction(state, { payload }) {
             IStorage.set("playMode", payload) // -- 缓存当前播放索引
             state.playMode = payload
+        },
+
+        changeShowDetailAction(state, { payload }) {
+            state.showDetail = payload
         }
     }
 })
@@ -149,7 +156,8 @@ export const {
     changeLyricIndexAction,
     changePlaySongListAction,
     changePlaySongIndexAction,
-    changePlayModeAction
+    changePlayModeAction,
+    changeShowDetailAction
 } = playerSlice.actions
 
 export default playerSlice.reducer

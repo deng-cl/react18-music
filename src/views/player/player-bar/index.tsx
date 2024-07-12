@@ -9,7 +9,7 @@ import { joinSongArtistNames } from "@/utils";
 import { getPlayerURL } from "@/utils/handle-player";
 
 // store
-import { changeLyricIndexAction, changeMusicAction } from "../store/module/player";
+import { changeLyricIndexAction, changeMusicAction, changeShowDetailAction } from "../store/module/player";
 import { changeCurrentTimeAction, changeDurationAction, changePlayingAction, changeProgressAction } from "../store/module/audio-control";
 
 // -- comp
@@ -24,7 +24,6 @@ const PlayerBar: FC<IProps> = () => {
     // -- useState/dispatch/...
     const dispatch = useAppDispatch()
     const [loading, setLoading] = useState(false) // -- 记录正在播放歌曲是否正在加载
-    const [isShowDetail, setIsShoeDetail] = useState(false) // -- 是否显示播放详情页
 
     const audioRef = useRef<HTMLAudioElement>(null) // -- 播放器容器 Ref 对象
 
@@ -40,11 +39,12 @@ const PlayerBar: FC<IProps> = () => {
         volume: state.audioOperator.volume,
     }), appShallowEqual)
 
-    const { currentSong, lyrics, lyricIndex, playMode } = useAppSelector(state => ({ // -- player
+    const { currentSong, lyrics, lyricIndex, playMode, showDetail } = useAppSelector(state => ({ // -- player
         currentSong: state.player.currentSong,
         lyrics: state.player.lyrics,
         lyricIndex: state.player.lyricIndex,
         playMode: state.player.playMode,
+        showDetail: state.player.showDetail,
     }), appShallowEqual)
 
     let NotFirstEnter = useRef(false)
@@ -96,10 +96,6 @@ const PlayerBar: FC<IProps> = () => {
         }
         if (index === lyricIndex) return // -- 避免过多重复渲染
         dispatch(changeLyricIndexAction(index)) // -- ↑ 当当前 index 与 lyricIndex 不一样是才修改 state 对应的歌词 index --> 🔺节流: 避免组件在同一句歌词中多次 dispatch 该 action，导致页面有过多的没有必要的渲染
-
-        // -- 对上述代码进行优化
-        // const findIndex = lyrics.findIndex(lyric => lyric.time > (currentTime * 1000)) - 1  // -- 特殊情况: 因为该算法在匹配歌词中是通过匹配到大于当前时间的，所以正在的歌词还需要向前一位，所以会有一个问题，就是最后一句歌词是无法获取到的（所以这里给默认值可以是最后一个歌词）
-        // if (findIndex !== lyricIndex) dispatch(changeLyricIndexAction(findIndex)) // -- ↑ 当当前 index 与 lyricIndex 不一样是才修改 state 对应的歌词 index --> 🔺节流: 避免组件在同一句歌词中多次 dispatch 该 action，导致页面有过多的没有必要的渲染
     }
 
     const audioPlayEndedHandle = () => { // -- 监听歌曲自然播放结束 --> 播放下一首
@@ -107,13 +103,15 @@ const PlayerBar: FC<IProps> = () => {
         else dispatch(changeMusicAction(true))
     }
 
+    const showDetailPage = () => dispatch(changeShowDetailAction(true)) // -- 显示播放详情页
+
     return (
         <PlayerBarWrapper>
             {/* player bar 展示区 */}
             <>
                 {/* left */}
                 <InfoWrapper>
-                    <div className="album" onClick={e => setIsShoeDetail(true)}>
+                    <div className="album" onClick={showDetailPage}>
                         <img src={currentSong?.al?.picUrl} alt="" />
                     </div>
                     <div className="msg">
@@ -161,8 +159,8 @@ const PlayerBar: FC<IProps> = () => {
 
             {/* 播放详情页的展示 */}
             <DetailWrapper>
-                <CSSTransition classNames="player" in={isShowDetail} timeout={250} unmountOnExit>
-                    <Player audioRef={audioRef} onBackFun={() => setIsShoeDetail(false)} />
+                <CSSTransition classNames="player" in={showDetail} timeout={250} unmountOnExit>
+                    <Player audioRef={audioRef} />
                 </CSSTransition>
             </DetailWrapper>
         </PlayerBarWrapper >
