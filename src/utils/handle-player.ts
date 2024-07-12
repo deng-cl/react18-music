@@ -21,7 +21,7 @@ export const parseLyric = (lyricString: string) => { // -- 歌词解析
 
         const text = line.replace(timeRegExp, "").trim() // -- 2.5 获取当前行歌词文本: 通过 replace 并借助上面解析 time 的正则将对应 time 部分替换成空字符串 ""，剩下的字符就为对应的歌词文本 --> 也可以通过 trim 方法对该文本的首尾空格去除
 
-        lyrics.push({ time, text }) // -- End: 存储当前行解析的结果（time & text）
+        if (text.length > 0) lyrics.push({ time, text }) // -- End: 存储当前行解析的结果（time & text） --> 判断当前 text 有值时，才进行添加
     }
 
     return lyrics

@@ -1,6 +1,6 @@
 import { memo, useEffect, useRef, useState } from "react"
 import type { ReactNode, FC } from "react"
-import { Spin } from 'antd';
+import { Spin, message } from 'antd';
 import { CSSTransition } from "react-transition-group";
 
 // -- custom: utils/hooks...
@@ -47,7 +47,7 @@ const PlayerBar: FC<IProps> = () => {
         playMode: state.player.playMode,
     }), appShallowEqual)
 
-
+    let NotFirstEnter = useRef(false)
     // -- 🔺↓ 音乐播放逻辑代码
     useEffect(() => { // -- 处理音乐切换播放
         // -- 1. 播放音乐
@@ -62,6 +62,13 @@ const PlayerBar: FC<IProps> = () => {
             dispatch(changePlayingAction(false))
             console.log("歌曲播放失败:", err); // -- 歌曲播放失败: DOMException: play() failed because the user didn't interact with the document first. --> 不允许在用户没有交互的情况下直接播放音频 / ...
             // -- ---------
+            if (NotFirstEnter.current) {
+                dispatch(changeMusicAction(true))
+                message.error({
+                    content: "播放失败，已自动切换至下一首!（NOT VIP）"
+                })
+            }
+            NotFirstEnter.current = true
         })
 
         audioRef.current.volume = volume
@@ -89,6 +96,10 @@ const PlayerBar: FC<IProps> = () => {
         }
         if (index === lyricIndex) return // -- 避免过多重复渲染
         dispatch(changeLyricIndexAction(index)) // -- ↑ 当当前 index 与 lyricIndex 不一样是才修改 state 对应的歌词 index --> 🔺节流: 避免组件在同一句歌词中多次 dispatch 该 action，导致页面有过多的没有必要的渲染
+
+        // -- 对上述代码进行优化
+        // const findIndex = lyrics.findIndex(lyric => lyric.time > (currentTime * 1000)) - 1  // -- 特殊情况: 因为该算法在匹配歌词中是通过匹配到大于当前时间的，所以正在的歌词还需要向前一位，所以会有一个问题，就是最后一句歌词是无法获取到的（所以这里给默认值可以是最后一个歌词）
+        // if (findIndex !== lyricIndex) dispatch(changeLyricIndexAction(findIndex)) // -- ↑ 当当前 index 与 lyricIndex 不一样是才修改 state 对应的歌词 index --> 🔺节流: 避免组件在同一句歌词中多次 dispatch 该 action，导致页面有过多的没有必要的渲染
     }
 
     const audioPlayEndedHandle = () => { // -- 监听歌曲自然播放结束 --> 播放下一首
@@ -141,9 +152,9 @@ const PlayerBar: FC<IProps> = () => {
 
             {/* 歌词展示: 可能会删，看具体样式... */}
             {
-                showLyric && lyrics[lyricIndex]?.text && (
+                showLyric && (
                     <div className="lyric">
-                        {lyrics[lyricIndex]?.text}
+                        {lyrics[lyricIndex]?.text || lyrics[lyricIndex - 1]?.text}
                     </div>
                 )
             }
@@ -151,7 +162,7 @@ const PlayerBar: FC<IProps> = () => {
             {/* 播放详情页的展示 */}
             <DetailWrapper>
                 <CSSTransition classNames="player" in={isShowDetail} timeout={250} unmountOnExit>
-                    <Player onBackFun={() => setIsShoeDetail(false)} />
+                    <Player audioRef={audioRef} onBackFun={() => setIsShoeDetail(false)} />
                 </CSSTransition>
             </DetailWrapper>
         </PlayerBarWrapper >
