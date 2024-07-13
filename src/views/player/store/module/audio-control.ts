@@ -17,7 +17,7 @@ const initialState: IState = {
 }
 
 const playBarSlice = createSlice({
-    name: "playbar",
+    name: "audio-control",
     initialState,
     reducers: {
         changePlayingAction(state, { payload }) {

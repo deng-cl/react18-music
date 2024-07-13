@@ -18,7 +18,7 @@ const initialState: IState = {
 }
 
 const audioOperatorSlice = createSlice({
-    name: "playbar",
+    name: "audio-operator",
     initialState,
     reducers: {
         changeShowLyricAction(state, { payload }) {

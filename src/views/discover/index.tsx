@@ -2,17 +2,11 @@ import { memo, useEffect, useState } from "react"
 import type { ReactNode, FC } from "react"
 import { DiscoverWrapper } from "./style"
 import { fetchDiscoverPageDataAction } from "@/store/modules/discover"
-import { useDispatch } from "react-redux"
 import { UnknownAction } from "@reduxjs/toolkit"
 import Banner from "./c-cpns/banner"
 import SongsItemV1 from "./c-cpns/songs-item-v1"
 import { appShallowEqual, useAppDispatch, useAppSelector } from "@/store/app-react-redux"
 import ScrollView from "@/base-ui/scroll-view"
-import SongItem from "./c-cpns/song-item"
-
-import { Pagination } from 'antd';
-import CommomPaganition from "@/components/commom-paganition"
-import { playSongListAction } from "../player/store/module/player"
 import CommomSongListV1 from "@/components/commom-song-list-v1"
 
 
@@ -31,22 +25,11 @@ const Discover: FC<IProps> = () => {
         dispatch(fetchDiscoverPageDataAction() as unknown as UnknownAction)
     }, [])
 
-    // -- 处理分页器
+    // -- 歌曲列表歌曲数量
     const [total, setTotal] = useState(0)
-    const [curPageCode, setCurPageCode] = useState(0)
     useEffect(() => {
         setTotal(hotSongList?.tracks?.length)
     }, [hotSongList])
-
-    function pageCodeClickHandle(pageCode: number) {
-        setCurPageCode(pageCode - 1) // -- 因为 curPageCode 存储的为索引从 0 开始 --> 所以需要减 1
-    }
-
-    // -- 播放列表所有歌曲
-    function playSongListEntire() {
-        const songList = hotSongList?.tracks
-        if (songList) dispatch(playSongListAction(songList))
-    }
 
     return (
         <DiscoverWrapper>

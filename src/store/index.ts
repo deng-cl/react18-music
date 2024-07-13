@@ -5,11 +5,13 @@ import main from "./modules/main";
 import songs from "./modules/songs";
 import video from "./modules/video";
 import theme from "./modules/theme";
+import ranking from "./modules/ranking";
 
 // player --- ↓
 import player from "../views/player/store/module/player"
 import audioControl from "@/views/player/store/module/audio-control";
 import audioOperator from "@/views/player/store/module/audio-operator";
+
 
 
 
@@ -24,7 +26,8 @@ const store = configureStore({
         audioControl,
         audioOperator,
         // --
-        theme
+        theme,
+        ranking
     }
 })
 

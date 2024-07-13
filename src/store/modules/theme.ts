@@ -11,7 +11,7 @@ const initialState: IState = {
 }
 
 const themeSlice = createSlice({
-    name: "vidoe",
+    name: "theme",
     initialState,
     reducers: {
         changeThemeIsDarkAction(state, { payload }) {

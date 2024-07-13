@@ -4,21 +4,41 @@ export const RankingWrapper = styled.div`
     display: flex;
     flex-flow:column nowrap;
 
-    .filter {
+    > .filter {
         width: 100%;
-        height: 25px;
-        background-color: orange;
+        height: 32px;
+        /* background-color: orange; */
         display: flex;
         align-items: center;
         font-weight: 700;
 
+        .title {
+            color: ${props => props.theme.textColor.secondary};
+            margin-right: 12px;
+        }
+
         .item {
+            user-select: none;
+            cursor: pointer;
             height: 100%;
             display: flex;
             align-items: center;
             padding: 0 14px;
             margin: 0 4px;
-            background-color: green;
+            border-radius: 4px;
+            font-size: ${props => props.theme.textSize.small};
+
+            &:hover {
+                background-color: ${props => props.theme.color.hover_bg};
+            }
+
+            &.active {
+                background-color: red;
+            }
         }
+    }
+
+    > .content {
+
     }
 `
