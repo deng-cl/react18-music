@@ -62,12 +62,38 @@ const Discover: FC<IProps> = () => {
                     }
                 </ScrollView>
             </div>
+            <div className="song-list">
+                <div className="title">
+                    <span>
+                        Recommend song
+                        <div className="count">歌曲数量: {hotSongList?.tracks?.length}</div>
+                    </span>
+                    <div className="play-entire btn" onClick={playSongListEntire}>播放全部</div>
+                </div>
 
-            <CommomSongListV1
-                title="Recommend song"
-                paginationConfig={{ total: total, defaultPageSize: 10 }}
-                songListInfo={hotSongList}
-            />
+                <div className="list">
+                    {
+                        (function () {
+                            const sliceStart = curPageCode * 10
+                            const sliceEnd = sliceStart + 10
+                            return (
+                                hotSongList?.tracks?.slice(sliceStart, sliceEnd).map((item: any) => (
+                                    <div className="item" key={item.id}>
+                                        <SongItem songInfo={item} />
+                                    </div>
+                                ))
+                            )
+                        })()
+                    }
+                </div>
+
+                <CommomPaganition
+                    defaultCurrent={1}
+                    defaultPageSize={10}
+                    total={total}
+                    onChange={pageCodeClickHandle}
+                />
+            </div>
         </DiscoverWrapper>
 
         //  git commit -m "discover 页面中的 song-list 歌曲列表数据展示封装展示"

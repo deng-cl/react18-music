@@ -9,7 +9,14 @@ interface IProps {
 const Ranking: FC<IProps> = () => {
     return (
         <RankingWrapper>
-            Ranking
+            <div className="filter">
+                <div className="item">新歌</div>
+                <div className="item">原创</div>
+                <div className="item">飙升</div>
+            </div>
+            <div className="content">
+
+            </div>
         </RankingWrapper>
     )
 }
