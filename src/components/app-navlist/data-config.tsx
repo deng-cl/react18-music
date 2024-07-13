@@ -5,6 +5,7 @@ import IconHome from "@/assets/icon/nav/icon-home"
 import IconMusic from "@/assets/icon/nav/icon-music"
 import IconSongs from "@/assets/icon/nav/icon-songs"
 import IconMV from "@/assets/icon/nav/icon-mv"
+import IconRanking from "@/assets/icon/nav/icon-ranking"
 
 // -- setting comp
 import IconSetting from "@/assets/icon/nav/icon-setting"
@@ -27,6 +28,11 @@ const NAV_LIST_DATA: TSectionListData = [
             icon: <IconSongs />,
             name: "Songs",
             routePath: "/songs"
+        },
+        {
+            icon: <IconRanking />,
+            name: "Ranking",
+            routePath: "/ranking"
         },
         {
             icon: <IconMV />,

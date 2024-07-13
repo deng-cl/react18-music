@@ -1,4 +1,5 @@
 import { fetchTopMv } from "@/service/modules/video";
+import IStorage from "@/utils/local-storage";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 interface IState {
@@ -6,7 +7,7 @@ interface IState {
 }
 
 const initialState: IState = {
-    isDark: true
+    isDark: IStorage.get("isDark")
 }
 
 const themeSlice = createSlice({
@@ -14,6 +15,7 @@ const themeSlice = createSlice({
     initialState,
     reducers: {
         changeThemeIsDarkAction(state, { payload }) {
+            IStorage.set("isDark", payload) // -- 本地存储 theme 主题
             state.isDark = payload
         }
     }

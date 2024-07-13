@@ -1,3 +1,4 @@
+import Ranking from "@/views/ranking"
 import React from "react"
 import { Navigate, RouteObject } from "react-router-dom"
 
@@ -45,6 +46,10 @@ const routes: RouteObject[] = [
         path: "/theme",
         element: <SettingTheme />
     },
+    {
+        path: "/ranking",
+        element: <Ranking />
+    },
     { // -- test --> 主要用于展示项目中的 icon 方便选择使用
         path: "/icon",
         element: <ShowIconTest />
@@ -53,7 +58,7 @@ const routes: RouteObject[] = [
 
 export default routes
 
-export type IRoutesPath = "/" | "/discover" | "/songs" | "/songs-detail" | "/player-detail" | "/video" | "/video-detail" | "/theme" | "none"
+export type IRoutesPath = "/" | "/discover" | "/songs" | "/songs-detail" | "/player-detail" | "/video" | "/video-detail" | "/theme" | "/ranking" | "none"
 export enum routepataMapPagename {
     "/discover" = "Home",
     "/songs" = "Songs",
@@ -61,5 +66,6 @@ export enum routepataMapPagename {
     "/player-detail" = "PlayerDetail",
     "/video" = "Video/MV",
     "/video-detail" = "MVDetail",
-    "/theme" = "Theme"
+    "/theme" = "Theme",
+    "/ranking" = "Ranking"
 }

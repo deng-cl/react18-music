@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const ThemeWrapper = styled.div`
     .theme {
-        transition: all 150ms ease;
         background-color: ${props => props.theme.color.hover_bg};
         font-size: ${props => props.theme.textSize.larger};
         font-weight: 700;
