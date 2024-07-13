@@ -25,14 +25,14 @@ const NAV_LIST_DATA: TSectionListData = [
             routePath: "/discover"
         },
         {
-            icon: <IconSongs />,
-            name: "Songs",
-            routePath: "/songs"
-        },
-        {
             icon: <IconRanking />,
             name: "Ranking",
             routePath: "/ranking"
+        },
+        {
+            icon: <IconSongs />,
+            name: "Songs",
+            routePath: "/songs"
         },
         {
             icon: <IconMV />,

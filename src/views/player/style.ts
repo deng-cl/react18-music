@@ -52,11 +52,19 @@ export const PlayerWrapper = styled.div`
         margin: auto 0;
         box-sizing: border-box;
         overflow: hidden;
+        overflow-y: auto;
+
+        scroll-behavior: smooth;
+
+        &::-webkit-scrollbar {
+            width: 0px;
+        }
 
         .lyric-content {
             transition: all 200ms ease;
             justify-content: flex-start;
             /* transform: translateY(calc(35% - 34px)); // -- 18 + 4 * 2  --> 24px ↓ .line */
+            transform: translateY(30%);
             .line {
                 transition: all 200ms ease;
                 height: 18px;

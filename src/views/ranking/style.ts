@@ -5,6 +5,7 @@ export const RankingWrapper = styled.div`
     flex-flow:column nowrap;
 
     > .filter {
+        user-select: none;
         width: 100%;
         height: 32px;
         /* background-color: orange; */
@@ -18,7 +19,6 @@ export const RankingWrapper = styled.div`
         }
 
         .item {
-            user-select: none;
             cursor: pointer;
             height: 100%;
             display: flex;
@@ -34,6 +34,7 @@ export const RankingWrapper = styled.div`
 
             &.active {
                 background-color: red;
+                color: white;
             }
         }
     }

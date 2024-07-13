@@ -1,4 +1,4 @@
-import { memo } from "react"
+import { memo, useEffect, useRef } from "react"
 import type { ReactNode, FC } from "react"
 import { PlayerWrapper } from "./style"
 import { useAppDispatch, useAppSelector } from "@/store/app-react-redux"
@@ -25,6 +25,12 @@ const Player: FC<IProps> = (props: IProps) => {
 
     const hideDetailPage = () => dispatch(changeShowDetailAction(false))
 
+    // -- 歌词滚动
+    const lyricsRef = useRef<HTMLDivElement>(null)
+    useEffect(() => {
+        if (lyricsRef.current) lyricsRef.current.scrollTo(50, (lyricIndex + 1) * 24)
+    }, [lyricIndex])
+
     return (
         <PlayerWrapper>
             <div className="left album">
@@ -36,11 +42,9 @@ const Player: FC<IProps> = (props: IProps) => {
                 </div>
             </div>
 
-            <div className="right lyric">
+            <div className="right lyric" ref={lyricsRef}>
                 {/* 歌词滚动: 计算歌词向上滚动距离 */}
-                <div className="lyric-content" style={{
-                    transform: `translateY(calc(30% - ${(lyricIndex + 1) * 24}px))`
-                }}>
+                <div className="lyric-content" >
                     {
                         lyrics.map((line, index) => (
                             <div className={classNames("line", { active: index === lyricIndex })} key={index}>{line.text}</div>
