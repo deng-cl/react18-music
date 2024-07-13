@@ -60,6 +60,7 @@ export const SongsDetailWrapper = styled.div`
                     background-color: #C20C0C;
                     margin-right: 4px;
                     border-radius: 6px;
+                    color: white;
                 }
             }
 

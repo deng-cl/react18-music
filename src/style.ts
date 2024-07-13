@@ -36,6 +36,8 @@ export const AppWrapper = styled.div`
         flex: 1;
         /* background-color: orange; */
         overflow-y: auto;
+        padding-bottom: 20px;
+        box-sizing: border-box;
 
         .show-page-name {
             margin-top: 6px;

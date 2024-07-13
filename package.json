@@ -2,6 +2,7 @@
     "name": "coderkxh-music",
     "version": "0.1.0",
     "private": true,
+    "homepage": "http://47.121.143.202/coderkxh-music/",
     "dependencies": {
         "@reduxjs/toolkit": "^2.2.6",
         "@testing-library/jest-dom": "^5.17.0",

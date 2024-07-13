@@ -57,9 +57,9 @@ const App = memo(() => {
                             </Suspense>
                         </AppContext.Provider>
                     </div>
-                    {
+                    {/* {
                         NOT_FOOTER_ROUTE_PATHS.includes(location.pathname as IRoutesPath) ? undefined : <AppFooter />
-                    }
+                    } */}
                 </div>
 
                 {/* player bar: 播放器工具栏 */}
