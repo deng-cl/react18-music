@@ -43,12 +43,13 @@ export const ControlWrapper = styled.div`
             }
 
             .ant-slider-track {
-                /* background-color: ${props => props.theme.textColor.primary}; */
+                background-color: ${props => props.theme.textColor.primary};
                 background-color: #C20C0C;
             }
             .ant-slider-step {
                 z-index: -1;
-                background-color: ${props => props.theme.textColor.secondary};
+                background-color: ${props => props.theme.color.button_bg};
+                /* background-color: ${props => props.theme.textColor.secondary}; */
             }
             .ant-slider-handle {
                 background-color: green;
@@ -61,10 +62,10 @@ export const ControlWrapper = styled.div`
                     box-shadow: 0 0 0 2px #C20C0C;
                 }
                 &:hover::after {
-                    box-shadow: 0 0 0 2.5px #C20C0C;
+                    box-shadow: 0 0 0 2px #C20C0C;
                 }
                 &:focus::after {
-                    box-shadow: 0 0 0 2.5px #C20C0C;
+                    box-shadow: 0 0 0 2px #C20C0C;
                 }
                 &.ant-tooltip-open::after {
                     content: "333";

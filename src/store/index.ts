@@ -4,11 +4,13 @@ import discover from "./modules/discover";
 import main from "./modules/main";
 import songs from "./modules/songs";
 import video from "./modules/video";
+import theme from "./modules/theme";
 
 // player --- ↓
 import player from "../views/player/store/module/player"
 import audioControl from "@/views/player/store/module/audio-control";
 import audioOperator from "@/views/player/store/module/audio-operator";
+
 
 
 const store = configureStore({
@@ -20,7 +22,9 @@ const store = configureStore({
         // player --- ↓
         player,
         audioControl,
-        audioOperator
+        audioOperator,
+        // --
+        theme
     }
 })
 

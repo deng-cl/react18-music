@@ -1,16 +1,14 @@
-// import { DefaultTheme } from "styled-components" // -- theme 类型支持
-
-const theme = {
+const light = {
     color: {
-        primary: "#000000",
+        primary: "#ffffff",
         secondary: "#9867da",
-        hover_bg: "#ffffff1c",
-        active: "#5e5e5e",
-        button_bg: "#5e5e5e",
+        hover_bg: "#71717114",
+        active: "#71717136",
+        button_bg: "#7171711c",
 
     },
     textColor: {
-        primary: "#ffffff",
+        primary: "#000000",
         secondary: "#60656b"
     },
     textSize: {
@@ -39,6 +37,4 @@ const theme = {
 
 // 播放器进度条: #252525
 
-export type CustomTheme = typeof theme // -- 获取当前 them 类型 --> 在自定义类型文件（styled.d.ts）中配置对应 DefaultTheme 类型 --> 使其后续在样式中使用是可以有更好的支持
-
-export default theme
+export default light

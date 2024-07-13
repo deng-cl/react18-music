@@ -8,7 +8,7 @@ module.exports = {
     webpack: {
         alias: {
             "@": resolve("src")
-        }
+        },
     },
 
     plugins: [{ plugin: CracoLessPlugin }]
