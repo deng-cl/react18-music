@@ -33,7 +33,7 @@ export const RankingWrapper = styled.div`
             }
 
             &.active {
-                background-color: red;
+                background-color:#C20C0C;
                 color: white;
             }
         }

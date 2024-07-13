@@ -17,6 +17,7 @@ import Player from "..";
 import AudioControl from "./c-cpns/audio-control";
 import AudioOperator from "./c-cpns/audio-operator";
 import { DetailWrapper, InfoWrapper, PlayerBarWrapper } from "./style"
+import CurrentPlayMenu from "./c-cpns/current-play-menu";
 
 interface IProps { }
 
@@ -27,16 +28,16 @@ const PlayerBar: FC<IProps> = () => {
 
     const audioRef = useRef<HTMLAudioElement>(null) // -- 播放器容器 Ref 对象
 
-
     // -- Store State
     const { duration, sliding } = useAppSelector(state => ({ // -- audio-control
         duration: state.audioControl.duration, // -- 记录歌曲总时长（ms）
         sliding: state.audioControl.sliding // -- 记录当前是否正在拖拽进度）
     }), appShallowEqual)
 
-    const { showLyric, volume } = useAppSelector(state => ({ // -- audio-operator
+    const { showLyric, volume, showPlayList } = useAppSelector(state => ({ // -- audio-operator
         showLyric: state.audioOperator.showLyric,
         volume: state.audioOperator.volume,
+        showPlayList: state.audioOperator.showPlayList,
     }), appShallowEqual)
 
     const { currentSong, lyrics, lyricIndex, playMode, showDetail } = useAppSelector(state => ({ // -- player
@@ -48,6 +49,7 @@ const PlayerBar: FC<IProps> = () => {
     }), appShallowEqual)
 
     let NotFirstEnter = useRef(false)
+
     // -- 🔺↓ 音乐播放逻辑代码
     useEffect(() => { // -- 处理音乐切换播放
         // -- 1. 播放音乐
@@ -153,6 +155,15 @@ const PlayerBar: FC<IProps> = () => {
                 showLyric && (
                     <div className="lyric">
                         {lyrics[lyricIndex]?.text || lyrics[lyricIndex - 1]?.text}
+                    </div>
+                )
+            }
+
+            {/* 播放列表展示 */}
+            {
+                showPlayList && (
+                    <div className="current-play-menu">
+                        <CurrentPlayMenu />
                     </div>
                 )
             }

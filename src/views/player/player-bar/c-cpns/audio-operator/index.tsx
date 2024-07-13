@@ -10,7 +10,7 @@ import IconSoundMute from "@/assets/icon/player/icon-sound-mute"
 import { Slider, message } from "antd"
 import IconSound from "@/assets/icon/player/icon-sound"
 import { appShallowEqual, useAppDispatch, useAppSelector } from "@/store/app-react-redux"
-import { changeShowLyricAction, changeShowVolumeControlAction, changeVolumeAction } from "@/views/player/store/module/audio-operator"
+import { changeShowLyricAction, changeShowPlayListAction, changeShowVolumeControlAction, changeVolumeAction } from "@/views/player/store/module/audio-operator"
 import { changePlayModeAction } from "@/views/player/store/module/player"
 import IStorage from "@/utils/local-storage"
 import IconMusicList from "@/assets/icon/player/icon-music-list"
@@ -66,6 +66,10 @@ const AudioOperator: FC<IProps> = (props: IProps) => {
         }
     }
 
+    const changeSongMenuAsider = () => { // -- 显示左侧当前播放列表
+        dispatch(changeShowPlayListAction(!showPlayList))
+    }
+
     return (
         <OperatorWrapper>
             <div className="lyric" onClick={changeShowLyric}>
@@ -91,7 +95,9 @@ const AudioOperator: FC<IProps> = (props: IProps) => {
                     />
                 }
             </div>
-            <IconMusicList />
+            <div className="menu" onClick={changeSongMenuAsider}>
+                <IconMusicList />
+            </div>
         </OperatorWrapper>
     )
 }

@@ -8,7 +8,7 @@ export const OperatorWrapper = styled.div`
     padding-right: 6px;
     box-sizing: border-box;
 
-    > *, > .playmode *, > .lyric * ,> .volume .icon *   {
+    > *, > .playmode *, > .lyric * ,> .volume .icon * > .menu *   {
         margin-left: 14px;
         cursor: pointer;
         fill: ${props => props.theme.textColor.secondary} !important;
@@ -18,7 +18,7 @@ export const OperatorWrapper = styled.div`
         }
     }
 
-    > .playmode, > .lyric ,> .volume .icon {
+    > .playmode, > .lyric ,> .volume .icon, > .menu .icon  {
         display: flex;
         align-items: center;
         margin:0;

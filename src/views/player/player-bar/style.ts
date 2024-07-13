@@ -61,6 +61,12 @@ export const PlayerBarWrapper = styled.div`
         min-width: 120px;
         justify-content: flex-end;
     }
+
+    > .current-play-menu {
+        position: absolute;
+        top: -302px;
+        right: 0;
+    }
 `
 
 export const InfoWrapper = styled.div` // -- ↑ PlayerBarWrapper info 子元素部分
