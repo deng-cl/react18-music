@@ -40,7 +40,10 @@ const AudioOperator: FC<IProps> = (props: IProps) => {
     // -- Methods
     const changeShowLyric = () => dispatch(changeShowLyricAction(!showLyric)) // -- 歌词显示切换: 显示/隐藏
 
-    const changeShowVolunmeControl = () => dispatch(changeShowVolumeControlAction(!showVolumeControl)) // -- 音量控件显示切换: 显示/隐藏
+    const changeShowVolunmeControl = () => { // -- 音量控件显示切换: 显示/隐藏
+        dispatch(changeShowVolumeControlAction(!showVolumeControl))
+        if (showPlayList) dispatch(changeShowPlayListAction(false))
+    }
 
     const changePlayMode = () => { // -- 切换播放模式: 顺序/随机/单曲
         const playModes = ["顺序播放", "随机播放", "单曲循环"]
@@ -68,6 +71,7 @@ const AudioOperator: FC<IProps> = (props: IProps) => {
 
     const changeSongMenuAsider = () => { // -- 显示左侧当前播放列表
         dispatch(changeShowPlayListAction(!showPlayList))
+        if (showVolumeControl) dispatch(changeShowVolumeControlAction(false))
     }
 
     return (

@@ -54,7 +54,7 @@ const PlayerBar: FC<IProps> = () => {
     useEffect(() => { // -- 处理音乐切换播放
         // -- 1. 播放音乐
         if (!audioRef.current) return
-        if (!currentSong.id) return
+        if (!currentSong?.id) return
 
         audioRef.current!.src = getPlayerURL(currentSong.id)
         audioRef.current.play().then(res => {

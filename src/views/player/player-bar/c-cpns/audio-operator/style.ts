@@ -8,7 +8,7 @@ export const OperatorWrapper = styled.div`
     padding-right: 6px;
     box-sizing: border-box;
 
-    > *, > .playmode *, > .lyric * ,> .volume .icon * > .menu *   {
+    > *, > .playmode *, > .lyric * ,> .volume .icon *, > .menu *   {
         margin-left: 14px;
         cursor: pointer;
         fill: ${props => props.theme.textColor.secondary} !important;

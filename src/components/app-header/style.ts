@@ -35,6 +35,7 @@ export const HeaderWrapper = styled.div`
         .btn {
             padding: 2px 8px;
             margin: 0 6px;
+            cursor: no-drop;
             span {
                 margin: 0 4px;
             }

@@ -14,7 +14,7 @@ const initialState: IState = {
     showLyric: false,
     showVolumeControl: false,
     volume: volume >= 0 && volume <= 1 ? volume : 1, // -- 查看本地缓存，是否存在上次设置的音量
-    showPlayList: true
+    showPlayList: false
 }
 
 const audioOperatorSlice = createSlice({
