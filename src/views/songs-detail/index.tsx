@@ -64,7 +64,7 @@ const SongsDetail: FC<IProps> = () => {
                             (function () {
                                 let parseCreateTime = dayjs?.unix(detailInfo?.createTime / 1000) as any
                                 const { $y, $M, $D } = parseCreateTime
-                                return $y + "/" + $M + "/" + $D
+                                return $y + "/" + ($M + 1) + "/" + $D
                             })()
                         }</div>
                     </div>
