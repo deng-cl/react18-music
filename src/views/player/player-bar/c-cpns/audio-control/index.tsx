@@ -11,9 +11,10 @@ import { Slider, message } from "antd"
 import { formatTime } from "@/utils"
 import { changeCurrentTimeAction, changePlayingAction, changeProgressAction, changeSlidingAction } from "@/views/player/store/module/audio-control"
 
+import lodash from "lodash"
+
 interface IProps {
     audioRef: React.RefObject<HTMLAudioElement>
-
 }
 
 const AudioControl: FC<IProps> = (props: IProps) => {
@@ -37,9 +38,12 @@ const AudioControl: FC<IProps> = (props: IProps) => {
     }), appShallowEqual)
 
     // -- 歌曲切换
-    function changeMusicHandle(isNext = true) {
+    const changeMusicHandle = lodash.throttle((isNext = true) => {
         dispatch(changeMusicAction(isNext))
-    }
+    }, 400)
+    // function changeMusicHandle(isNext = true) {
+    //     dispatch(changeMusicAction(isNext))
+    // }
 
     // -- 播放/暂停
     function playBtnClickHandle() { // -- 处理用户点击播放音乐 <播放/暂停>

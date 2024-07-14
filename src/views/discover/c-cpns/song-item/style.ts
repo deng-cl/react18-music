@@ -10,6 +10,10 @@ export const ItemWrapper = styled.div<{ $height: number }>`
     cursor: pointer;
     border-radius: 6px;
 
+    &.active {
+        background-color: ${props => props.theme.color.button_bg};
+    }
+
     &:hover {
         background-color: ${props => props.theme.color.hover_bg};
     }

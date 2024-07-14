@@ -52,7 +52,7 @@ export const OperatorWrapper = styled.div`
             }
             .ant-slider-step {
                 z-index: -1;
-                background-color: ${props => props.theme.textColor.secondary};
+                background-color: ${props => props.theme.color.button_bg};
             }
             .ant-slider-handle {
                 background-color: green;

@@ -6,6 +6,7 @@ import IconPlayerV2 from "@/assets/icon/player/icon-player-v2"
 import { appShallowEqual, useAppDispatch, useAppSelector } from "@/store/app-react-redux"
 import { fetchPlaySongInfoAction } from "@/views/player/store/module/player"
 import lodash from "lodash"
+import classNames from "classnames"
 
 interface IProps {
     songInfo: any,
@@ -29,7 +30,9 @@ const SongItem: FC<IProps> = (props: IProps) => {
         <ItemWrapper $height={height} onClick={e => {
             if (currentSong.id && currentSong.id === songInfo?.id) return // -- 判断点击播放的是否正在播放
             playerSong(songInfo?.id)
-        }}>
+        }}
+            className={classNames({ active: currentSong?.id === songInfo?.id })}
+        >
             <div className="left">
                 <div className="picture">
                     <img src={songInfo?.al?.picUrl} alt="" />

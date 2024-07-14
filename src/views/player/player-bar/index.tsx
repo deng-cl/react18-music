@@ -54,32 +54,28 @@ const PlayerBar: FC<IProps> = () => {
     useEffect(() => { // -- 处理音乐切换播放
         // -- 1. 播放音乐
         if (!audioRef.current) return
-        if (!currentSong?.id) return
+        // if (!currentSong?.id) return
 
-        audioRef.current!.src = getPlayerURL(currentSong.id)
+        audioRef.current!.src = getPlayerURL(currentSong?.id)
+
         audioRef.current.play().then(res => {
             dispatch(changePlayingAction(true))
-            console.log("歌曲播放成功");
+            console.log("歌曲播放成功", currentSong);
+            if (!NotFirstEnter.current) NotFirstEnter.current = true
         }).catch(err => { // -- 捕获首次进入页面时的错误，防止报错导致程序无法运行
             dispatch(changePlayingAction(false))
             console.log("歌曲播放失败:", err, currentSong); // -- 歌曲播放失败: DOMException: play() failed because the user didn't interact with the document first. --> 不允许在用户没有交互的情况下直接播放音频 / ...
-            // -- ---------
-            if (NotFirstEnter.current) {
-                message.error({
-                    content: "播放失败，将再1秒后自动切换至下一首!（NOT VIP）"
-                })
-                dispatch(changeMusicAction(true))
-            }
-            NotFirstEnter.current = true
-
-            return Promise.resolve()
+            if (!NotFirstEnter.current) NotFirstEnter.current = true
         })
 
-        audioRef.current.volume = volume
-
         // -- 2. 获取音乐总时长
-        dispatch(changeDurationAction(currentSong.dt))
+        dispatch(changeDurationAction(currentSong?.dt))
     }, [currentSong])
+
+    useEffect(() => { // -- 音量
+        if (!audioRef.current) return
+        audioRef.current.volume = volume
+    }, [volume])
 
     const audioTimeUpdateHandle = () => { // -- 音乐播放进度处理
         const currentTime = audioRef.current!.currentTime // -- 1. 获取当前播放时间（s）
@@ -108,6 +104,16 @@ const PlayerBar: FC<IProps> = () => {
     }
 
     const showDetailPage = () => dispatch(changeShowDetailAction(true)) // -- 显示播放详情页
+
+    function AudioErrorHanlde(e: any) { // -- 处理 audio 不能播放时的问题，进行自动切换下一首
+        // console.log("ERROR", e);
+        if (NotFirstEnter.current) {
+            message.error({
+                content: "播放失败，已自动切换至下一首!（NOT VIP）"
+            })
+            dispatch(changeMusicAction(true))
+        }
+    }
 
     return (
         <PlayerBarWrapper>
@@ -150,6 +156,7 @@ const PlayerBar: FC<IProps> = () => {
                 onEnded={e => audioPlayEndedHandle()}
                 onWaiting={e => { setLoading(true); console.log(333); }}
                 onCanPlay={e => { setLoading(false) }}
+                onError={AudioErrorHanlde}
             />
 
             {/* 歌词展示: 可能会删，看具体样式... */}

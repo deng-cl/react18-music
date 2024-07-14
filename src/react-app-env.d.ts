@@ -11,7 +11,9 @@ declare module 'rgbaster' {
 }
 
 declare module 'lodash' {
-    export default {
+    class Lodash {
         throttle(func: any | void, timeout: number)
+        debounce(func: any | void, timeout: number)
     }
+    export default new Lodash()
 }

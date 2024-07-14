@@ -130,8 +130,9 @@ const playerSlice = createSlice({
         },
 
         changePlaySongListAction(state, { payload }) {
-            IStorage.set("songList", payload) // -- 缓存当前播放列表
-            state.playSongList = payload
+            const playList = (payload as any[])?.filter(item => item) // -- 过滤掉一些可能不存在的歌曲
+            IStorage.set("songList", playList) // -- 缓存当前播放列表
+            state.playSongList = playList
         },
 
         changePlaySongIndexAction(state, { payload }) { // -- 修改下一首/上一首

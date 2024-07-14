@@ -18,10 +18,6 @@ const CurrentPlayMenu: FC<IProps> = () => {
         playSongIndex: state.player.playSongIndex
     }), appShallowEqual)
 
-    useEffect(() => {
-        console.log(playSongList[0]);
-    })
-
     const changePlaySongById = (id: number) => { // -- 切换歌曲
         dispatch(fetchPlaySongInfoAction(id))
     }
