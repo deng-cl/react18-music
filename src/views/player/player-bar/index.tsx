@@ -63,14 +63,16 @@ const PlayerBar: FC<IProps> = () => {
         }).catch(err => { // -- 捕获首次进入页面时的错误，防止报错导致程序无法运行
             dispatch(changePlayingAction(false))
             console.log("歌曲播放失败:", err, currentSong); // -- 歌曲播放失败: DOMException: play() failed because the user didn't interact with the document first. --> 不允许在用户没有交互的情况下直接播放音频 / ...
-            // // -- ---------
-            // if (NotFirstEnter.current) {
-            //     message.error({
-            //         content: "播放失败，将再1秒后自动切换至下一首!（NOT VIP）"
-            //     })
-            //     dispatch(changeMusicAction(true))
-            // }
-            // NotFirstEnter.current = true
+            // -- ---------
+            if (NotFirstEnter.current) {
+                message.error({
+                    content: "播放失败，将再1秒后自动切换至下一首!（NOT VIP）"
+                })
+                dispatch(changeMusicAction(true))
+            }
+            NotFirstEnter.current = true
+
+            return Promise.resolve()
         })
 
         audioRef.current.volume = volume
@@ -152,11 +154,16 @@ const PlayerBar: FC<IProps> = () => {
 
             {/* 歌词展示: 可能会删，看具体样式... */}
             {
-                showLyric && (
-                    <div className="lyric">
-                        {lyrics[lyricIndex]?.text || lyrics[lyricIndex - 1]?.text}
-                    </div>
-                )
+                (() => {
+                    if (lyrics?.length === 0) return <div className="lyric">暂无歌词</div>
+                    if (showLyric && lyrics[lyricIndex]?.text || lyrics[lyricIndex - 1]?.text) {
+                        return (
+                            <div className="lyric">
+                                {lyrics[lyricIndex]?.text || lyrics[lyricIndex - 1]?.text}
+                            </div>
+                        )
+                    }
+                })()
             }
 
             {/* 播放列表展示 */}

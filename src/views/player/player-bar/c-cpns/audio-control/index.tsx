@@ -121,7 +121,7 @@ const AudioControl: FC<IProps> = (props: IProps) => {
                     <Slider value={progress} step={0.4} tooltip={{ open: false }}
                         onChangeComplete={sliderChangeCompleteHandle}
                         onChange={sliderChangeHandle}
-                        disabled={!currentSong?.id && !canChangeSlider} // -- 当当前暂无歌曲播放时，禁用 slider 滑块
+                        disabled={!canChangeSlider} // -- 当当前暂无歌曲播放时，禁用 slider 滑块
                     />
                 </div>
                 <div className="tt" >{currentSong?.dt ? formatTime(currentSong?.dt) : "00:00"}</div>

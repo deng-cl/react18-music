@@ -1,4 +1,3 @@
-import Ranking from "@/views/ranking"
 import React from "react"
 import { Navigate, RouteObject } from "react-router-dom"
 
@@ -12,6 +11,8 @@ const VideoDetail = React.lazy(() => import("@/views/video-detail"))
 const SettingTheme = React.lazy(() => import("@/views/setting-theme"))
 
 const ShowIconTest = React.lazy(() => import("@/views/show-icon-test"))
+
+const Ranking = React.lazy(() => import("@/views/ranking"))
 
 const routes: RouteObject[] = [
     {

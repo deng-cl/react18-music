@@ -12,6 +12,8 @@ import IconTime from "@/assets/icon/player/icon-time"
 import CommomPaganition from "@/components/commom-paganition"
 import classNames from "classnames"
 import { AppContext } from "@/App"
+import { useAppDispatch } from "@/store/app-react-redux"
+import { changeLoadingAction } from "@/store/modules/main"
 
 interface IProps {
     children?: ReactNode
@@ -20,6 +22,8 @@ interface IProps {
 const VideoDetail: FC<IProps> = () => {
     const { id } = useParams()
     const [MVInfo, setMVInfo] = useState<any>({})
+
+    const dispatch = useAppDispatch()
 
     useEffect(() => {
         (async () => { // -- Fetch MV Detail Info
@@ -50,18 +54,22 @@ const VideoDetail: FC<IProps> = () => {
         })();
     }, [id])
 
-
     // -- 获取 MV 评论信息
     const [sortType, setSortType] = useState<number>(3)
     const [MVCommentList, setMVCommentList] = useState<any>([])
+    const [commentTotal, setCommentTotal] = useState(0)
     const [commentPage, setCommentPage] = useState<number>(0)
+    const cursor = useRef<any>(null)
     useEffect(() => {
         (async () => { // -- fetch MV comment list
-            const commentCOunt = MVOtherInfo.commentCount || 1000
-            const res = await fetchMVCommentsById(id as any, sortType, commentCOunt) as any
+            dispatch(changeLoadingAction(true))
+            const res = await fetchMVCommentsById(id as any, sortType, 16, commentPage + 1, sortType === 3 ? cursor.current : null) as any
+            cursor.current = res?.data?.cursor
             setMVCommentList(res?.data?.comments)
+            setCommentTotal(res?.data?.totalCount)
+            dispatch(changeLoadingAction(false))
         })();
-    }, [sortType, id])
+    }, [sortType, id, commentPage])
     function changeCommentSortType(sortType: number) {
         setCommentPage(0)
         setSortType(sortType)
@@ -146,10 +154,9 @@ const VideoDetail: FC<IProps> = () => {
                     <div className="list">
                         {
                             (() => {
-                                const sliceStart = commentPage * 16
-                                const sliceEnd = sliceStart + 16
+
                                 return (
-                                    MVCommentList?.slice(sliceStart, sliceEnd)?.map((item: any, index: number) => (
+                                    MVCommentList?.map((item: any, index: number) => (
                                         <div className="item" key={index}>
                                             <div className="user flex-row">
                                                 <img src={item.user.avatarUrl} alt="" />
@@ -171,7 +178,7 @@ const VideoDetail: FC<IProps> = () => {
                         defaultCurrent={1}
                         defaultPageSize={16}
                         current={commentPage + 1}
-                        total={MVCommentList?.length || 0}
+                        total={commentTotal}
                         onChange={(pageCount => changeCommentPageCode(pageCount - 1))}
                     />
                 </div>
