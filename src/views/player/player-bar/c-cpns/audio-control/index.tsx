@@ -1,4 +1,4 @@
-import { memo, useState } from "react"
+import { memo, useEffect, useState } from "react"
 import type { ReactNode, FC, Ref } from "react"
 import { ControlWrapper } from "./style"
 import { appShallowEqual, useAppDispatch, useAppSelector } from "@/store/app-react-redux"
@@ -82,6 +82,22 @@ const AudioControl: FC<IProps> = (props: IProps) => {
         dispatch(changeProgressAction(value))
     }
 
+    // -- 监听歌曲可以播放后再允许点击或拖动进度条
+    const [canChangeSlider, setCanChangeSlider] = useState(true)
+    useEffect(() => {
+        if (!audioRef.current) return
+        const canolayHandle = () => setCanChangeSlider(true)
+        const waitingHandle = () => setCanChangeSlider(false)
+        audioRef.current.addEventListener('canplay', canolayHandle)
+        audioRef.current.addEventListener('waiting', waitingHandle)
+
+        return () => {
+            if (!audioRef.current) return
+            audioRef.current.removeEventListener('canplay', canolayHandle)
+            audioRef.current.removeEventListener('waiting', waitingHandle)
+        }
+    }, [audioRef])
+
     return (
         <ControlWrapper>
             <div className="control">
@@ -105,7 +121,7 @@ const AudioControl: FC<IProps> = (props: IProps) => {
                     <Slider value={progress} step={0.4} tooltip={{ open: false }}
                         onChangeComplete={sliderChangeCompleteHandle}
                         onChange={sliderChangeHandle}
-                        disabled={!currentSong?.id && true && !!audioRef.current} // -- 当当前暂无歌曲播放时，禁用 slider 滑块
+                        disabled={!currentSong?.id && !canChangeSlider} // -- 当当前暂无歌曲播放时，禁用 slider 滑块
                     />
                 </div>
                 <div className="tt" >{currentSong?.dt ? formatTime(currentSong?.dt) : "00:00"}</div>

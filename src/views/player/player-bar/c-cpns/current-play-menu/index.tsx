@@ -1,4 +1,4 @@
-import { memo, useEffect } from "react"
+import { memo, useEffect, useRef } from "react"
 import type { ReactNode, FC } from "react"
 import { PlayMenuWrapper } from "./style"
 import { appShallowEqual, useAppDispatch, useAppSelector } from "@/store/app-react-redux"
@@ -26,8 +26,16 @@ const CurrentPlayMenu: FC<IProps> = () => {
         dispatch(fetchPlaySongInfoAction(id))
     }
 
+    // -- 处理播放列表的滚动位置（滚动到当前播放歌曲位置）
+    const MenuRef = useRef<HTMLDivElement>(null)
+    useEffect(() => {
+        if (!MenuRef.current) return
+        const scrollSize = playSongIndex * 44
+        MenuRef.current.scrollTo(0, scrollSize)
+    }, [playSongIndex])
+
     return (
-        <PlayMenuWrapper>
+        <PlayMenuWrapper ref={MenuRef}>
             {
                 playSongList.map((item, index) => (
                     <div className={classNames("item", { active: playSongIndex === index })} onClick={e => changePlaySongById(item?.id)} key={index} >

@@ -1,5 +1,6 @@
 import { fetchSongsInfo } from "@/service/modules/songs"
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { changeLoadingAction } from "./main"
 
 interface IState {
     entire: any,
@@ -10,8 +11,11 @@ interface IState {
 }
 
 export const fetchSongsPageDataAction = createAsyncThunk("fetch_songs_page_data_action", (state, { dispatch }) => {
+    dispatch(changeLoadingAction(true))
+
     fetchSongsInfo("华语").then((res: any) => {
         dispatch(changeChineseAction(res.playlists))
+        dispatch(changeLoadingAction(false))
     })
     fetchSongsInfo("古风").then((res: any) => {
         dispatch(changeAncientAction(res.playlists))

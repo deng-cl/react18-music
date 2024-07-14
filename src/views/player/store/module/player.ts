@@ -47,7 +47,7 @@ export const fetchPlaySongInfoAction = createAsyncThunk<void, number, IThunkStat
 
     // -- 准备播放该 id 这首歌曲，可以先从当前播放列表中查找是否存在该歌曲，不存在时在进行请求对应的歌曲数据
     const playSongList = state.player.playSongList
-    const findIndex = playSongList.findIndex(item => item.id === id)
+    const findIndex = playSongList.findIndex(item => item?.id === id)
     if (findIndex !== -1) {// -- 找到相同的 id，即列表中存在该歌曲信息 --> 直接在播放列表中获取对应数据
         const song = playSongList[findIndex]
         dispatch(changeCurrentSongAction(song))

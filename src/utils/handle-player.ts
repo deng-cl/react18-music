@@ -1,6 +1,6 @@
+import http from "@/service"
 
 export const getPlayerURL = (id: number) => `https://music.163.com/song/media/outer/url?id=${id}.mp3`
-
 
 export interface ILyric { time: number, text: string } // -- 歌词解析字段类型
 const timeRegExp = /\[(\d{2}):(\d{2})\.(\d{2,3})\]/ // -- 匹配时间的正则表达式: 如 --> "[00:14:00]出品：央视新闻×网易·云上"

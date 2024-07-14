@@ -1,7 +1,7 @@
 import { memo, useEffect, useRef } from "react"
 import type { ReactNode, FC } from "react"
 import { PlayerWrapper } from "./style"
-import { useAppDispatch, useAppSelector } from "@/store/app-react-redux"
+import { appShallowEqual, useAppDispatch, useAppSelector } from "@/store/app-react-redux"
 import classNames from "classnames"
 import AudioControl from "./player-bar/c-cpns/audio-control"
 import IconArrowTop from "@/assets/icon/header/icon-arrow-top"
@@ -21,7 +21,7 @@ const Player: FC<IProps> = (props: IProps) => {
         songInfo: state.player.currentSong,
         lyrics: state.player.lyrics,
         lyricIndex: state.player.lyricIndex,
-    }))
+    }), appShallowEqual)
 
     const hideDetailPage = () => dispatch(changeShowDetailAction(false))
 

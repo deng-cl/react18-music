@@ -62,15 +62,15 @@ const PlayerBar: FC<IProps> = () => {
             console.log("歌曲播放成功");
         }).catch(err => { // -- 捕获首次进入页面时的错误，防止报错导致程序无法运行
             dispatch(changePlayingAction(false))
-            console.log("歌曲播放失败:", err); // -- 歌曲播放失败: DOMException: play() failed because the user didn't interact with the document first. --> 不允许在用户没有交互的情况下直接播放音频 / ...
-            // -- ---------
-            if (NotFirstEnter.current) {
-                dispatch(changeMusicAction(true))
-                message.error({
-                    content: "播放失败，已自动切换至下一首!（NOT VIP）"
-                })
-            }
-            NotFirstEnter.current = true
+            console.log("歌曲播放失败:", err, currentSong); // -- 歌曲播放失败: DOMException: play() failed because the user didn't interact with the document first. --> 不允许在用户没有交互的情况下直接播放音频 / ...
+            // // -- ---------
+            // if (NotFirstEnter.current) {
+            //     message.error({
+            //         content: "播放失败，将再1秒后自动切换至下一首!（NOT VIP）"
+            //     })
+            //     dispatch(changeMusicAction(true))
+            // }
+            // NotFirstEnter.current = true
         })
 
         audioRef.current.volume = volume
@@ -146,7 +146,7 @@ const PlayerBar: FC<IProps> = () => {
             < audio ref={audioRef}
                 onTimeUpdate={audioTimeUpdateHandle}
                 onEnded={e => audioPlayEndedHandle()}
-                onWaiting={e => { setLoading(true) }}
+                onWaiting={e => { setLoading(true); console.log(333); }}
                 onCanPlay={e => { setLoading(false) }}
             />
 

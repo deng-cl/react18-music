@@ -6,7 +6,7 @@ class IStorage {
 
     static get(key: any) {
         const res = localStorage.getItem(key)
-        if (res) {
+        if (res && res !== "undefined") {
             return JSON.parse(res)
         }
         return ""

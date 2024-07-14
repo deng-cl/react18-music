@@ -9,3 +9,9 @@ declare module 'react-transition-group' {
 declare module 'rgbaster' {
     export default function analyze(imageUrl: string, options?: any): Promise<any>
 }
+
+declare module 'lodash' {
+    export default {
+        throttle(func: any | void, timeout: number)
+    }
+}

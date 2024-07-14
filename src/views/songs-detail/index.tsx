@@ -8,6 +8,8 @@ import SongItem from "../discover/c-cpns/song-item"
 import { useAppDispatch } from "@/store/app-react-redux"
 import { playSongListAction } from "../player/store/module/player"
 
+import lodash from "lodash"
+
 interface IProps {
     children?: ReactNode
 }
@@ -26,9 +28,9 @@ const SongsDetail: FC<IProps> = () => {
         console.log(dayjs.unix(1630769207371 / 1000));
     }, [])
 
-    function playSongsEntireSong() { // -- 播放歌单所有歌曲
+    const playSongsEntireSong = lodash.throttle(() => { // -- 播放歌单所有歌曲
         if (detailInfo?.tracks) dispatch(playSongListAction(detailInfo?.tracks))
-    }
+    }, 1000)
 
     return (
         <SongsDetailWrapper>

@@ -3,8 +3,9 @@ import type { FC } from "react"
 import { ItemWrapper } from "./style"
 import { formatTime, joinSongArtistNames } from "@/utils"
 import IconPlayerV2 from "@/assets/icon/player/icon-player-v2"
-import { useAppDispatch } from "@/store/app-react-redux"
+import { appShallowEqual, useAppDispatch, useAppSelector } from "@/store/app-react-redux"
 import { fetchPlaySongInfoAction } from "@/views/player/store/module/player"
+import lodash from "lodash"
 
 interface IProps {
     songInfo: any,
@@ -15,12 +16,20 @@ const SongItem: FC<IProps> = (props: IProps) => {
     const { songInfo, height = 40 } = props
 
     const dispatch = useAppDispatch()
-    function playerSong(id: number) {
+
+    const { currentSong } = useAppSelector(state => ({ // -- player state
+        currentSong: state.player.currentSong
+    }), appShallowEqual)
+
+    const playerSong = lodash.throttle((id: number) => { // -- 防抖
         dispatch(fetchPlaySongInfoAction(id))
-    }
+    }, 600)
 
     return (
-        <ItemWrapper $height={height} onClick={e => playerSong(songInfo?.id)}>
+        <ItemWrapper $height={height} onClick={e => {
+            if (currentSong.id && currentSong.id === songInfo?.id) return // -- 判断点击播放的是否正在播放
+            playerSong(songInfo?.id)
+        }}>
             <div className="left">
                 <div className="picture">
                     <img src={songInfo?.al?.picUrl} alt="" />

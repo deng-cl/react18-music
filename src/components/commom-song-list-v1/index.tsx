@@ -5,6 +5,7 @@ import CommomPaganition from "../commom-paganition"
 import SongItem from "@/views/discover/c-cpns/song-item"
 import { playSongListAction } from "@/views/player/store/module/player"
 import { useAppDispatch } from "@/store/app-react-redux"
+import lodash from "lodash"
 
 interface IProps {
     title: string
@@ -26,10 +27,10 @@ const CommomSongListV1: FC<IProps> = (props: IProps) => {
         setCurPageCode(pageCode - 1) // -- 因为 curPageCode 存储的为索引从 0 开始 --> 所以需要减 1
     }
 
-    const playSongListEntire = () => { // -- 播放列表所有歌曲
+    const playSongListEntire = lodash.throttle(() => { // -- 播放列表所有歌曲
         const songList = songListInfo?.tracks
         if (songList) dispatch(playSongListAction(songList))
-    }
+    }, 1000)
 
     return (
         <SongListV1Wrapper>
@@ -39,7 +40,7 @@ const CommomSongListV1: FC<IProps> = (props: IProps) => {
                         {title || "默认歌单列表标题"}
                         <div className="count">歌曲数量: {songListInfo?.tracks?.length}</div>
                     </span>
-                    <div className="play-entire btn" onClick={e => playSongListEntire()}>播放全部</div>
+                    <div className="play-entire btn" onClick={playSongListEntire}>播放全部</div>
                 </div>
 
                 <div className="list">

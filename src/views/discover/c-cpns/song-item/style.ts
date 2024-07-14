@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const ItemWrapper = styled.div<{ $height: number }>`
+    user-select: none;
     width: 100%;
     height: ${props => props.$height + "px"};
     display: flex;
