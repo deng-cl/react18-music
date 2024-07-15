@@ -60,11 +60,11 @@ const PlayerBar: FC<IProps> = () => {
 
         audioRef.current.play().then(res => {
             dispatch(changePlayingAction(true))
-            console.log("歌曲播放成功", currentSong);
+            // console.log("歌曲播放成功", currentSong);
             if (!NotFirstEnter.current) NotFirstEnter.current = true
         }).catch(err => { // -- 捕获首次进入页面时的错误，防止报错导致程序无法运行
             dispatch(changePlayingAction(false))
-            console.log("歌曲播放失败:", err, currentSong); // -- 歌曲播放失败: DOMException: play() failed because the user didn't interact with the document first. --> 不允许在用户没有交互的情况下直接播放音频 / ...
+            // console.log("歌曲播放失败:", err, currentSong); // -- 歌曲播放失败: DOMException: play() failed because the user didn't interact with the document first. --> 不允许在用户没有交互的情况下直接播放音频 / ...
             if (!NotFirstEnter.current) NotFirstEnter.current = true
         })
 

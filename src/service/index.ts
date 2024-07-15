@@ -6,7 +6,7 @@ const http = new HRequest({ // 配置封装的当前 axios 实例的默认参数
     timeout: TIME_OUT,
     interceptors: {
         requestInterceptor(config) {
-            console.log("requestInterceptor");
+            // console.log("requestInterceptor");
             return config
         }
     }

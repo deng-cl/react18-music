@@ -93,7 +93,7 @@ const VideoDetail: FC<IProps> = () => {
         const baseHeight = leftContentRef.current?.clientHeight ?? 0
         const commentHeight = commentRef.current?.clientHeight ?? 0
         const scrollSize = baseHeight - commentHeight
-        console.log(baseHeight, commentHeight, scrollSize);
+        // console.log(baseHeight, commentHeight, scrollSize);
         pageRef?.current?.scrollTo(0, scrollSize) // -- 进行相应的滚动
     }
 

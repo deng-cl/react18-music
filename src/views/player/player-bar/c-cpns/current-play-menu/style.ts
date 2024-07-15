@@ -35,7 +35,7 @@ export const PlayMenuWrapper = styled.div`
         }
 
         &.active {
-            background-color:${props => props.theme.color.button_bg};
+            background-color:${props => props.theme.color.hover_bg};
             color:${props => props.theme.textColor.primary};
         }
 

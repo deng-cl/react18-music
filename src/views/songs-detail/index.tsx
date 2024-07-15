@@ -25,7 +25,7 @@ const SongsDetail: FC<IProps> = () => {
             setDetailInfo(res.playlist)
         })
 
-        console.log(dayjs.unix(1630769207371 / 1000));
+        // console.log(dayjs.unix(1630769207371 / 1000));
     }, [])
 
     const playSongsEntireSong = lodash.throttle(() => { // -- 播放歌单所有歌曲

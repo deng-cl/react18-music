@@ -131,7 +131,7 @@ const playerSlice = createSlice({
 
         changePlaySongListAction(state, { payload }) {
             const playList = (payload as any[])?.filter(item => item) // -- 过滤掉一些可能不存在的歌曲
-            console.log(playList);
+            // console.log(playList);
 
             IStorage.set("songList", playList) // -- 缓存当前播放列表
             state.playSongList = playList
