@@ -9,7 +9,7 @@ interface IState {
 
 }
 
-const volume = IStorage.get("volume")
+const volume = IStorage.get("volume") || 0.5
 const initialState: IState = {
     showLyric: false,
     showVolumeControl: false,

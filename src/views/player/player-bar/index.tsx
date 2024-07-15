@@ -163,12 +163,14 @@ const PlayerBar: FC<IProps> = () => {
             {
                 (() => {
                     if (lyrics?.length === 0) return <div className="lyric">暂无歌词</div>
-                    if (showLyric && lyrics[lyricIndex]?.text || lyrics[lyricIndex - 1]?.text) {
-                        return (
-                            <div className="lyric">
-                                {lyrics[lyricIndex]?.text || lyrics[lyricIndex - 1]?.text}
-                            </div>
-                        )
+                    if (showLyric) {
+                        if (lyrics[lyricIndex]?.text || lyrics[lyricIndex - 1]?.text) {
+                            return (
+                                <div className="lyric">
+                                    {lyrics[lyricIndex]?.text || lyrics[lyricIndex - 1]?.text}
+                                </div>
+                            )
+                        }
                     }
                 })()
             }

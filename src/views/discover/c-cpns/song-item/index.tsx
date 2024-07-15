@@ -28,7 +28,7 @@ const SongItem: FC<IProps> = (props: IProps) => {
 
     return (
         <ItemWrapper $height={height} onClick={e => {
-            if (currentSong.id && currentSong.id === songInfo?.id) return // -- 判断点击播放的是否正在播放
+            if (currentSong?.id && currentSong?.id === songInfo?.id) return // -- 判断点击播放的是否正在播放
             playerSong(songInfo?.id)
         }}
             className={classNames({ active: currentSong?.id === songInfo?.id })}

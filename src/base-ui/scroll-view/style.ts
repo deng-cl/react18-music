@@ -17,6 +17,7 @@ export const ViewWrapper = styled.div`
     }
 
     > .left, >.right {
+        user-select: none;
         position: absolute;
         top: 50%;
         transform: translateY(-50%);

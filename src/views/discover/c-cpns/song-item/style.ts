@@ -11,7 +11,7 @@ export const ItemWrapper = styled.div<{ $height: number }>`
     border-radius: 6px;
 
     &.active {
-        background-color: ${props => props.theme.color.button_bg};
+        background-color: ${props => props.theme.color.hover_bg};
     }
 
     &:hover {

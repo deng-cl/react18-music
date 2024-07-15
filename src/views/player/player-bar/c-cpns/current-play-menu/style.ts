@@ -18,6 +18,7 @@ export const PlayMenuWrapper = styled.div`
     }
 
     > .item {
+        user-select: none;
         margin-top: 4px;
         height: 40px;
         border-radius: 4px;
@@ -29,8 +30,13 @@ export const PlayMenuWrapper = styled.div`
         font-size:${props => props.theme.textSize.small};
         color:${props => props.theme.textColor.secondary};
 
+        &:not(.active) {
+            cursor: pointer;
+        }
+
         &.active {
             background-color:${props => props.theme.color.button_bg};
+            color:${props => props.theme.textColor.primary};
         }
 
         &:hover {

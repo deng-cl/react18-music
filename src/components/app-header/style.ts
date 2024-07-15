@@ -33,6 +33,7 @@ export const HeaderWrapper = styled.div`
         }
 
         .btn {
+            user-select: none;
             padding: 2px 8px;
             margin: 0 6px;
             cursor: no-drop;
