@@ -61,9 +61,11 @@ const SongsDetail: FC<IProps> = () => {
     useEffect(() => {
         if (songListInfo.length === 0) return
 
+        if (scrollable === 0) setOffset(offset + INITAL_DISPLAY_SONG_COUNT) // -- 初始进入: 当屏幕高度高于显示的数据时，直接请求更多数据
+
         if (offset >= songListInfo.length) {
             if (removeListenerRef.current) removeListenerRef.current() // -- 取消 scroll 的监听 --> 性能优化
-            console.log("END");
+            // console.log("END");
             return
         }
 
@@ -77,7 +79,7 @@ const SongsDetail: FC<IProps> = () => {
                 setLoading(false)
             })
         }
-    }, [scrollY, scrollable])
+    }, [scrollY, scrollable, songListInfo.length])
 
     return (
         <SongsDetailWrapper>

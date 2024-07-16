@@ -39,13 +39,13 @@ const HISTORY_VERSION_INFO: IVersionItem[] = [ // -- hstory version info list
         desc: "Fix: 修复 MV 切换评论排序数据获取不到问题",
         date: "2024/7/16"
     }
-]
+].reverse()
 
 const Version: FC<IProps> = () => {
     return (
         <VersionWrapper>
             {
-                HISTORY_VERSION_INFO.reverse().map(item => (
+                HISTORY_VERSION_INFO.map(item => (
                     <div className="item" key={item.vNumber}>
                         <VersionItem itemData={item} />
                     </div>
