@@ -57,4 +57,9 @@ export const DiscoverWrapper = styled.div`
             }
         }
     }
+
+    > .loading {
+        margin: 14px 0;
+        text-align: center;
+    }
 `

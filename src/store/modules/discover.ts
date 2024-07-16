@@ -3,13 +3,13 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export const fetchDiscoverPageDataAction = createAsyncThunk("fetch_discover_data_action", (state, { dispatch }) => {
     fetchMusicBannerInfo().then((res: any) => {
-        dispatch(changeBannerAction(res.banners))
+        dispatch(changeBannerAction(res?.banners || []))
     })
     fetchRecommendSongs().then((res: any) => {
-        dispatch(changeRecommendSongsAction(res.result))
+        dispatch(changeRecommendSongsAction(res?.result || []))
     })
     fetchHotPlaySongInfoList().then((res: any) => {
-        dispatch(changeHotSongListAction(res.playlist))
+        dispatch(changeHotSongListAction(res?.playlist || {}))
     })
 })
 

@@ -9,6 +9,7 @@ import { appShallowEqual, useAppDispatch, useAppSelector } from "@/store/app-rea
 import ScrollView from "@/base-ui/scroll-view"
 import CommomSongListV1 from "@/components/commom-song-list-v1"
 import KeepAlive, { useAliveController } from "react-activation"
+import { Spin } from "antd"
 
 
 interface IProps {
@@ -53,13 +54,24 @@ const Discover: FC<IProps> = () => {
                 }
             </div>
 
-            <KeepAlive cacheKey={"discover:CommomSongListV1"} name='discover:CommomSongListV1'>
-                <CommomSongListV1
-                    title="Recommend song"
-                    paginationConfig={{ total: total, defaultPageSize: 10 }}
-                    songListInfo={hotSongList}
-                />
-            </KeepAlive>
+
+            {
+                hotSongList?.tracks ? (
+                    <KeepAlive cacheKey={"discover:CommomSongListV1"} name='discover:CommomSongListV1'>
+                        <CommomSongListV1
+                            title="Recommend song"
+                            paginationConfig={{ total: total, defaultPageSize: 10 }}
+                            songListInfo={hotSongList}
+                        />
+                    </KeepAlive>
+                ) : (
+                    <div className="loading">
+                        <Spin size="small" />
+                    </div>
+                )
+            }
+
+
         </DiscoverWrapper >
 
         //  git commit -m "discover 页面中的 song-list 歌曲列表数据展示封装展示"
