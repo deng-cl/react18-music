@@ -8,6 +8,7 @@ import SongsItemV1 from "./c-cpns/songs-item-v1"
 import { appShallowEqual, useAppDispatch, useAppSelector } from "@/store/app-react-redux"
 import ScrollView from "@/base-ui/scroll-view"
 import CommomSongListV1 from "@/components/commom-song-list-v1"
+import KeepAlive, { useAliveController } from "react-activation"
 
 
 interface IProps {
@@ -32,26 +33,34 @@ const Discover: FC<IProps> = () => {
     }, [hotSongList])
 
     return (
+
+        // <KeepAlive cacheKey="discover" name="discover"  >
         <DiscoverWrapper>
             <Banner />
             <div className="rec-songs">
-                <ScrollView>
-                    {
-                        recommendSongs.map(item => (
-                            <div className="item" key={item.id}>
-                                <SongsItemV1 songsInfo={item} />
-                            </div>
-                        ))
-                    }
-                </ScrollView>
+                {
+                    <ScrollView>
+                        {
+                            recommendSongs.map((item, index) => (
+                                <KeepAlive cacheKey={"discover:" + index.toString()} name='discover:songItemV1' key={index}>
+                                    <div className="item" >
+                                        <SongsItemV1 songsInfo={item} />
+                                    </div>
+                                </KeepAlive>
+                            ))
+                        }
+                    </ScrollView>
+                }
             </div>
 
-            <CommomSongListV1
-                title="Recommend song"
-                paginationConfig={{ total: total, defaultPageSize: 10 }}
-                songListInfo={hotSongList}
-            />
-        </DiscoverWrapper>
+            <KeepAlive cacheKey={"discover:CommomSongListV1"} name='discover:CommomSongListV1'>
+                <CommomSongListV1
+                    title="Recommend song"
+                    paginationConfig={{ total: total, defaultPageSize: 10 }}
+                    songListInfo={hotSongList}
+                />
+            </KeepAlive>
+        </DiscoverWrapper >
 
         //  git commit -m "discover 页面中的 song-list 歌曲列表数据展示封装展示"
     )

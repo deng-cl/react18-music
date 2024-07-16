@@ -6,6 +6,7 @@ import SongItem from "@/views/discover/c-cpns/song-item"
 import { playSongListAction } from "@/views/player/store/module/player"
 import { useAppDispatch } from "@/store/app-react-redux"
 import lodash from "lodash"
+import KeepAlive from "react-activation"
 
 interface IProps {
     title: string
@@ -49,10 +50,11 @@ const CommomSongListV1: FC<IProps> = (props: IProps) => {
                             const sliceStart = curPageCode * paginationConfig.defaultPageSize
                             const sliceEnd = sliceStart + paginationConfig.defaultPageSize
                             return (
-                                songListInfo?.tracks?.slice(sliceStart, sliceEnd).map((item: any) => (
+                                songListInfo?.tracks?.slice(sliceStart, sliceEnd).map((item: any, index: number) => (
                                     <div className="item" key={item.id}>
                                         <SongItem songInfo={item} />
                                     </div>
+
                                 ))
                             )
                         })()

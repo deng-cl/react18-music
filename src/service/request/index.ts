@@ -1,6 +1,7 @@
 import axios from "axios"
 import type { AxiosInstance, InternalAxiosRequestConfig, AxiosResponse } from "axios"
 import type { HRequestInterceptors, HRequestConfig } from "./types" /* 类型扩展 */
+import { message } from "antd"
 
 class HRequest { // H: 个人昵称
     instance: AxiosInstance
@@ -32,6 +33,10 @@ class HRequest { // H: 个人昵称
                     console.log("处理对应的错误信息")
                 }
 
+                if (config.data?.code === 400) {
+                    console.log("处理对应的错误信息")
+                }
+
                 return config.data /* 响应拦截: 只返回服务器所响应的数据 */
             },
             err => { /* 请求失败响应拦截，处理全局请求失败的逻辑 */
@@ -39,6 +44,11 @@ class HRequest { // H: 个人昵称
                     console.log("404错误~");
                 }
                 /* oether error handle */
+
+                message.error({
+                    key: err?.response?.data?.code,
+                    content: err?.response?.data?.code + ": " + err?.response?.data?.message
+                })
             }
         )
     }

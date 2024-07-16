@@ -1,10 +1,11 @@
 import styled from "styled-components";
 
 export const SectionWrapper = styled.div`
-    margin-bottom: 24px;
+    /* margin-bottom: 24px; */
     user-select: none;
 
    > .section {
+        margin-bottom: 14px;
         > .icon {
             display: flex;
             align-items: center;
@@ -27,7 +28,7 @@ export const SectionWrapper = styled.div`
             cursor: pointer;
 
             &:hover {
-                    
+
             }
         }
 

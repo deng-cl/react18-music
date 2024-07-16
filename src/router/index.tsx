@@ -1,4 +1,5 @@
 import React from "react"
+import KeepAlive from "react-activation"
 import { Navigate, RouteObject } from "react-router-dom"
 
 // -- 路由懒加载（pageCount: 7）
@@ -14,6 +15,10 @@ const ShowIconTest = React.lazy(() => import("@/views/show-icon-test"))
 
 const Ranking = React.lazy(() => import("@/views/ranking"))
 
+const Version = React.lazy(() => import("@/views/version"))
+
+const SettingBase = React.lazy(() => import("@/views/setting-base"))
+
 const routes: RouteObject[] = [
     {
         path: "/",
@@ -21,7 +26,10 @@ const routes: RouteObject[] = [
     },
     {
         path: "/discover",
-        element: <Discover />,
+        element: (
+
+            <Discover />
+        ),
     },
     {
         path: "/songs",
@@ -48,8 +56,16 @@ const routes: RouteObject[] = [
         element: <SettingTheme />
     },
     {
+        path: "/base",
+        element: <SettingBase />
+    },
+    {
         path: "/ranking",
         element: <Ranking />
+    },
+    {
+        path: "/version",
+        element: <Version />
     },
     { // -- test --> 主要用于展示项目中的 icon 方便选择使用
         path: "/icon",
@@ -59,7 +75,7 @@ const routes: RouteObject[] = [
 
 export default routes
 
-export type IRoutesPath = "/" | "/discover" | "/songs" | "/songs-detail" | "/player-detail" | "/video" | "/video-detail" | "/theme" | "/ranking" | "none"
+export type IRoutesPath = "/" | "/discover" | "/songs" | "/songs-detail" | "/player-detail" | "/video" | "/video-detail" | "/theme" | "/base" | "/ranking" | "/version" | "none"
 export enum routepataMapPagename {
     "/discover" = "Home",
     "/songs" = "Songs",
@@ -68,5 +84,7 @@ export enum routepataMapPagename {
     "/video" = "Video/MV",
     "/video-detail" = "MVDetail",
     "/theme" = "Theme",
-    "/ranking" = "Ranking"
+    "/base" = "Base",
+    "/ranking" = "Ranking",
+    "/version" = "History Version",
 }

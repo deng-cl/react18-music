@@ -10,6 +10,9 @@ import IconRanking from "@/assets/icon/nav/icon-ranking"
 // -- setting comp
 import IconSetting from "@/assets/icon/nav/icon-setting"
 import IconTheme from "@/assets/icon/nav/icon-theme"
+import IconVersion from "@/assets/icon/nav/icon-version"
+import IconAppInfo from "@/assets/icon/nav/icon-app-info"
+import IconSettingBase from "@/assets/icon/nav/icon-setting-base"
 
 const NAV_LIST_DATA: TSectionListData = [
     [ // -- home item config
@@ -52,6 +55,25 @@ const NAV_LIST_DATA: TSectionListData = [
             icon: <IconTheme />,
             name: "Theme",
             routePath: "/theme"
+        },
+        {
+            icon: <IconSettingBase />,
+            name: "Base",
+            routePath: "/base"
+        },
+    ],
+
+    [ // -- app info item config
+        {
+            icon: <IconAppInfo />,
+            name: "App Info",
+            routePath: "none",
+            isTitle: true
+        },
+        {
+            icon: <IconVersion />,
+            name: "Version",
+            routePath: "/version"
         }
     ]
 ]

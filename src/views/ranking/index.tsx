@@ -5,6 +5,7 @@ import { appShallowEqual, useAppDispatch, useAppSelector } from "@/store/app-rea
 import { fetchRankingPageDataAction } from "@/store/modules/ranking"
 import classNames from "classnames"
 import CommomSongListV1 from "@/components/commom-song-list-v1"
+import KeepAlive from "react-activation"
 
 interface IProps {
     children?: ReactNode
@@ -25,6 +26,7 @@ const Ranking: FC<IProps> = () => {
     const [songMenu, setSongMenu] = useState<any>({}) // -- 所要展示的歌曲列表
 
     useEffect(() => {
+        if (newSong.name && newSong.name !== "") return // -- 已有数据 --> 不需要再重复请求
         dispatch(fetchRankingPageDataAction())
     }, [])
 
@@ -32,10 +34,16 @@ const Ranking: FC<IProps> = () => {
         setSongMenu(newSong)
     }, [newSong])
 
-    const switchSongMenuExhibition = (name: RankingType) => { // -- 切换歌曲榜单列表展示
-        if (name === "NewSong") setSongMenu(newSong)
-        else if (name === "Original") setSongMenu(original)
-        else setSongMenu(surge)
+    // const switchSongMenuExhibition = (name: RankingType) => { // -- 切换歌曲榜单列表展示
+    //     if (name === "NewSong") setSongMenu(newSong)
+    //     else if (name === "Original") setSongMenu(original)
+    //     else setSongMenu(surge)
+    // }
+
+    const getSongMenuByName = (name: RankingType) => { // -- 切换歌曲榜单列表展示
+        if (name === "NewSong") return newSong
+        else if (name === "Original") return original
+        else return surge
     }
 
     return (
@@ -47,21 +55,28 @@ const Ranking: FC<IProps> = () => {
                         const MenuList: RankingType[] = ["NewSong", "Original", "Surge"]
                         return MenuList.map(item =>
                             <div className={classNames("item", { active: curShowMenuTitle === item })} key={item}
-                                onClick={e => { switchSongMenuExhibition(item as any), setCurShowMenuTitle(item) }}
-
+                                onClick={e => { setCurShowMenuTitle(item) }}
                             >{item}</div>)
                     })()
                 }
             </div>
-            <div className="content">
-                <CommomSongListV1
-                    title={
-                        curShowMenuTitle === "NewSong" ? "新歌榜" : curShowMenuTitle === "Original" ? "原创榜" : "飙升榜"
+            <KeepAlive cacheKey={"ranking:..."} name='ranking:...'>
+                <div className="content">
+                    {
+                        (["NewSong", "Original", "Surge"] as RankingType[]).map(item => (
+                            <div className="item" key={item} style={{
+                                display: curShowMenuTitle === item ? "block" : "none"
+                            }}>
+                                <CommomSongListV1
+                                    title={item === "NewSong" ? "新歌榜" : item === "Original" ? "原创榜" : "飙升榜"}
+                                    paginationConfig={{ total: getSongMenuByName(item)?.tracks?.length, defaultPageSize: 10 }}
+                                    songListInfo={getSongMenuByName(item)}
+                                />
+                            </div>
+                        ))
                     }
-                    paginationConfig={{ total: songMenu?.tracks?.length, defaultPageSize: 10 }}
-                    songListInfo={songMenu}
-                />
-            </div>
+                </div>
+            </KeepAlive>
         </RankingWrapper>
     )
 }

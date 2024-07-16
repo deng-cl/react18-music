@@ -33,7 +33,7 @@ const VideoItemV1: FC<IProps> = (props: IProps) => {
             </div>
             <div className="info">
                 <div className="name">{MVData?.mv?.title}</div>
-                <div className="arts">-- {joinSongArtistNames(MVData?.mv?.artists)}</div>
+                <div className="arts">{joinSongArtistNames(MVData?.mv?.artists)}</div>
             </div>
         </ItemWrapper>
     )

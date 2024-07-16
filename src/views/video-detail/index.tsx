@@ -63,7 +63,13 @@ const VideoDetail: FC<IProps> = () => {
     useEffect(() => {
         (async () => { // -- fetch MV comment list
             dispatch(changeLoadingAction(true))
-            const res = await fetchMVCommentsById(id as any, sortType, 16, commentPage + 1, sortType === 3 ? cursor.current : null) as any
+
+            let cursorParam: any = null
+            if (sortType === 3) {
+                cursorParam = !cursor.current?.includes("normalHot") ? cursor.current : null
+            }
+
+            const res = await fetchMVCommentsById(id as any, sortType, 16, commentPage + 1, cursorParam) as any
             cursor.current = res?.data?.cursor
             setMVCommentList(res?.data?.comments)
             setCommentTotal(res?.data?.totalCount)
@@ -137,14 +143,14 @@ const VideoDetail: FC<IProps> = () => {
                         <div className="sort flex-row">
                             {
                                 (() => {
-                                    const fields = ["推荐", "热度", "时间"]
+                                    const fields = ["热度", "时间"]
                                     return fields.map((item, index: number) => (
                                         <div className="item flex-row" key={item}>
                                             <div
-                                                className={classNames("btn", { active: (index + 1) === sortType })}
-                                                onClick={e => changeCommentSortType(index + 1)}
+                                                className={classNames("btn", { active: (index + 2) === sortType })}
+                                                onClick={e => changeCommentSortType(index + 2)}
                                             >{item}</div>
-                                            {index !== 2 && "|"}
+                                            {index !== 1 && "|"}
                                         </div>
                                     ))
                                 })()

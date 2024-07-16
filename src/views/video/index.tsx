@@ -4,6 +4,7 @@ import { VideoWrapper } from "./style"
 import VideoItemV1 from "./c-cpns/video-item-v1"
 import { appShallowEqual, useAppDispatch, useAppSelector } from "@/store/app-react-redux"
 import { fetchVideoPageDataAction } from "@/store/modules/video"
+import KeepAlive from "react-activation"
 
 interface IProps {
     children?: ReactNode
@@ -24,9 +25,11 @@ const Video: FC<IProps> = () => {
         <VideoWrapper>
             <div className="list">
                 {
-                    MVTop.map((item: any) => (
+                    MVTop.map((item: any, index: number) => (
                         <div className="item" key={item.id}>
-                            <VideoItemV1 MVData={item} />
+                            <KeepAlive cacheKey={"video:item" + index} name='video:item'>
+                                <VideoItemV1 MVData={item} />
+                            </KeepAlive>
                         </div>
                     ))
                 }

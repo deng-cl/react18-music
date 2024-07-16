@@ -8,7 +8,7 @@ const http = new HRequest({ // 配置封装的当前 axios 实例的默认参数
         requestInterceptor(config) {
             // console.log("requestInterceptor");
             return config
-        }
+        },
     }
 })
 

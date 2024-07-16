@@ -16,9 +16,16 @@ export const ItemWrapper = styled.div`
         color: white;
         fill: white;
         font-size: ${props => props.theme.textSize.small};
+        /* max-height: 123px; */
+        height: 0;
+        padding: 60px 0;
+        overflow: hidden;
+        border-radius: 6px;
         img {
+            position: absolute;
+            top: 0;
             width: 100%;
-            border-radius: 6px;
+            height: 100%;
         }
         .al-info {
             position: absolute;
@@ -33,6 +40,9 @@ export const ItemWrapper = styled.div`
             .count {
                 display: flex;
                 align-items: center;
+                .icon {
+                    fill: white;
+                }
                 > span {
                     margin-left: 4px;
                 }
@@ -43,12 +53,15 @@ export const ItemWrapper = styled.div`
 
     .info {
         display: flex;
+        flex-flow: column nowrap;
         margin-top: 4px;
         padding: 0 4px;
         box-sizing: border-box;
 
         .arts {
-            margin-left: 4px;
+            margin-top: 6px;
+            color:${props => props.theme.textColor.secondary};
+            font-size: ${props => props.theme.textSize.small};
         }
     }
 `

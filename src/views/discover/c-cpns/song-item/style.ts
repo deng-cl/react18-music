@@ -53,8 +53,7 @@ export const ItemWrapper = styled.div<{ $height: number }>`
             margin-left: 6px;
             .name {
                 width: calc(100% - 40px);
-                color:${props => props.theme.textColor.primary};
-
+                /* color:${props => props.theme.textColor.primary}; */
             }
             .ars {
                 width: calc(100% - 40px);

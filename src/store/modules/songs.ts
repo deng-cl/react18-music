@@ -7,28 +7,61 @@ interface IState {
     chinese: any, // -- 华语
     ancient: any, // -- 古风
     popular: any, // -- 流行
-    EA: any // -- 欧美
+    EA: any, // -- 欧美
+    filterFields: SongsMenuType[] // -- 页面数据展示过滤
+
+    songsInfoInEntire: any
 }
 
-export const fetchSongsPageDataAction = createAsyncThunk("fetch_songs_page_data_action", (state, { dispatch }) => {
+export type SongsMenuType = "华语" | "古风" | "欧美" | "流行" | "全部"
+
+export const fetchSongsPageDataAction = createAsyncThunk("fetch_songs_page_data_action", (type: SongsMenuType, { dispatch }) => {
     dispatch(changeLoadingAction(true))
 
-    fetchSongsInfo("华语").then((res: any) => {
-        dispatch(changeChineseAction(res.playlists))
+    fetchSongsInfo(type).then((res: any) => {
+        switch (type) {
+            case "华语":
+                dispatch(changeChineseAction(res.playlists))
+                break
+            case "古风":
+                dispatch(changeAncientAction(res.playlists))
+                break
+            case "欧美":
+                dispatch(changeEAAction(res.playlists))
+                break
+            case "流行":
+                dispatch(changePopularAction(res.playlists))
+                break
+            case "全部":
+                dispatch(changeEntireAction(res.playlists))
+                break
+            default:
+                console.log("Error: songs state --> fetchSongsPageDataAction");
+        }
+
         dispatch(changeLoadingAction(false))
     })
-    fetchSongsInfo("古风").then((res: any) => {
-        dispatch(changeAncientAction(res.playlists))
-    })
-    fetchSongsInfo("欧美").then((res: any) => {
-        dispatch(changeEAAction(res.playlists))
-    })
-    fetchSongsInfo("流行").then((res: any) => {
-        dispatch(changePopularAction(res.playlists))
-    })
-    fetchSongsInfo("全部").then((res: any) => {
-        dispatch(changeEntireAction(res.playlists))
-    })
+
+    // fetchSongsInfo("华语").then((res: any) => {
+    //     dispatch(changeChineseAction(res.playlists))
+    //     dispatch(changeLoadingAction(false))
+    // })
+
+    // fetchSongsInfo("古风").then((res: any) => {
+    //     dispatch(changeAncientAction(res.playlists))
+    // })
+
+    // fetchSongsInfo("欧美").then((res: any) => {
+    //     dispatch(changeEAAction(res.playlists))
+    // })
+
+    // fetchSongsInfo("流行").then((res: any) => {
+    //     dispatch(changePopularAction(res.playlists))
+    // })
+
+    // fetchSongsInfo("全部").then((res: any) => {
+    //     dispatch(changeEntireAction(res.playlists))
+    // })
 })
 
 
@@ -38,6 +71,9 @@ const initialState: IState = {
     ancient: [],
     popular: [],
     EA: [],
+    filterFields: ["华语"],
+
+    songsInfoInEntire: {}
 }
 
 const songsSlice = createSlice({
@@ -59,6 +95,12 @@ const songsSlice = createSlice({
         changeEntireAction(state, { payload }) {
             state.entire = payload
         },
+        changeFilterFieldsAction(state, { payload }) {
+            state.filterFields = payload
+        },
+        changeSongsInfoInEntireAction(state, { payload }) {
+            state.songsInfoInEntire = payload
+        }
     }
 })
 
@@ -67,7 +109,9 @@ export const {
     changeChineseAction,
     changeEAAction,
     changePopularAction,
-    changeEntireAction
+    changeEntireAction,
+    changeFilterFieldsAction,
+    changeSongsInfoInEntireAction
 } = songsSlice.actions
 
 export default songsSlice.reducer

@@ -1,6 +1,6 @@
 import http from "@/service"
 
-export const fetchSongInfoById = (ids: number) => {
+export const fetchSongInfoById = (ids: number | string) => {
     return http.get({ url: "/song/detail", params: { ids } })
 }
 

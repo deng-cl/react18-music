@@ -49,6 +49,7 @@ export const AppWrapper = styled.div`
         .content {
             padding-right: 4px;
             box-sizing: border-box;
+            /* overflow-y: auto; */
         }
 
         /* 滚动条样式设置 */
