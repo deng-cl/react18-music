@@ -43,7 +43,9 @@ const SongItem: FC<IProps> = (props: IProps) => {
                 </div>
             </div>
             {/* ar */}
-            <div className="center">{songInfo?.al?.name}</div>
+            <div className="center">
+                <div className="text single-line">{songInfo?.al?.name}</div>
+            </div>
             <div className="right">
                 <div className="time">{formatTime(songInfo?.dt)}</div>
                 <div className="icons">

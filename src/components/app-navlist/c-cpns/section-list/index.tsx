@@ -1,5 +1,5 @@
 import { memo, useEffect } from "react"
-import type { ReactNode, FC } from "react"
+import type { ReactNode, FC, SetStateAction, Dispatch } from "react"
 import { SectionWrapper } from "./style"
 import classNames from "classnames"
 import { IRoutesPath } from "@/router" // -- 路由路径类型
@@ -17,6 +17,7 @@ export type TSectionListData = INavItem[][] // -- 该组件需要接收的数据
 interface IProps {
     children?: ReactNode
     NavListData: TSectionListData
+    set_is_show_nav: Dispatch<SetStateAction<boolean>>
 }
 
 const NavSectionList: FC<IProps> = (props) => {
@@ -27,6 +28,7 @@ const NavSectionList: FC<IProps> = (props) => {
     const navigate = useNavigate()
     function toNewPage(path: IRoutesPath) {
         if (path === 'none') return
+        props.set_is_show_nav(false)
         navigate(path)
     }
 

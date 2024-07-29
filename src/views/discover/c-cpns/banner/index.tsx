@@ -40,18 +40,6 @@ const Banner: FC<IProps> = (props: IProps) => {
         }
     }, [curIndex, isControlling, banner])
 
-    // -- 获取当前轮播图片的前三个主要颜色 --> 动态设置 .banners 的渐变背景 ↓ -- > 展示废弃（使用原图的模糊背景）
-    // const boxRef = useRef<HTMLElement>()
-    // useEffect(() => {
-    //     (async function () {
-    //         const imageUrl = banner[curIndex]?.imageUrl
-    //         if (imageUrl) {
-    //             const result = await analyze(imageUrl, { scale: 0.1 })
-    //             const [c1, c2, c3] = [result[0], result[Math.floor(result.length / 2)], result.at(-1)]
-    //             if (boxRef.current) boxRef.current.style.background = `linear-gradient(0.3turn,${c1.color}, ${c2.color}, ${c3.color})`; // -- 设置容器背景颜色
-    //         }
-    //     })()
-    // }, [curIndex, banner])
 
     // -- 替换 ↑ 使用模糊背景图
     let bgImageUrl = banner[curIndex]?.imageUrl
@@ -92,25 +80,6 @@ const Banner: FC<IProps> = (props: IProps) => {
                     <IconArrowRight width={40} height={40} />
                 </div>
             </div>
-
-            {/* indicator: 弃用 --> 使用 .commom-indicator 进行替换（将对应 indicator 逻辑封装成一个组件） */}
-            {/* <div className="indicator">
-                <Indicator selectedIndex={curIndex} >
-                    {
-                        banner.map((item, index) => (
-                            <div className="item" key={index}>
-                                <div className={
-                                    classNames("dot", {
-                                        active: index === curIndex,
-                                        middle: index === curIndex + 1 || index === curIndex - 1
-                                    })
-                                }
-                                ></div>
-                            </div>
-                        ))
-                    }
-                </Indicator>
-            </div> */}
 
             <div className="commom-indicator">
                 <CommomIndicator dogCount={banner.length} curIndex={curIndex} />

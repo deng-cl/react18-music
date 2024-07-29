@@ -67,6 +67,71 @@ export const PlayerBarWrapper = styled.div`
         top: -302px;
         right: 0;
     }
+
+    > .toggle-side-operator-show {
+        margin-left: auto;
+        display: flex;
+        justify-content: flex-end;
+        align-content: center;
+        flex: 1;
+        flex-grow: 0.75;
+        display: none;
+
+        .icon-btn {
+            cursor: pointer;
+            user-select: none;
+            transition: all 200ms ease;
+        }
+
+        &.active {
+            .icon {
+                fill: #C20C0C;
+            }
+        }
+        .icon {
+            fill:${props => props.theme.textColor.primary};
+
+            /* transform: rotate(-90deg); */
+        }
+    }
+
+// --
+    // new
+    @media screen and (width <  520px) { // -- 手机
+        > .operator {
+            transition: all 200ms ease;
+            position: absolute;
+            height: 44px;
+            top: -50px;
+            right: 0px;
+            background-color: ${props => props.theme.color.primary};
+            border-radius: 4px;
+            border: 1px solid ${props => props.theme.color.hover_bg};;
+
+            &.show {
+                transform: translateX(0);
+            }
+
+            &.hide {
+                transform: translateX(100%);
+            }
+        }
+
+        > .current-play-menu {
+            top: -355px;
+        }
+
+        > .toggle-side-operator-show {
+            display: flex;
+        }
+
+        > .control {
+            flex: 1;
+            flex-grow: 1.5;
+            display: flex;
+            justify-content: center;
+        }
+    }
 `
 
 export const InfoWrapper = styled.div` // -- ↑ PlayerBarWrapper info 子元素部分
@@ -122,6 +187,12 @@ export const InfoWrapper = styled.div` // -- ↑ PlayerBarWrapper info 子元素
         .loding {
             margin-left:4px
         }
+    }
+
+    // --
+    // new
+    @media screen and (width <  520px) { // -- 手机
+        flex-grow: 0.75;
     }
 `
 

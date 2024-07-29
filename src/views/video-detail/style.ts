@@ -21,6 +21,7 @@ export const VideoDetailWrapper = styled.div`
         flex: 1;
         /* background-color: orange; */
         min-width: 420px;
+        width: 60%;
         height: 100%;
 
         .base-info {
@@ -55,6 +56,8 @@ export const VideoDetailWrapper = styled.div`
 
         .v-main {
             margin-top: 24px;
+            border-radius: 6px;
+            overflow: hidden;
             video {
                 width: 100%;
             }
@@ -145,8 +148,11 @@ export const VideoDetailWrapper = styled.div`
 
     > .right {
         flex-shrink: 0;
-        width: 400px;
+        /* width: 400px; */
+        /* flex: 1; */
+        /* width: 40%; */
         /* background-color: purple; */
+        transform: translateY(31px);
         height: 100%;
         padding-left: 12px;
         box-sizing: border-box;
@@ -217,6 +223,53 @@ export const VideoDetailWrapper = styled.div`
                     }
                 }
             }
+        }
+
+    }
+
+
+// --
+    // new
+
+    > .right .list .item .name-not-info {
+        padding: 0 2px;
+        margin-top: 4px;
+        ${props => props.theme.mixin.twoLineClamp};
+        display: none;
+    }
+
+    @media screen and (760px < width < 1000px){ // -- 电脑
+        > .right {
+            width: 200px;
+
+            .list {
+                .item {
+                    flex-flow: column;
+                    height: fit-content;
+                    .album {
+                        width: 100%;
+                        height: fit-content;
+                        img {
+                            width: 100%;
+                            height: fit-content;
+                        }
+                    }
+
+                    .info {
+                        display: none;
+                    }
+
+                    .name-not-info {
+                        display: block;
+                    }
+                }
+            }
+        }
+    }
+
+    @media screen and (width <= 760px){
+        > .right {
+            display: none;
         }
     }
 `

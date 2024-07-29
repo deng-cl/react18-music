@@ -16,6 +16,7 @@ export const BannerWrapper = styled.div`
         width: 769px;
         height: 100%;
         display: flex;
+        border-radius: 6px;
 
         .item {
             width: 100%;
@@ -42,7 +43,7 @@ export const BannerWrapper = styled.div`
         padding: 0 20px;
         box-sizing: border-box;
         align-items: center;
-
+        fill: white;
         .left, .right {
             cursor: pointer;
             border-radius: 6px;
@@ -56,54 +57,49 @@ export const BannerWrapper = styled.div`
             }
         }
     }
-    /* 弃用 --> 使用 .commom-indicator 进行替换（将对应 indicator 逻辑封装成一个组件） */
-    > .indicator {
-        position: absolute;
-        inset: 0;
-        margin: auto;
-        top: auto;
-        bottom: 4px;
-        /* background-color: red; */
-        height: 20px;
-        width: 200px;
-        display: flex;
-        align-items: center;
-
-            .item {
-                width:40px ;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                .dot {
-                    width: 4px;
-                    height:4px;
-                    border-radius: 10px;
-                    background-color: white;
-
-                    &.active {
-                        width: 10px;
-                        height: 10px;
-                    }
-
-                    &.middle {
-                        width: 6px;
-                        height: 6px;
-                    }
-                }
-            }
-    }
 
     > .commom-indicator {
         position: absolute;
         inset: 0;
         margin: auto;
         top: auto;
-        bottom: 0;
+        bottom: 4px;
         width: 200px;
         height: 20px;
     }
-
     svg {
         fill: white;
+    }
+
+// -----
+    // -- new
+    @media screen and (max-width: 854px) { // --平板或手机
+        height: 250px;
+        > .banners {
+            width: 100%;
+            .item {
+                width: auto;
+                img {
+                    border-radius: 6px;
+                    height: fit-content;
+                    height: 100%;
+                    width: auto;
+                    width: 100%;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                }
+            }
+        }
+    }
+
+    @media screen and (max-width: 580px) { // -- 手机
+        height: 210px;
+    }
+    @media screen and (max-width: 420px) { // -- 手机
+        height: 180px;
+    }
+    @media screen and (max-width: 340px) { // -- 手机
+        height: 160px;
     }
 `

@@ -7,6 +7,7 @@ export const ItemWrapper = styled.div`
     flex-flow: column nowrap;
     cursor: pointer;
     transition: all 250ms ease;
+    height: fit-content;
     &:hover {
         transform: translateY(-3px);
     }
@@ -16,16 +17,13 @@ export const ItemWrapper = styled.div`
         color: white;
         fill: white;
         font-size: ${props => props.theme.textSize.small};
-        /* max-height: 123px; */
-        height: 0;
-        padding: 60px 0;
         overflow: hidden;
         border-radius: 6px;
+        margin-bottom: 6px;
         img {
-            position: absolute;
+            /* position: absolute; */
             top: 0;
             width: 100%;
-            height: 100%;
         }
         .al-info {
             position: absolute;

@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from "react"
+import { memo, useContext, useEffect, useState } from "react"
 import type { ReactNode, FC } from "react"
 import { DiscoverWrapper } from "./style"
 import { fetchDiscoverPageDataAction } from "@/store/modules/discover"
@@ -10,6 +10,9 @@ import ScrollView from "@/base-ui/scroll-view"
 import CommomSongListV1 from "@/components/commom-song-list-v1"
 import KeepAlive, { useAliveController } from "react-activation"
 import { Spin } from "antd"
+import AppContext from "antd/es/app/context"
+import usePageScrollInfo from "@/hooks/usePageScrollInfo"
+import useIsDistance from "@/hooks/useIsDistance"
 
 
 interface IProps {
@@ -26,12 +29,6 @@ const Discover: FC<IProps> = () => {
     useEffect(() => { // -- comp mounted --> fetch data
         dispatch(fetchDiscoverPageDataAction() as unknown as UnknownAction)
     }, [])
-
-    // -- 歌曲列表歌曲数量
-    const [total, setTotal] = useState(0)
-    useEffect(() => {
-        setTotal(hotSongList?.tracks?.length)
-    }, [hotSongList])
 
     return (
 
@@ -54,27 +51,16 @@ const Discover: FC<IProps> = () => {
                 }
             </div>
 
-
             {
-                hotSongList?.tracks ? (
-                    <KeepAlive cacheKey={"discover:CommomSongListV1"} name='discover:CommomSongListV1'>
-                        <CommomSongListV1
-                            title="Recommend song"
-                            paginationConfig={{ total: total, defaultPageSize: 10 }}
-                            songListInfo={hotSongList}
-                        />
-                    </KeepAlive>
-                ) : (
-                    <div className="loading">
-                        <Spin size="small" />
-                    </div>
-                )
+                // <KeepAlive cacheKey={"discover:CommomSongListV1"} name='discover:CommomSongListV1'>
+                <CommomSongListV1
+                    title="Recommend song"
+                    songListInfo={hotSongList?.tracks ?? []}
+                />
+                // </KeepAlive>
             }
 
-
         </DiscoverWrapper >
-
-        //  git commit -m "discover 页面中的 song-list 歌曲列表数据展示封装展示"
     )
 }
 

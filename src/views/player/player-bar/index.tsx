@@ -18,6 +18,9 @@ import AudioControl from "./c-cpns/audio-control";
 import AudioOperator from "./c-cpns/audio-operator";
 import { DetailWrapper, InfoWrapper, PlayerBarWrapper } from "./style"
 import CurrentPlayMenu from "./c-cpns/current-play-menu";
+import IconArrowLeft from "@/assets/icon/header/icon-arrow-left";
+import IconOperatorMenu from "@/assets/icon/player/icon-operator-menu";
+import classNames from "classnames";
 
 interface IProps { }
 
@@ -115,6 +118,9 @@ const PlayerBar: FC<IProps> = () => {
         }
     }
 
+    // -- 是否显示侧边 operator 音乐控件
+    const [sideOperator, setSideOperator] = useState(true)
+
     return (
         <PlayerBarWrapper>
             {/* player bar 展示区 */}
@@ -145,8 +151,17 @@ const PlayerBar: FC<IProps> = () => {
                 </div>
 
                 {/* right --> audio operation */}
-                <div className="operator">
+                <div className={classNames("operator", sideOperator ? "show" : "hide")}>
                     <AudioOperator audioRef={audioRef} />
+                </div>
+
+                {/* 当可视品目较小时，功能控件移至 player-bar 上测 ↑，该 ↓ 可以用暂时性的显示或隐藏控件 */}
+                <div className={classNames("toggle-side-operator-show", { active: sideOperator })}>
+                    <div className="icon-btn" onClick={e => setSideOperator(!sideOperator)} style={{
+                        transform: `rotate(${sideOperator ? "-90deg" : "0"})`
+                    }}>
+                        <IconOperatorMenu width={22} height={22} />
+                    </div>
                 </div>
             </>
 
@@ -154,7 +169,7 @@ const PlayerBar: FC<IProps> = () => {
             < audio ref={audioRef}
                 onTimeUpdate={audioTimeUpdateHandle}
                 onEnded={e => audioPlayEndedHandle()}
-                onWaiting={e => { setLoading(true); console.log(333); }}
+                onWaiting={e => { setLoading(true) }}
                 onCanPlay={e => { setLoading(false) }}
                 onError={AudioErrorHanlde}
             />

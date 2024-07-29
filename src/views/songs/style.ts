@@ -33,4 +33,6 @@ export const SongsWrapper = styled.div`
             color: ${props => props.theme.textColor.secondary};
         }
     }
+
+
 `

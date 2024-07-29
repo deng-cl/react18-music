@@ -64,4 +64,55 @@ export const ItemWrapper = styled.div`
         }
     }
 
+
+// -----
+    // -- new
+    @media screen and (width > 1680px ) { // --电脑
+        > .list {
+            .item {
+                width: calc(12.5% - 16px);
+            }
+        }
+    }
+
+    @media screen and (1480px < width < 1680px) { // --电脑
+        > .list {
+            .item {
+                width: calc(14.2851% - 16px);
+            }
+        }
+    }
+
+    @media screen and (1280px < width < 1480px) { // --电脑
+        > .list {
+            .item {
+                width: calc(16.6666666667% - 16px);
+            }
+        }
+    }
+
+    @media screen and (900px < width < 1280px) { // --电脑
+        > .list {
+            .item {
+                width: calc(20% - 16px);
+            }
+        }
+    }
+
+    @media screen and (750px < width < 900px) { // --电脑或平板
+        > .list {
+            .item {
+                width: calc(25% - 16px);
+            }
+        }
+    }
+
+    @media screen and (width < 750px) { // --平板或手机
+        > .list {
+            .item {
+                width: calc(33.333336% - 16px);
+            }
+        }
+    }
+
 `

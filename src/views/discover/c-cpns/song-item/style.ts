@@ -19,7 +19,7 @@ export const ItemWrapper = styled.div<{ $height: number }>`
     }
 
     > div { // -- commom style
-        width: 35%;
+        /* width: 35%; */
         height: 100%;
         flex-shrink: 0;
         flex-grow: 0;
@@ -39,6 +39,9 @@ export const ItemWrapper = styled.div<{ $height: number }>`
         display: flex;
         flex-flow: row nowrap;
         align-items: center;
+        width: 35%;
+        padding-right: 16px;
+        box-sizing: border-box;
 
         .picture {
             width: fit-content;
@@ -75,12 +78,16 @@ export const ItemWrapper = styled.div<{ $height: number }>`
         /* background-color: green; */
         display:  flex;
         align-items: center;
+        margin-left: 14px;
     }
 
     > .right {
         /* background-color: orange; */
         justify-content: space-between;
         padding-right: 16px;
+        box-sizing: border-box;
+        flex: 1;
+        padding-left: 14px;
         box-sizing: border-box;
 
         > div {
@@ -89,8 +96,61 @@ export const ItemWrapper = styled.div<{ $height: number }>`
         }
 
         .icons {
+            margin-left: 18px;
             width: fit-content;
             cursor: pointer;
+        }
+    }
+
+    // -----
+    // -- new
+    @media screen and (max-width: 780px) { // --手机
+        > .left {
+            width: 45%;
+        }
+
+        > .center {
+            max-width: 35%;
+        }
+
+        > .right {
+            .time {
+                justify-content: flex-end;
+            }
+
+            .icons {
+                display: none;
+            }
+        }
+    }
+
+    @media screen and (max-width: 510px) { // --手机
+        > .center {
+            box-sizing: border-box;
+            ${props => props.theme.mixin.singleLineClamp}
+        }
+
+        > .right {
+
+            > div {
+                justify-content: flex-end;
+            }
+
+            .icons {
+                display: none;
+                width: fit-content;
+                cursor: pointer;
+            }
+        }
+    }
+
+    @media screen and (max-width: 375px) { // --手机
+        > .left {
+            width: 80%;
+        }
+        justify-content: space-between;
+        > .center {
+            display: none;
         }
     }
 `

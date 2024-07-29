@@ -5,11 +5,10 @@ export const AppWrapper = styled.div`
     inset: 0;
     margin: auto;
     display: flex;
-    flex-flow: row nowrap;
+    flex-flow: column nowrap;
     color: ${props => props.theme.textColor.primary};
     background-color: ${props => props.theme.color.primary};
     padding:  6px 14px;
-    padding-right: 2px;
     /* 该 padding-bottom 值对应 player-bar 播放器工具栏的高度 */
     padding-bottom: 66px;
     box-sizing: border-box;
@@ -36,8 +35,10 @@ export const AppWrapper = styled.div`
         flex: 1;
         /* background-color: orange; */
         overflow-y: auto;
+        overflow-x: hidden;
         padding-bottom: 20px;
         box-sizing: border-box;
+        padding-right: 2px;
 
         .show-page-name {
             margin-top: 6px;
@@ -47,7 +48,7 @@ export const AppWrapper = styled.div`
         }
 
         .content {
-            padding-right: 4px;
+            /* padding-right: 4px; */
             box-sizing: border-box;
             /* overflow-y: auto; */
         }
@@ -75,5 +76,30 @@ export const AppWrapper = styled.div`
         align-items: center;
         background-color: rgba(255,255,255,.2);
         cursor: not-allowed;
+    }
+
+// -----
+    // -- new
+    min-width: 325px;
+
+    @media screen and (min-width: 1080px){ // -- 电脑
+        flex-flow: row nowrap;
+    }
+
+    @media screen and (max-width: 1080px) { // --平板或手机
+        .main-left {
+            /* position: relative; */
+            height: fit-content;
+            width: 100%;
+            padding-bottom: 0;
+        }
+    }
+
+    @media screen and (max-width: 520px){ // -- 手机
+        padding: 0 4px;
+
+        .main-right {
+            padding-right: 4px;
+        }
     }
 `

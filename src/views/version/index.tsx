@@ -38,8 +38,19 @@ const HISTORY_VERSION_INFO: IVersionItem[] = [ // -- hstory version info list
         vNumber: "1.0.6",
         desc: "Fix: 修复 MV 切换评论排序数据获取不到问题",
         date: "2024/7/16"
+    },
+    {
+        vNumber: "1.0.7",
+        desc: "Refactor: 重构首页推荐歌曲与排行榜中的歌曲数据展示，便于后面进行进行移动端的适配",
+        date: "2024/7/29"
+    },
+    {
+        vNumber: "1.1.7",
+        desc: "Feat: ",
+        date: "2024/7/30"
     }
 ].reverse()
+
 
 const Version: FC<IProps> = () => {
     return (

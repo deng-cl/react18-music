@@ -58,8 +58,20 @@ export const DiscoverWrapper = styled.div`
         }
     }
 
+    /* > .loading {
+        margin: 14px 0;
+        text-align: center;
+    } */
+
     > .loading {
         margin: 14px 0;
         text-align: center;
+    }
+
+    > .not-more {
+        text-align: center;
+        margin-top: 16px;
+        font-size: ${props => props.theme.textSize.v_small};
+        color: ${props => props.theme.textColor.secondary};
     }
 `

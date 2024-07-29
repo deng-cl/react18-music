@@ -60,23 +60,25 @@ const Ranking: FC<IProps> = () => {
                     })()
                 }
             </div>
-            <KeepAlive cacheKey={"ranking:..."} name='ranking:...'>
-                <div className="content">
-                    {
-                        (["NewSong", "Original", "Surge"] as RankingType[]).map(item => (
+
+            <div className="content">
+                {
+                    (["NewSong", "Original", "Surge"] as RankingType[]).map((item) => {
+                        const tracks = getSongMenuByName(item)?.tracks
+                        return (
                             <div className="item" key={item} style={{
                                 display: curShowMenuTitle === item ? "block" : "none"
                             }}>
                                 <CommomSongListV1
                                     title={item === "NewSong" ? "新歌榜" : item === "Original" ? "原创榜" : "飙升榜"}
-                                    paginationConfig={{ total: getSongMenuByName(item)?.tracks?.length, defaultPageSize: 10 }}
-                                    songListInfo={getSongMenuByName(item)}
+                                    songListInfo={tracks ?? []}
                                 />
                             </div>
-                        ))
-                    }
-                </div>
-            </KeepAlive>
+                        )
+                    })
+                }
+            </div>
+
         </RankingWrapper>
     )
 }

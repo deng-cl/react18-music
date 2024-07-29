@@ -11,3 +11,5 @@ const IconComment: FC<ISvgProps> = memo((props: ISvgProps) => {
 })
 
 export default IconComment
+
+

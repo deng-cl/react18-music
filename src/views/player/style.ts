@@ -17,6 +17,7 @@ export const PlayerWrapper = styled.div`
         align-items: center;
         justify-content: center;
         height: 100%;
+        transition: all 200ms ease;
     }
 
     > .album {
@@ -25,7 +26,7 @@ export const PlayerWrapper = styled.div`
         justify-content: center;
 
         .cover {
-            margin-bottom: 12px;
+            margin-bottom: 1px;
             img {
                 width: 18vw;
                 max-width: 390px;
@@ -87,6 +88,8 @@ export const PlayerWrapper = styled.div`
         top: 20px;
         right: 20px;
         cursor: pointer;
+        z-index: 2;
+
 
         svg {
             fill: ${props => props.theme.textColor.secondary};
@@ -94,6 +97,102 @@ export const PlayerWrapper = styled.div`
             &:hover {
                 fill: ${props => props.theme.textColor.primary};
             }
+        }
+    }
+
+
+
+// --
+    // new
+    > .switch {
+        position: absolute;
+        left: 0;
+        right: 0;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-top: 16px;
+        height: 60px;
+        z-index: 1;
+        line-height: 40px;
+        background-color: ${props => props.theme.color.primary};
+        color:${props => props.theme.textColor.secondary};
+        display: none;
+
+        .active {
+            color:${props => props.theme.textColor.primary};
+            font-size: calc(${props => props.theme.textSize.normal} + 2px);
+        }
+
+        div {
+            user-select: none;
+            cursor: pointer;
+            margin: 0 6px;
+            padding: 0px 12px;
+            box-sizing: border-box;
+            height: fit-content ;
+            transition: all 200ms ease;
+        }
+    }
+
+    > .album {
+        > .info {
+            .name {
+                font-size: ${props => props.theme.textSize.larger};
+                margin: 8px;
+            }
+            .arts {
+                font-size: ${props => props.theme.textSize.small};
+                color: ${props => props.theme.textColor.secondary};
+                text-align: center;
+            }
+            margin-bottom: 16px;
+        }
+    }
+
+
+    @media screen and (width < 999px){ // -- 电脑
+        display: block;
+
+        > .switch {
+            display: flex;
+        }
+
+        >.left {
+            width: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        > .right {
+            width: 100%;
+            position: absolute;
+            left: 100%;
+            top: 0;
+        }
+
+        > .album {
+            .cover {
+                img {
+                    width: 40vw;
+                }
+            }
+
+            > .control {
+                position: fixed;
+                bottom: 24px;
+                width: 60vw;
+            }
+
+            > .info {
+                display: block;
+            }
+        }
+
+        > .lyric {
+            height: 88vh;
         }
     }
 `

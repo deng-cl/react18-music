@@ -6,7 +6,7 @@ export const HeaderWrapper = styled.div`
     justify-content: space-between;
     align-items: center;
     height: 40px;
-    padding-right: 14px;
+    /* padding-right: 14px; */
     box-sizing: border-box;
 
     > .left, > .right {
@@ -91,6 +91,34 @@ export const HeaderWrapper = styled.div`
 
         .info {
             height: 32px;
+        }
+    }
+
+
+// -----
+    @media screen and (min-width: 1080px){ // -- 电脑
+        > .left {
+            .back {
+                margin-right: 160px;
+            }
+
+            /* .btn {
+                display: block;
+            } */
+        }
+    }
+
+    @media screen and (max-width: 1080px) { // -- 平板或手机
+        > .left {
+            .back {
+                margin-right: 20px;
+            }
+
+            @media screen and (max-width: 680px) { // --
+                .btn {
+                    display: none;
+                }
+            }
         }
     }
 `

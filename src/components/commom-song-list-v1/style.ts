@@ -39,5 +39,17 @@ export const SongListV1Wrapper = styled.div`
                 cursor: pointer;
             }
         }
+
+        > .loading {
+            margin: 14px 0;
+            text-align: center;
+        }
+
+        > .not-more {
+            text-align: center;
+            margin-top: 16px;
+            font-size: ${props => props.theme.textSize.v_small};
+            color: ${props => props.theme.textColor.secondary};
+        }
     }
 `

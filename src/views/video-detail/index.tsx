@@ -200,6 +200,10 @@ const VideoDetail: FC<IProps> = () => {
                                     <img src={item.cover} alt="" />
                                     <div className="t">{formatTime(item.duration)}</div>
                                 </div>
+
+                                {/* 当窗口过小，不显示 info 时，显示该 name */}
+                                <div className="name-not-info">{item.name}</div>
+
                                 <div className="info">
                                     <div className="name">{item.name}</div>
                                     <div className="arts">{joinSongArtistNames(item.artists)}</div>

@@ -59,7 +59,7 @@ const AppHeader: FC<IProps> = () => {
                 <div className="search" onClick={e => {
                     message.info({
                         key: "search",
-                        content: "当前 coderkxh-music v1.0.6 版本，暂未去实现搜索功能，后续会实现，敬请期待...",
+                        content: "当前 coderkxh-music v1.1.7 版本，暂未去实现搜索功能，后续会实现，敬请期待...",
                         duration: 5
                     })
                 }}>
