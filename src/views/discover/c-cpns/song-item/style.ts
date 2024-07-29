@@ -84,7 +84,7 @@ export const ItemWrapper = styled.div<{ $height: number }>`
     > .right {
         /* background-color: orange; */
         justify-content: space-between;
-        padding-right: 16px;
+        /* padding-right: 16px; */
         box-sizing: border-box;
         flex: 1;
         padding-left: 14px;

@@ -1,22 +1,5 @@
 import styled from "styled-components"
 
-// export const NavListWrapper = styled.div`
-//     padding: 0 6px;
-//     box-sizing: border-box;
-
-//     > .logo {
-//         display: flex;
-//         justify-content: flex-start;
-//         align-items: center;
-//         height: 40px;
-//         margin-bottom: 12px;
-
-//         img {
-//             width: 140px;
-//         }
-//     }
-// `
-
 export const NavListWrapper = styled.div`
     padding-top: 2px;
     padding-right: 2px;
@@ -83,9 +66,13 @@ export const NavListWrapper = styled.div`
 
 // -----
     // -- new
-    @media screen and (max-width: 520px){ // -- 手机
+    @media screen and (368px < width < 520px){ // -- 手机
         padding-left: 0;
         padding-right: 4px;
+    }
+
+    @media screen and (width < 368px){ // -- 手机
+        padding-right: 0;
     }
 `
 

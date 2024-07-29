@@ -7,6 +7,7 @@ export const SongsWrapper = styled.div`
         margin-bottom: 28px;
         display: flex;
         align-items: center;
+        flex-flow: row wrap;
         user-select: none;
 
         .title {
@@ -29,10 +30,21 @@ export const SongsWrapper = styled.div`
         }
 
         .__ {
+            padding: 4px;
+            box-sizing: border-box;
             font-size: ${props => props.theme.textSize.v_small};
             color: ${props => props.theme.textColor.secondary};
         }
     }
 
+
+// --
+    // new
+    @media screen and (width <  750px) { // -- 手机
+        > .filter {
+            margin: 0;
+            margin-bottom: 8px;
+        }
+    }
 
 `

@@ -193,6 +193,7 @@ export const PlayerWrapper = styled.div`
 
         > .lyric {
             height: 88vh;
+            min-width: 100px;
         }
     }
 `

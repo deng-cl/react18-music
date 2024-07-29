@@ -43,6 +43,7 @@ export const AppWrapper = styled.div`
         .show-page-name {
             margin-top: 6px;
             height: 40px;
+            line-height: 28px;
             /* font-size: ${props => props.theme.textSize.larger}; */
             font-weight: 700;
         }
@@ -80,7 +81,7 @@ export const AppWrapper = styled.div`
 
 // -----
     // -- new
-    min-width: 325px;
+    min-width: 348px;
 
     @media screen and (min-width: 1080px){ // -- 电脑
         flex-flow: row nowrap;

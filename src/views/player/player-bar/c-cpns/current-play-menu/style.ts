@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const PlayMenuWrapper = styled.div`
-    width: 420px;
+    width: 100%;
     height: 300px;
     background-color: ${props => props.theme.color.primary};
     /* background-color: red; */
@@ -58,6 +58,10 @@ export const PlayMenuWrapper = styled.div`
             width: 30%;
             text-align: end;
             margin: 0 12px;
+        }
+
+        .duration {
+            min-width: 40px;
         }
     }
 

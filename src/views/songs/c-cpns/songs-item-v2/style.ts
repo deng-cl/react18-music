@@ -28,9 +28,9 @@ export const ItemWrapper = styled.div`
     > .list {
         display: flex;
         flex-flow: row wrap;
+        justify-content: space-between;
         .item {
             margin-bottom: 16px;
-            margin-right: 16px;
             width: calc(20% - 16px);
             cursor: pointer;
 
@@ -102,17 +102,24 @@ export const ItemWrapper = styled.div`
     @media screen and (750px < width < 900px) { // --电脑或平板
         > .list {
             .item {
-                width: calc(25% - 16px);
+                width: calc(25% - 14px);
             }
         }
     }
 
-    @media screen and (width < 750px) { // --平板或手机
+    @media screen and (400px < width <= 750px) { // --平板或手机
         > .list {
             .item {
-                width: calc(33.333336% - 16px);
+                width: calc(33.333336% - 8px);
             }
         }
     }
 
+    @media screen and (width <= 400px) { // --平板或手机
+        > .list {
+            .item {
+                width: calc(50% - 4px);
+            }
+        }
+    }
 `

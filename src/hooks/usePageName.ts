@@ -7,7 +7,7 @@ export default function usePageName(): string { // -- get current page name --> 
     const location = useLocation()
     useEffect(() => {
         const pathname = location.pathname as string
-        setPagename((routepataMapPagename as any)[pathname])
+        setPagename((routepataMapPagename as any)["/" + pathname.split("/")[1]])
     }, [location, pagename])
 
     return pagename

@@ -46,11 +46,15 @@ const HISTORY_VERSION_INFO: IVersionItem[] = [ // -- hstory version info list
     },
     {
         vNumber: "1.1.7",
-        desc: "Feat: ",
+        desc: "Feat: 移动端适配测试",
+        date: "2024/7/30"
+    },
+    {
+        vNumber: "1.1.8",
+        desc: "Feat: 处理部分适配小 bug 等问题",
         date: "2024/7/30"
     }
 ].reverse()
-
 
 const Version: FC<IProps> = () => {
     return (

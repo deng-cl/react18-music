@@ -191,13 +191,10 @@ const PlayerBar: FC<IProps> = () => {
             }
 
             {/* 播放列表展示 */}
-            {
-                showPlayList && (
-                    <div className="current-play-menu">
-                        <CurrentPlayMenu />
-                    </div>
-                )
-            }
+            <div className={classNames("current-play-menu", showPlayList ? "show" : "hide")}>
+                <CurrentPlayMenu />
+            </div>
+
 
             {/* 播放详情页的展示 */}
             <DetailWrapper>

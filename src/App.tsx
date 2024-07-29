@@ -8,7 +8,7 @@ import usePageName from "./hooks/usePageName"
 import AppFooter from "./components/app-footer"
 import PlayerBar from "./views/player/player-bar"
 import { appShallowEqual, useAppDispatch, useAppSelector } from "./store/app-react-redux"
-import { Spin } from "antd"
+import { Spin, message } from "antd"
 import { ThemeProvider } from "styled-components"
 import THEME from "./assets/theme"
 import { changeShowPlayListAction, changeShowVolumeControlAction } from "./views/player/store/module/audio-operator"
@@ -40,6 +40,22 @@ const App = memo(() => {
         if (showVolumeControl) dispatch(changeShowVolumeControlAction(false))
         if (showPlayList) dispatch(changeShowPlayListAction(false))
     }
+
+    useEffect(() => {
+        const availWidth = screen.availWidth
+        if (availWidth < 348) {
+            message.warning({
+                key: "support",
+                duration: 5,
+                content: `抱歉！您当前机型的可视宽度为 "${availWidth}px"，目前只对可视宽度大于 348px 的机型适配...`
+            })
+            message.info({
+                key: "support-info",
+                duration: 5,
+                content: `暂无法适配该机型，可能会存在页面错乱问题...`
+            })
+        }
+    })
 
     return (
         <ThemeProvider theme={isDark ? THEME.dark : THEME.light}>

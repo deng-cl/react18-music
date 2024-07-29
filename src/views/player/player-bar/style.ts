@@ -36,6 +36,8 @@ export const PlayerBarWrapper = styled.div`
         padding: 0 8px;
         border-radius: 3px;
         color: white;
+
+        ${props => props.theme.mixin.singleLineClamp};
     }
 
     /* control */
@@ -60,12 +62,29 @@ export const PlayerBarWrapper = styled.div`
         max-width: 320px;
         min-width: 120px;
         justify-content: flex-end;
+
+        &.show {
+            transform: translateX(0);
+        }
+
+        &.hide {
+            transform: translateX(100%);
+        }
     }
 
     > .current-play-menu {
         position: absolute;
         top: -302px;
         right: 0;
+        transition: all 200ms ease;
+
+        &.show {
+            transform: translateX(0);
+        }
+
+        &.hide {
+            transform: translateX(100%);
+        }
     }
 
     > .toggle-side-operator-show {
@@ -106,19 +125,15 @@ export const PlayerBarWrapper = styled.div`
             right: 0px;
             background-color: ${props => props.theme.color.primary};
             border-radius: 4px;
-            border: 1px solid ${props => props.theme.color.hover_bg};;
-
-            &.show {
-                transform: translateX(0);
-            }
-
-            &.hide {
-                transform: translateX(100%);
-            }
+            border: 1px solid ${props => props.theme.color.hover_bg};
+            z-index: 2;
         }
 
         > .current-play-menu {
             top: -355px;
+            max-width: calc(80vw - 4px);
+            border: 1px solid ${props => props.theme.color.hover_bg};
+            box-shadow: -1px 1px 1px 1px ${props => props.theme.color.hover_bg};
         }
 
         > .toggle-side-operator-show {
@@ -189,10 +204,16 @@ export const InfoWrapper = styled.div` // -- ↑ PlayerBarWrapper info 子元素
         }
     }
 
-    // --
+// --
     // new
     @media screen and (width <  520px) { // -- 手机
         flex-grow: 0.75;
+    }
+
+    @media screen and (width <  450px) { // -- 手机
+        > .msg {
+            display: none;
+        }
     }
 `
 
