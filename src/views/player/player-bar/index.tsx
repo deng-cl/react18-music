@@ -18,7 +18,6 @@ import AudioControl from "./c-cpns/audio-control";
 import AudioOperator from "./c-cpns/audio-operator";
 import { DetailWrapper, InfoWrapper, PlayerBarWrapper } from "./style"
 import CurrentPlayMenu from "./c-cpns/current-play-menu";
-import IconArrowLeft from "@/assets/icon/header/icon-arrow-left";
 import IconOperatorMenu from "@/assets/icon/player/icon-operator-menu";
 import classNames from "classnames";
 

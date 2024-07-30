@@ -5,7 +5,7 @@ export const PlayerBarWrapper = styled.div`
     position: fixed;
     bottom: 0;
     left: 0;
-    z-index: 99;
+    z-index: 999;
     width: 100%;
     height: 66px;
     padding: 10px 8px;
@@ -93,7 +93,7 @@ export const PlayerBarWrapper = styled.div`
         justify-content: flex-end;
         align-content: center;
         flex: 1;
-        flex-grow: 0.75;
+        flex-grow: 0.5;
         display: none;
 
         .icon-btn {
@@ -138,13 +138,17 @@ export const PlayerBarWrapper = styled.div`
 
         > .toggle-side-operator-show {
             display: flex;
+            flex-grow: 0.5;
+            min-width: 50px;
+            max-width: 120px;
         }
 
         > .control {
             flex: 1;
-            flex-grow: 1.5;
+            flex-grow: 2;
             display: flex;
             justify-content: center;
+            padding: 0;
         }
     }
 `
@@ -207,7 +211,9 @@ export const InfoWrapper = styled.div` // -- ↑ PlayerBarWrapper info 子元素
 // --
     // new
     @media screen and (width <  520px) { // -- 手机
-        flex-grow: 0.75;
+        flex-grow: 0.5;
+        min-width: 50px;
+        max-width: 120px;
     }
 
     @media screen and (width <  450px) { // -- 手机
@@ -218,6 +224,8 @@ export const InfoWrapper = styled.div` // -- ↑ PlayerBarWrapper info 子元素
 `
 
 export const DetailWrapper = styled.div` // 播放详情页样式
+    position: relative;
+    z-index: 999;
     // -- CSSTransition style
     .player-enter {
         transform: translateY(100%);
