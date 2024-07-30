@@ -113,10 +113,6 @@ const VideoDetail: FC<IProps> = () => {
                             <IconVideo />
                             <span>{formatCount(MVInfo?.playCount)}</span>
                         </div>
-                        <div className="comment-count flex-row">
-                            <IconComment />
-                            <span>{formatCount(MVOtherInfo.commentCount)}</span>
-                        </div>
                         <div className="favo flex-row">
                             <IconStar />
                             <span>{formatCount(MVOtherInfo.likedCount)}</span>
@@ -124,6 +120,10 @@ const VideoDetail: FC<IProps> = () => {
                         <div className="share flex-row">
                             <IconShare width={14} height={14} />
                             <span>{formatCount(MVOtherInfo.shareCount)}</span>
+                        </div>
+                        <div className="comment-count flex-row">
+                            <IconComment />
+                            <span>{formatCount(MVOtherInfo.commentCount)}</span>
                         </div>
                         <div className="ct flex-row">
                             <IconTime />

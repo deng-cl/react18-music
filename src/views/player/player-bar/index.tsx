@@ -20,6 +20,7 @@ import { DetailWrapper, InfoWrapper, PlayerBarWrapper } from "./style"
 import CurrentPlayMenu from "./c-cpns/current-play-menu";
 import IconOperatorMenu from "@/assets/icon/player/icon-operator-menu";
 import classNames from "classnames";
+import { changeShowPlayListAction, changeShowVolumeControlAction } from "../store/module/audio-operator";
 
 interface IProps { }
 
@@ -36,10 +37,11 @@ const PlayerBar: FC<IProps> = () => {
         sliding: state.audioControl.sliding // -- 记录当前是否正在拖拽进度）
     }), appShallowEqual)
 
-    const { showLyric, volume, showPlayList } = useAppSelector(state => ({ // -- audio-operator
+    const { showLyric, volume, showPlayList, showVolumeControl } = useAppSelector(state => ({ // -- audio-operator
         showLyric: state.audioOperator.showLyric,
         volume: state.audioOperator.volume,
         showPlayList: state.audioOperator.showPlayList,
+        showVolumeControl: state.audioOperator.showVolumeControl,
     }), appShallowEqual)
 
     const { currentSong, lyrics, lyricIndex, playMode, showDetail } = useAppSelector(state => ({ // -- player
@@ -119,7 +121,6 @@ const PlayerBar: FC<IProps> = () => {
 
     // -- 是否显示侧边 operator 音乐控件
     const [sideOperator, setSideOperator] = useState(true)
-
     return (
         <PlayerBarWrapper>
             {/* player bar 展示区 */}
@@ -156,9 +157,17 @@ const PlayerBar: FC<IProps> = () => {
 
                 {/* 当可视品目较小时，功能控件移至 player-bar 上测 ↑，该 ↓ 可以用暂时性的显示或隐藏控件 */}
                 <div className={classNames("toggle-side-operator-show", { active: sideOperator })}>
-                    <div className="icon-btn" onClick={e => setSideOperator(!sideOperator)} style={{
-                        transform: `rotate(${sideOperator ? "-90deg" : "0"})`
-                    }}>
+                    <div
+                        className="icon-btn"
+                        style={{ transform: `rotate(${sideOperator ? "-90deg" : "0"})` }}
+                        onClick={e => {
+                            if (sideOperator) {
+                                if (showVolumeControl) dispatch(changeShowVolumeControlAction(false))
+                                if (showPlayList) dispatch(changeShowPlayListAction(false))
+                            }
+                            setSideOperator(!sideOperator)
+                        }}
+                    >
                         <IconOperatorMenu width={22} height={22} />
                     </div>
                 </div>

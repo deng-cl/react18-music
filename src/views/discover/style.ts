@@ -7,6 +7,7 @@ export const DiscoverWrapper = styled.div`
         height: 130px;
         margin-top: 10px;
         display: flex;
+        overflow-x: auto;
         /* background: green; */
 
         .item {

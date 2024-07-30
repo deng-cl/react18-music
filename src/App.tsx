@@ -1,11 +1,10 @@
 import { Suspense, createContext, memo, useEffect, useRef } from "react"
-import { RouteObject, useLocation, useRoutes } from "react-router-dom"
+import { useLocation, useRoutes } from "react-router-dom"
 import routes, { IRoutesPath } from "./router"
 import AppNavlist from "./components/app-navlist"
 import AppHeader from "./components/app-header"
 import { AppWrapper } from "./style"
 import usePageName from "./hooks/usePageName"
-import AppFooter from "./components/app-footer"
 import PlayerBar from "./views/player/player-bar"
 import { appShallowEqual, useAppDispatch, useAppSelector } from "./store/app-react-redux"
 import { Spin, message } from "antd"
@@ -13,8 +12,8 @@ import { ThemeProvider } from "styled-components"
 import THEME from "./assets/theme"
 import { changeShowPlayListAction, changeShowVolumeControlAction } from "./views/player/store/module/audio-operator"
 import { PaginationGlobalWrapper } from "./components/commom-paganition/style"
-import lodash from "lodash"
-import usePageScrollInfo from "./hooks/usePageScrollInfo"
+import isPC from "./utils/ispc"
+import { chagneIspcAction } from "./store/modules/main"
 
 export const AppContext = createContext({}) // -- 通过 React 中的 Context 进行对应函数的传递
 
@@ -22,7 +21,6 @@ const App = memo(() => {
     const pagename = usePageName() // -- 获取当前页面名称
 
     const dispatch = useAppDispatch()
-    const location = useLocation()
 
     const NOT_FOOTER_ROUTE_PATHS: IRoutesPath[] = ["/theme"] // -- 配置哪些页面不需要显示 footer 页面
 
@@ -43,6 +41,9 @@ const App = memo(() => {
 
     useEffect(() => {
         const availWidth = screen.availWidth
+
+        if (!isPC()) dispatch(chagneIspcAction(false))
+
         if (availWidth < 348) {
             message.warning({
                 key: "support",
@@ -55,7 +56,7 @@ const App = memo(() => {
                 content: `暂无法适配该机型，可能会存在页面错乱问题...`
             })
         }
-    })
+    }, [])
 
     return (
         <ThemeProvider theme={isDark ? THEME.dark : THEME.light}>
@@ -70,7 +71,15 @@ const App = memo(() => {
                         <div className="show-page-name">{pagename}</div>
                         <div className="content" >
                             <AppContext.Provider value={{ pageRef }}>
-                                <Suspense fallback={<h2>loading...</h2>}>
+                                <Suspense fallback={
+                                    <div
+                                        style={{
+                                            display: "flex", justifyContent: "center", alignContent: "center", marginTop: "18px"
+                                        }}
+                                    >
+                                        <Spin />  <h5 style={{ marginLeft: "6px", color: "#C20C0C" }}>组件加载中...</h5>
+                                    </div>
+                                }>
                                     <div className="page">
                                         {useRoutes(routes)}
                                     </div>

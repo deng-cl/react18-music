@@ -28,18 +28,19 @@ const SongsDetail: FC<IProps> = () => {
 
     // -- 数据获取...
     useEffect(() => {
+        dispatch(changeLoadingAction(true))
         fetchSongsDetailById(id).then((res: any) => {
             setSongsBaseInfo(res?.playlist || {})
             setTracksIds(res?.playlist?.trackIds || [])
         })
-    }, [])
+    }, [id])
 
     useEffect(() => { // -- ↑ 拿到所有歌曲 id ，请求对应的歌曲信息
         const ids = trackIds.map(item => item.id).join(",") // -- 所有歌曲的 id 参数
         dispatch(changeLoadingAction(true))
         fetchSongInfoById(ids).then((res: any) => { // -- 请求所有歌曲信息
-            dispatch(changeLoadingAction(false))
             setSongListInfo(res?.songs || [])
+            dispatch(changeLoadingAction(false))
         })
     }, [trackIds])
 

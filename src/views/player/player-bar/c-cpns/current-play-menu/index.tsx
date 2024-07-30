@@ -34,7 +34,14 @@ const CurrentPlayMenu: FC<IProps> = () => {
         <PlayMenuWrapper ref={MenuRef}>
             {
                 playSongList.map((item, index) => (
-                    <div className={classNames("item", { active: playSongIndex === index })} onClick={e => changePlaySongById(item?.id)} key={index} >
+                    <div
+                        className={classNames("item", "is-cur-play-panle", { active: playSongIndex === index })}
+                        onClick={e => {
+                            e.stopPropagation()
+                            changePlaySongById(item?.id)
+                        }}
+                        key={index}
+                    >
                         <div className="name">{item?.name}</div>
                         <div className="arts">{joinSongArtistNames(item?.ar)}</div>
                         <div className="duration">{formatTime(item?.dt)}</div>

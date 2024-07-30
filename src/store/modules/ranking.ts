@@ -18,9 +18,9 @@ export const fetchRankingPageDataAction = createAsyncThunk("fetch-ranking-page-d
     dispatch(changeLoadingAction(true)) // -- loading...
     const RankingFetchs: Promise<any>[] = [fetchFRankingSongMenu(3779629), fetchFRankingSongMenu(2884035), fetchFRankingSongMenu(19723756)] // -- 顺序: 新歌 / 原创 / 飙升
     Promise.all(RankingFetchs).then(resluts => {
-        dispatch(changeNewSongAction(resluts[0].playlist))
-        dispatch(changeOriginalAction(resluts[1].playlist))
-        dispatch(changeSurgeAction(resluts[2].playlist))
+        dispatch(changeNewSongAction(resluts[0]?.playlist ?? {}))
+        dispatch(changeOriginalAction(resluts[1]?.playlist ?? {}))
+        dispatch(changeSurgeAction(resluts[2]?.playlist ?? {}))
 
         dispatch(changeLoadingAction(false)) // -- loaded
     })

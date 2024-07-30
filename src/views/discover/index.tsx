@@ -1,4 +1,4 @@
-import { memo, useContext, useEffect, useState } from "react"
+import { memo, useEffect } from "react"
 import type { ReactNode, FC } from "react"
 import { DiscoverWrapper } from "./style"
 import { fetchDiscoverPageDataAction } from "@/store/modules/discover"
@@ -8,11 +8,7 @@ import SongsItemV1 from "./c-cpns/songs-item-v1"
 import { appShallowEqual, useAppDispatch, useAppSelector } from "@/store/app-react-redux"
 import ScrollView from "@/base-ui/scroll-view"
 import CommomSongListV1 from "@/components/commom-song-list-v1"
-import KeepAlive, { useAliveController } from "react-activation"
-import { Spin } from "antd"
-import AppContext from "antd/es/app/context"
-import usePageScrollInfo from "@/hooks/usePageScrollInfo"
-import useIsDistance from "@/hooks/useIsDistance"
+import KeepAlive from "react-activation"
 
 
 interface IProps {
@@ -20,9 +16,10 @@ interface IProps {
 }
 
 const Discover: FC<IProps> = () => {
-    const { recommendSongs, hotSongList } = useAppSelector(state => ({
+    const { recommendSongs, hotSongList, ispc } = useAppSelector(state => ({
         recommendSongs: state.discover.recommendSongs,
         hotSongList: state.discover.hotSongList,
+        ispc: state.main.ispc,
     }), appShallowEqual)
 
     const dispatch = useAppDispatch()
@@ -30,25 +27,32 @@ const Discover: FC<IProps> = () => {
         dispatch(fetchDiscoverPageDataAction() as unknown as UnknownAction)
     }, [])
 
-    return (
 
+    // -- pc and not pc --> exhibition recommend songs
+    const COMMON = (
+        recommendSongs.map((item, index) => (
+            <KeepAlive cacheKey={"discover:" + index.toString()} name='discover:songItemV1' key={index}>
+                <div className="item" >
+                    <SongsItemV1 songsInfo={item} />
+                </div>
+            </KeepAlive>
+        ))
+    )
+    const PC = (
+        <ScrollView>
+            {
+                COMMON
+            }
+        </ScrollView>
+    )
+    const NOT_PC = COMMON
+
+    return (
         // <KeepAlive cacheKey="discover" name="discover"  >
         <DiscoverWrapper>
             <Banner />
             <div className="rec-songs">
-                {
-                    <ScrollView>
-                        {
-                            recommendSongs.map((item, index) => (
-                                <KeepAlive cacheKey={"discover:" + index.toString()} name='discover:songItemV1' key={index}>
-                                    <div className="item" >
-                                        <SongsItemV1 songsInfo={item} />
-                                    </div>
-                                </KeepAlive>
-                            ))
-                        }
-                    </ScrollView>
-                }
+                {ispc ? PC : NOT_PC}
             </div>
 
             {

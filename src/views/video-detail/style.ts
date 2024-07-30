@@ -20,7 +20,7 @@ export const VideoDetailWrapper = styled.div`
     > .left {
         flex: 1;
         /* background-color: orange; */
-        min-width: 420px;
+        min-width: 348px;
         width: 60%;
         height: 100%;
 
@@ -37,6 +37,7 @@ export const VideoDetailWrapper = styled.div`
                 width: 100%;
                 color: ${props => props.theme.textColor.secondary};
                 font-size: ${props => props.theme.textSize.normal};
+                flex-wrap: wrap;
 
                 .count,.comment-count,.share,.favo,.ct {
                     margin-right: 16px;
@@ -51,6 +52,25 @@ export const VideoDetailWrapper = styled.div`
                 .ct {
                     margin-left: auto;
                 }
+
+                @media screen and (width < 400px){
+                    justify-content: space-between;
+
+
+                    .count,.comment-count,.share,.favo,.ct {
+                        margin-right: 0;
+                        margin-bottom: 6px;
+                    }
+
+                    div {
+                        width: calc(33.3333% - 8px);
+                        transform: scale(0.8);
+                    }
+
+                    .ct {
+                        margin-left: 0;
+                    }
+                }
             }
         }
 
@@ -60,6 +80,10 @@ export const VideoDetailWrapper = styled.div`
             overflow: hidden;
             video {
                 width: 100%;
+            }
+
+            @media screen and (width < 400px){
+                margin-top: 12px;
             }
         }
 
