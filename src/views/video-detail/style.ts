@@ -20,7 +20,7 @@ export const VideoDetailWrapper = styled.div`
     > .left {
         flex: 1;
         /* background-color: orange; */
-        min-width: 348px;
+        min-width: 334px;
         width: 60%;
         height: 100%;
 
@@ -53,9 +53,8 @@ export const VideoDetailWrapper = styled.div`
                     margin-left: auto;
                 }
 
-                @media screen and (width < 400px){
+                @media screen and (max-width:400px){
                     justify-content: space-between;
-
 
                     .count,.comment-count,.share,.favo,.ct {
                         margin-right: 0;
@@ -64,7 +63,6 @@ export const VideoDetailWrapper = styled.div`
 
                     div {
                         width: calc(33.3333% - 8px);
-                        transform: scale(0.8);
                     }
 
                     .ct {
@@ -75,14 +73,17 @@ export const VideoDetailWrapper = styled.div`
         }
 
         .v-main {
+            /* position: relative; */
             margin-top: 24px;
             border-radius: 6px;
             overflow: hidden;
             video {
+                /* position: relative;
+                z-index: 2; */
                 width: 100%;
             }
 
-            @media screen and (width < 400px){
+            @media screen and (max-width: 400px){
                 margin-top: 12px;
             }
         }
@@ -262,7 +263,7 @@ export const VideoDetailWrapper = styled.div`
         display: none;
     }
 
-    @media screen and (760px < width < 1000px){ // -- 电脑
+    @media screen and (max-width: 1000px){ // -- 电脑
         > .right {
             width: 200px;
 
@@ -291,7 +292,7 @@ export const VideoDetailWrapper = styled.div`
         }
     }
 
-    @media screen and (width <= 760px){
+    @media screen and (max-width:760px){
         > .right {
             display: none;
         }

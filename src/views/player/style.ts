@@ -152,7 +152,7 @@ export const PlayerWrapper = styled.div`
     }
 
 
-    @media screen and (width < 999px){ // -- 电脑
+    @media screen and (min-width:999px){ // -- 电脑
         display: block;
 
         > .switch {

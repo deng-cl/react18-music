@@ -27,7 +27,6 @@ const Discover: FC<IProps> = () => {
         dispatch(fetchDiscoverPageDataAction() as unknown as UnknownAction)
     }, [])
 
-
     // -- pc and not pc --> exhibition recommend songs
     const COMMON = (
         recommendSongs.map((item, index) => (

@@ -116,7 +116,7 @@ export const PlayerBarWrapper = styled.div`
 
 // --
     // new
-    @media screen and (width <  520px) { // -- 手机
+    @media screen and (max-width:520px) { // -- 手机
         > .operator {
             transition: all 200ms ease;
             position: absolute;
@@ -210,13 +210,13 @@ export const InfoWrapper = styled.div` // -- ↑ PlayerBarWrapper info 子元素
 
 // --
     // new
-    @media screen and (width <  520px) { // -- 手机
+    @media screen and (max-width:520px) { // -- 手机
         flex-grow: 0.5;
         min-width: 50px;
         max-width: 120px;
     }
 
-    @media screen and (width <  450px) { // -- 手机
+    @media screen and (max-width:450px) { // -- 手机
         > .msg {
             display: none;
         }

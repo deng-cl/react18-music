@@ -40,7 +40,7 @@ export const SongsWrapper = styled.div`
 
 // --
     // new
-    @media screen and (width <  750px) { // -- 手机
+    @media screen and (min-width:  750px) { // -- 手机
         > .filter {
             margin: 0;
             margin-bottom: 8px;

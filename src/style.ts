@@ -81,7 +81,7 @@ export const AppWrapper = styled.div`
 
 // -----
     // -- new
-    min-width: 348px;
+    min-width: 334px;
 
     @media screen and (min-width: 1080px){ // -- 电脑
         flex-flow: row nowrap;

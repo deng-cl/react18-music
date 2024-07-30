@@ -52,6 +52,9 @@ const VideoDetail: FC<IProps> = () => {
             const res = await fetchSimiMVById(id as any) as any
             setMVSimiMVS(res.mvs)
         })();
+
+        console.log(MVPlayerURL);
+
     }, [id])
 
     // -- 获取 MV 评论信息
@@ -133,7 +136,7 @@ const VideoDetail: FC<IProps> = () => {
                 </div>
 
                 <div className="v-main">
-                    <video src={MVPlayerURL} autoPlay={true} controls></video>
+                    <video src={MVPlayerURL} autoPlay={true} controls x5-video-player="h5"></video>
                 </div>
 
                 <div className="comment-list" ref={commentRef as any}>

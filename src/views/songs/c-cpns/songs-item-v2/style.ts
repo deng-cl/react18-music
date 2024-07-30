@@ -67,7 +67,7 @@ export const ItemWrapper = styled.div`
 
 // -----
     // -- new
-    @media screen and (width > 1680px ) { // --电脑
+    @media screen and (min-width:1680px ) { // --电脑
         > .list {
             .item {
                 width: calc(12.5% - 16px);
@@ -75,7 +75,7 @@ export const ItemWrapper = styled.div`
         }
     }
 
-    @media screen and (1480px < width < 1680px) { // --电脑
+    @media screen and (max-width:1680px) { // --电脑
         > .list {
             .item {
                 width: calc(14.2851% - 16px);
@@ -83,7 +83,7 @@ export const ItemWrapper = styled.div`
         }
     }
 
-    @media screen and (1280px < width < 1480px) { // --电脑
+    @media screen and (max-width:1480px) { // --电脑
         > .list {
             .item {
                 width: calc(16.6666666667% - 16px);
@@ -91,7 +91,7 @@ export const ItemWrapper = styled.div`
         }
     }
 
-    @media screen and (900px < width < 1280px) { // --电脑
+    @media screen and (max-width:1280px) { // --电脑
         > .list {
             .item {
                 width: calc(20% - 16px);
@@ -99,7 +99,7 @@ export const ItemWrapper = styled.div`
         }
     }
 
-    @media screen and (750px < width < 900px) { // --电脑或平板
+    @media screen and (max-width:900px) { // --电脑或平板
         > .list {
             .item {
                 width: calc(25% - 14px);
@@ -107,7 +107,7 @@ export const ItemWrapper = styled.div`
         }
     }
 
-    @media screen and (400px < width <= 750px) { // --平板或手机
+    @media screen and (max-width:750px) { // --平板或手机
         > .list {
             .item {
                 width: calc(33.333336% - 8px);
@@ -115,7 +115,7 @@ export const ItemWrapper = styled.div`
         }
     }
 
-    @media screen and (width <= 400px) { // --平板或手机
+    @media screen and (max-width:400px) { // --平板或手机
         > .list {
             .item {
                 width: calc(50% - 4px);

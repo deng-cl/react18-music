@@ -32,7 +32,7 @@ export const NavListWrapper = styled.div`
         }
     }
 
-    @media screen and (width <= 1080px) { // --平板或手机
+    @media screen and (max-width: 1080px) { // --平板或手机
         > .nav-list {
             padding: 0 18px;
             box-sizing: border-box;
@@ -62,7 +62,7 @@ export const NavListWrapper = styled.div`
 
 // -----
     // -- new
-    @media screen and (368px < width <= 520px){ // -- 手机
+    @media screen and (max-width:520px){ // -- 手机
         padding-left: 0;
         padding-right: 4px;
 
@@ -71,7 +71,7 @@ export const NavListWrapper = styled.div`
         }
     }
 
-    @media screen and (width < 368px){ // -- 手机
+    @media screen and (max-width:368px){ // -- 手机
         padding-right: 0;
     }
 `

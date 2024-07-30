@@ -79,7 +79,7 @@ export const ControlWrapper = styled.div`
 
 // --
     // new
-    @media screen and (width <  520px) { // -- 手机
+    @media screen and (max-width: 520px) { // -- 手机
         > .control {
             transform: scale(1.3);
             margin-bottom: 6px;

@@ -44,11 +44,11 @@ const App = memo(() => {
 
         if (!isPC()) dispatch(chagneIspcAction(false))
 
-        if (availWidth < 348) {
+        if (availWidth < 334) {
             message.warning({
                 key: "support",
                 duration: 5,
-                content: `抱歉！您当前机型的可视宽度为 "${availWidth}px"，目前只对可视宽度大于 348px 的机型适配...`
+                content: `抱歉！您当前机型的可视宽度为 "${availWidth}px"，目前只对可视宽度大于 334px 的机型适配...`
             })
             message.info({
                 key: "support-info",
