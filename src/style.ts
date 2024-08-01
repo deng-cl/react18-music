@@ -98,10 +98,9 @@ export const AppWrapper = styled.div`
 
     @media screen and (max-width: 520px){ // -- 手机
         padding: 0 4px;
-
         .main-right {
             padding-right: 4px;
-            padding-bottom: 18px;
+            /* padding-bottom: 18px; */
         }
     }
 `
