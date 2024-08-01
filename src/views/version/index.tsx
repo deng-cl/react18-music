@@ -58,6 +58,11 @@ const HISTORY_VERSION_INFO: IVersionItem[] = [ // -- hstory version info list
         vNumber: "1.1.9",
         desc: "Style: 优化移动端样式的适配 / 数据加载中的反馈",
         date: "2024/7/30"
+    },
+    {
+        vNumber: "1.2.2",
+        desc: "Feat: 移动端适配调整，调整部分安卓浏览器播放适配顶层问题...",
+        date: "2024/8/1"
     }
 ].reverse()
 

@@ -34,11 +34,6 @@ const Ranking: FC<IProps> = () => {
         setSongMenu(newSong)
     }, [newSong])
 
-    // const switchSongMenuExhibition = (name: RankingType) => { // -- 切换歌曲榜单列表展示
-    //     if (name === "NewSong") setSongMenu(newSong)
-    //     else if (name === "Original") setSongMenu(original)
-    //     else setSongMenu(surge)
-    // }
 
     const getSongMenuByName = (name: RankingType) => { // -- 切换歌曲榜单列表展示
         if (name === "NewSong") return newSong

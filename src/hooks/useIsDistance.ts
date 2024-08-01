@@ -1,5 +1,6 @@
+
 import lodash from "lodash"
-import { MutableRefObject, startTransition, useContext, useEffect, useState } from "react"
+import { startTransition, useContext, useEffect, useState } from "react"
 import usePageScrollInfo from "./usePageScrollInfo"
 import { AppContext } from "@/App"
 

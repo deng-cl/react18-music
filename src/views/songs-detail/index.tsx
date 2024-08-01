@@ -30,19 +30,26 @@ const SongsDetail: FC<IProps> = () => {
     useEffect(() => {
         dispatch(changeLoadingAction(true))
         fetchSongsDetailById(id).then((res: any) => {
+            const tract = res?.playlist?.trackIds || []
             setSongsBaseInfo(res?.playlist || {})
-            setTracksIds(res?.playlist?.trackIds || [])
+            setTracksIds(tract)
+
+            const ids = tract.map((item: any) => item.id).join(",") // -- 所有歌曲的 id 参数
+            fetchSongInfoById(ids).then((res: any) => { // -- 请求所有歌曲信息
+                setSongListInfo(res?.songs || [])
+                dispatch(changeLoadingAction(false))
+            })
         })
     }, [id])
 
-    useEffect(() => { // -- ↑ 拿到所有歌曲 id ，请求对应的歌曲信息
-        const ids = trackIds.map(item => item.id).join(",") // -- 所有歌曲的 id 参数
-        dispatch(changeLoadingAction(true))
-        fetchSongInfoById(ids).then((res: any) => { // -- 请求所有歌曲信息
-            setSongListInfo(res?.songs || [])
-            dispatch(changeLoadingAction(false))
-        })
-    }, [trackIds])
+    // useEffect(() => { // -- ↑ 拿到所有歌曲 id ，请求对应的歌曲信息
+    //     const ids = trackIds.map(item => item.id).join(",") // -- 所有歌曲的 id 参数
+    //     dispatch(changeLoadingAction(true))
+    //     fetchSongInfoById(ids).then((res: any) => { // -- 请求所有歌曲信息
+    //         setSongListInfo(res?.songs || [])
+    //         dispatch(changeLoadingAction(false))
+    //     })
+    // }, [trackIds])
 
     const playSongsEntireSong = lodash.throttle(() => { // -- 播放歌单所有歌曲
         dispatch(playSongListAction(trackIds))

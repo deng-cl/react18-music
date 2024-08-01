@@ -101,6 +101,7 @@ export const AppWrapper = styled.div`
 
         .main-right {
             padding-right: 4px;
+            padding-bottom: 18px;
         }
     }
 `

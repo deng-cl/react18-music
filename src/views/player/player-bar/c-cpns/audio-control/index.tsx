@@ -41,9 +41,7 @@ const AudioControl: FC<IProps> = (props: IProps) => {
     const changeMusicHandle = lodash.throttle((isNext = true) => {
         dispatch(changeMusicAction(isNext))
     }, 400)
-    // function changeMusicHandle(isNext = true) {
-    //     dispatch(changeMusicAction(isNext))
-    // }
+
 
     // -- 播放/暂停
     function playBtnClickHandle() { // -- 处理用户点击播放音乐 <播放/暂停>

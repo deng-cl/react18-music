@@ -12,8 +12,9 @@ import IconTime from "@/assets/icon/player/icon-time"
 import CommomPaganition from "@/components/commom-paganition"
 import classNames from "classnames"
 import { AppContext } from "@/App"
-import { useAppDispatch } from "@/store/app-react-redux"
+import { appShallowEqual, useAppDispatch, useAppSelector } from "@/store/app-react-redux"
 import { changeLoadingAction } from "@/store/modules/main"
+// import Player from "xgplayer/es/player"
 
 interface IProps {
     children?: ReactNode
@@ -25,6 +26,11 @@ const VideoDetail: FC<IProps> = () => {
 
     const dispatch = useAppDispatch()
 
+    const { ispc, hideVideo } = useAppSelector(state => ({
+        ispc: state.main.ispc,
+        hideVideo: state.video.hideVideo,
+    }), appShallowEqual)
+
     useEffect(() => {
         (async () => { // -- Fetch MV Detail Info
             const res = await fetchMVDetailById(id as any) as any
@@ -32,15 +38,18 @@ const VideoDetail: FC<IProps> = () => {
         })();
     }, [id])
 
+    // -- new
+    const videoContainerRef = useRef<HTMLDivElement>(null)
 
     // -- 获取视频播放 URL & 获取视频其它信息（收藏、点赞、评论）
     const [MVPlayerURL, setMVPlayerURL] = useState<string>("")
     const [MVOtherInfo, setMVOtherInfo] = useState<IMVInfo>({ likedCount: 0, shareCount: 0, commentCount: 0 })
     const [MVSimiMVS, setMVSimiMVS] = useState<any>([])
+
     useEffect(() => {
         (async () => { // -- fetch MV player URL
             const res = await fetchMVPlayerURLById(id as any) as any
-            setMVPlayerURL(res?.data?.url)
+            setMVPlayerURL(res?.data?.url ?? "")
         })();
 
         (async () => { // -- fetch MV info
@@ -52,9 +61,6 @@ const VideoDetail: FC<IProps> = () => {
             const res = await fetchSimiMVById(id as any) as any
             setMVSimiMVS(res.mvs)
         })();
-
-        console.log(MVPlayerURL);
-
     }, [id])
 
     // -- 获取 MV 评论信息
@@ -83,7 +89,6 @@ const VideoDetail: FC<IProps> = () => {
         setCommentPage(0)
         setSortType(sortType)
     }
-
 
     // -- 处理相关视频的点击
     const navigate = useNavigate()
@@ -135,8 +140,23 @@ const VideoDetail: FC<IProps> = () => {
                     </div>
                 </div>
 
-                <div className="v-main">
-                    <video src={MVPlayerURL} autoPlay={true} controls x5-video-player="h5"></video>
+                <div className="v-main" ref={videoContainerRef}
+                    // -- 当在处理移动端时，点击视频播放器，将隐藏视频播放器时，为了避免出现对应布局的抖动，在隐藏播放器前，将容器的高度设置为播放器的高度
+                    style={{
+                        height: !ispc && hideVideo ? (videoContainerRef.current?.clientHeight ?? 195) + "px" : "fit-content"
+                    }}
+                >
+                    <video
+                        style={{
+                            // -- 处理在移动端部分浏览器中，视频播放器会一直在顶层的问题 --> 当当前是在移动端中显示，且对应的导航栏或歌曲播放详情在在播放时，将播放器隐藏 -- 并在上面暂停播放/继续播放...
+                            display: !ispc && hideVideo ? "none" : "block",
+                            opacity: !ispc && hideVideo ? 0 : 1, // -- 没用
+                        }}
+                        className="video"
+                        src={MVPlayerURL}
+                        controls
+                        autoPlay
+                    ></video>
                 </div>
 
                 <div className="comment-list" ref={commentRef as any}>

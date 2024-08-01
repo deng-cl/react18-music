@@ -77,10 +77,12 @@ export const VideoDetailWrapper = styled.div`
             margin-top: 24px;
             border-radius: 6px;
             overflow: hidden;
-            video {
-                /* position: relative;
-                z-index: 2; */
+            width: 100%;
+
+            .video {
                 width: 100%;
+                transition: all 180ms ease;
+                display: none;
             }
 
             @media screen and (max-width: 400px){

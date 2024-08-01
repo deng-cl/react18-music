@@ -13,8 +13,8 @@ const usePageScrollInfo = (elementRef: React.RefObject<HTMLDivElement>) => { // 
             const target = e?.target as HTMLDivElement
             const scrollableSize = target.scrollHeight - target.clientHeight
             const currentScrollPostion = target.scrollTop
-            setScrollY(currentScrollPostion)
 
+            setScrollY(currentScrollPostion)
             setScrollable(scrollableSize)
         }, 80) // -- prev: 500
 

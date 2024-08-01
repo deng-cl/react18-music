@@ -152,7 +152,7 @@ export const PlayerWrapper = styled.div`
     }
 
 
-    @media screen and (min-width:999px){ // -- 电脑
+    @media screen and (max-width:880px){ // -- 电脑
         display: block;
 
         > .switch {
@@ -170,7 +170,7 @@ export const PlayerWrapper = styled.div`
             width: 100%;
             position: absolute;
             left: 100%;
-            top: 0;
+            top: 8vh;
         }
 
         > .album {
@@ -192,7 +192,7 @@ export const PlayerWrapper = styled.div`
         }
 
         > .lyric {
-            height: 88vh;
+            height: 75vh;
             min-width: 100px;
         }
     }

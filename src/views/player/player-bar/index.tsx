@@ -21,6 +21,7 @@ import CurrentPlayMenu from "./c-cpns/current-play-menu";
 import IconOperatorMenu from "@/assets/icon/player/icon-operator-menu";
 import classNames from "classnames";
 import { changeShowPlayListAction, changeShowVolumeControlAction } from "../store/module/audio-operator";
+import { changeHideVideoAction, changeHideVideoAsyncAction } from "@/store/modules/video";
 
 interface IProps { }
 
@@ -119,8 +120,14 @@ const PlayerBar: FC<IProps> = () => {
         }
     }
 
-    // -- 是否显示侧边 operator 音乐控件
+    // -- 是否显示侧边 operator 音乐控件（小屏/移动端）
     const [sideOperator, setSideOperator] = useState(true)
+
+    // -- 处理移动端视频播放顶层问题 -->
+    useEffect(() => {
+        // dispatch(changeHideVideoAction(showDetail)) // -- 当显示 nav 列表时，隐藏视频内容 --> 反之显示
+        dispatch(changeHideVideoAsyncAction(showDetail)) // -- s↑ 替换
+    }, [showDetail])
     return (
         <PlayerBarWrapper>
             {/* player bar 展示区 */}
