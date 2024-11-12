@@ -63,6 +63,11 @@ const HISTORY_VERSION_INFO: IVersionItem[] = [ // -- hstory version info list
         vNumber: "1.2.2",
         desc: "Feat: 移动端适配调整，调整部分安卓浏览器播放适配顶层问题...",
         date: "2024/8/1"
+    },
+    {
+        vNumber: "1.2.3",
+        desc: "Refactor / Performances: 性能优化 - 通过虚拟列表来展示歌单与排行榜的歌曲列表，减少当列表滚动时的渲染卡顿，通过 useCallback 优化部分组件",
+        date: "2024/11/12"
     }
 ].reverse()
 

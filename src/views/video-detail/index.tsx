@@ -1,4 +1,4 @@
-import { memo, useContext, useEffect, useRef, useState } from "react"
+import { memo, useCallback, useContext, useEffect, useRef, useState } from "react"
 import type { ReactNode, FC } from "react"
 import { VideoDetailWrapper } from "./style"
 import { useNavigate, useParams } from "react-router-dom"
@@ -63,6 +63,7 @@ const VideoDetail: FC<IProps> = () => {
         })();
     }, [id])
 
+
     // -- 获取 MV 评论信息
     const [sortType, setSortType] = useState<number>(3)
     const [MVCommentList, setMVCommentList] = useState<any>([])
@@ -100,16 +101,17 @@ const VideoDetail: FC<IProps> = () => {
     const leftContentRef = useRef<HTMLElement>() // -- 1. 获取左侧 .left Dom 元素
     const commentRef = useRef<HTMLElement>() // --  2. 获取 .left 中的 .comment-list Dom 元素 --> 通过 .left 元素高度减去当前评论高度，即可得到评论分页后所要滚动的距离
     const { pageRef } = useContext(AppContext) as any// -- 3. 获取对应的 App.tsx 中的 page 内容 Dom 元素，进行滚动条的滚动
-    function changeCommentPageCode(pageCode: number) { // -- 4. 在修改对应 comment 页面时，进行相应的滚动
+    const changeCommentPageCode = useCallback(function changeCommentPageCode(pageCode: number) { // -- 4. 在修改对应 comment 页面时，进行相应的滚动
         setCommentPage(pageCode) // -- 修改页面
 
         // -- ↓ 进行相应的滚动
         const baseHeight = leftContentRef.current?.clientHeight ?? 0
         const commentHeight = commentRef.current?.clientHeight ?? 0
         const scrollSize = baseHeight - commentHeight
-        // console.log(baseHeight, commentHeight, scrollSize);
+
         pageRef?.current?.scrollTo(0, scrollSize) // -- 进行相应的滚动
-    }
+    }, [])
+
 
     return (
         <VideoDetailWrapper>
@@ -180,6 +182,7 @@ const VideoDetail: FC<IProps> = () => {
                             }
                         </div>
                     </div>
+
                     <div className="list">
                         {
                             (() => {

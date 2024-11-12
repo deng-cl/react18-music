@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const DiscoverWrapper = styled.div`
+    padding-bottom: 24px;
     > .rec-songs {
         position: relative;
         width: 100%;

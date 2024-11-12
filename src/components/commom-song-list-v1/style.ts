@@ -6,6 +6,32 @@ export const SongListV1Wrapper = styled.div`
             margin-top: 16px;
         }
 
+        /* padding-bottom: 24px; */
+        box-sizing: border-box;
+
+        > .list-ctn {
+            overflow: auto;
+
+
+            /* 滚动条样式设置 */
+            &::-webkit-scrollbar {
+                width: 2px;
+            }
+            &::-webkit-scrollbar-track{
+                background-color: ${props => props.theme.color.primary};
+
+
+            }
+            &::-webkit-scrollbar-thumb{
+                width: 2px;
+                border-radius: 2px;
+                background-color: ${props => props.theme.textColor.primary};
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+        }
+
         > .title {
             margin-top: 22px;
             margin-bottom: 18px;
@@ -45,11 +71,23 @@ export const SongListV1Wrapper = styled.div`
             text-align: center;
         }
 
-        > .not-more {
+        .not-more {
             text-align: center;
             margin-top: 16px;
             font-size: ${props => props.theme.textSize.v_small};
             color: ${props => props.theme.textColor.secondary};
         }
     }
+
+    /* height: 60vh;
+
+    > .list {
+        height:100%;
+        padding-bottom: 24px;
+        overflow: auto;
+
+        .item {
+            margin-top: 16px;
+        }
+    } */
 `

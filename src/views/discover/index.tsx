@@ -23,6 +23,7 @@ const Discover: FC<IProps> = () => {
     }), appShallowEqual)
 
     const dispatch = useAppDispatch()
+
     useEffect(() => { // -- comp mounted --> fetch data
         dispatch(fetchDiscoverPageDataAction() as unknown as UnknownAction)
     }, [])
@@ -37,6 +38,7 @@ const Discover: FC<IProps> = () => {
             </KeepAlive>
         ))
     )
+
     const PC = (
         <ScrollView>
             {
@@ -46,10 +48,14 @@ const Discover: FC<IProps> = () => {
     )
     const NOT_PC = COMMON
 
+    console.log("mian");
+
+
     return (
         // <KeepAlive cacheKey="discover" name="discover"  >
         <DiscoverWrapper>
             <Banner />
+
             <div className="rec-songs">
                 {ispc ? PC : NOT_PC}
             </div>
@@ -62,7 +68,6 @@ const Discover: FC<IProps> = () => {
                 />
                 // </KeepAlive>
             }
-
         </DiscoverWrapper >
     )
 }

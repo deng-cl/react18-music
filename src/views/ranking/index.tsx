@@ -5,7 +5,6 @@ import { appShallowEqual, useAppDispatch, useAppSelector } from "@/store/app-rea
 import { fetchRankingPageDataAction } from "@/store/modules/ranking"
 import classNames from "classnames"
 import CommomSongListV1 from "@/components/commom-song-list-v1"
-import KeepAlive from "react-activation"
 
 interface IProps {
     children?: ReactNode
@@ -67,6 +66,8 @@ const Ranking: FC<IProps> = () => {
                                 <CommomSongListV1
                                     title={item === "NewSong" ? "新歌榜" : item === "Original" ? "原创榜" : "飙升榜"}
                                     songListInfo={tracks ?? []}
+
+                                    isVirtualList
                                 />
                             </div>
                         )

@@ -1,4 +1,4 @@
-import { memo } from "react"
+import { memo, useRef } from "react"
 import type { ReactNode, FC } from "react"
 import { ThemeWrapper } from "./style"
 import IconNight from "@/assets/icon/ot/icon-night"

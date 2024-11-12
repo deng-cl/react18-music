@@ -1,4 +1,4 @@
-import { memo, useContext, useEffect, useState } from "react"
+import { memo, useContext, useDeferredValue, useEffect, useMemo, useRef, useState, useTransition } from "react"
 import type { ReactNode, FC } from "react"
 import { SongListV1Wrapper } from "./style"
 import CommomPaganition from "../commom-paganition"
@@ -11,14 +11,20 @@ import { AppContext } from "@/App"
 import usePageScrollInfo from "@/hooks/usePageScrollInfo"
 import useIsDistance from "@/hooks/useIsDistance"
 import { Spin } from "antd"
+import { useVirtualList } from "ahooks"
 
 interface IProps {
     title: string
     songListInfo: any,
+    isVirtualList?: boolean
 }
 
-const CommomSongListV1: FC<IProps> = (props: IProps) => {
-    const { title, songListInfo, } = props
+
+const CommomSongListV1: FC<IProps> = ({
+    title,
+    songListInfo,
+    isVirtualList = false
+}: IProps) => {
 
     const dispatch = useAppDispatch()
 
@@ -28,13 +34,28 @@ const CommomSongListV1: FC<IProps> = (props: IProps) => {
         if (songList) dispatch(playSongListAction(songList))
     }, 1000)
 
-    // -- 监听页面滚动距离 --> 挂载更多歌曲进行展示
-    const { offset, loading } = useIsDistance(songListInfo?.length ?? 0)
+    // -- new 分页
+    const PAGINATION_SIZE = 18
+    const [start, setStart] = useState(0)
+    const end = start + PAGINATION_SIZE
+
+    // -- new 虚拟列表
+    const songList = useMemo(() => songListInfo, [songListInfo])
+    const ctnRef = useRef(null)
+    const listRef = useRef(null)
+    const tempRef = useRef<HTMLDivElement>(null)
+
+    const [list] = useVirtualList(songList, {
+        containerTarget: ctnRef,
+        wrapperTarget: listRef,
+        itemHeight: 40,
+        overscan: 8,
+    });
 
     return (
-        <SongListV1Wrapper>
-            <div className="song-list">
-                <div className="title">
+        <SongListV1Wrapper  >
+            <div className="song-list" >
+                <div className="title" ref={tempRef}>
                     <span>
                         {title || "默认歌单列表标题"}
                         <div className="count">歌曲数量: {songListInfo?.length}</div>
@@ -42,34 +63,49 @@ const CommomSongListV1: FC<IProps> = (props: IProps) => {
                     <div className="play-entire btn" onClick={playSongListEntire}>播放全部</div>
                 </div>
 
-
-                <div className="list">
-                    {
-                        songListInfo?.slice(0, offset).map((item: any, index: number) => (
-                            <div className="item" key={index}>
-                                <SongItem songInfo={item} />
+                {
+                    isVirtualList ? ( // -- 使用虚拟列表
+                        <div className="list-ctn" style={{
+                            height: `calc(100vh - ${tempRef.current?.offsetTop ?? 0}px - 130px)`,
+                        }} ref={ctnRef}>
+                            <div className="list" ref={listRef}>
+                                {
+                                    list.map(item => (
+                                        <div className="item" key={item.index}>
+                                            <SongItem songInfo={item.data} />
+                                        </div>
+                                    ))
+                                }
+                                <div className="not-more">
+                                    暂无更多歌曲
+                                </div>
                             </div>
-                        ))
-                    }
-
-                </div>
-
-
-                {
-                    loading && (
-                        <div className="loading">
-                            <Spin size="small" />
                         </div>
+                    ) : ( // -- 使用分页器
+                        <>
+                            <div className="list" ref={listRef}>
+                                {
+                                    songListInfo.slice(start, end).map((item: any, i: number) => (
+                                        <div className="item" key={item.id ?? i}>
+                                            <SongItem songInfo={item} />
+                                        </div>
+                                    ))
+                                }
+                            </div>
+
+                            <CommomPaganition
+                                defaultPageSize={PAGINATION_SIZE}
+                                total={songListInfo?.length || 0}
+                                onChange={(e) => {
+                                    setStart((e - 1) * 20)
+                                }}
+                            />
+                        </>
                     )
                 }
 
-                {
-                    songListInfo.length > 0 && offset > songListInfo.length && (
-                        <div className="not-more">
-                            暂无更多歌曲
-                        </div>
-                    )
-                }
+
+
 
             </div>
         </SongListV1Wrapper>

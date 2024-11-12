@@ -36,7 +36,7 @@ export const AppWrapper = styled.div`
         /* background-color: orange; */
         overflow-y: auto;
         overflow-x: hidden;
-        padding-bottom: 66px;
+        /* padding-bottom: 66px; */
         box-sizing: border-box;
         padding-right: 2px;
 

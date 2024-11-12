@@ -5,7 +5,8 @@ export const VideoDetailWrapper = styled.div`
     flex-flow: row nowrap;
     /* align-items: center; */
     width: 100%;
-    /* height: 20px; */
+    padding-bottom: 24px;
+    box-sizing: border-box;
 
     .flex-row {
         display: flex;

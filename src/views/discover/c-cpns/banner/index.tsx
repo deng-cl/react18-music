@@ -21,7 +21,8 @@ const Banner: FC<IProps> = (props: IProps) => {
     }), appShallowEqual)
 
     const [curIndex, setCurIndex] = useState(0) // -- 当前展示的图片索引
-    const [isControlling, setSsControlling] = useState(false) // -- 当前是否在使用控件切换轮播 --> 用于当鼠标在控件上时停止自动轮播
+    // let curIndex = 0
+    const [isControlling, setIsControlling] = useState(false) // -- 当前是否在使用控件切换轮播 --> 用于当鼠标在控件上时停止自动轮播
 
     const changeCurIndex = (isNext = true) => { // -- 修改 curIndex 进行切换轮播函数
         let newIndex = isNext ? curIndex + 1 : curIndex - 1
@@ -41,15 +42,13 @@ const Banner: FC<IProps> = (props: IProps) => {
     }, [curIndex, isControlling, banner])
 
 
-    // -- 替换 ↑ 使用模糊背景图
+    // -- 模糊背景图
     let bgImageUrl = banner[curIndex]?.imageUrl
     if (bgImageUrl) {
         bgImageUrl = bgImageUrl + "?imageView&blur=40x20" // -- 向服务器请求对应的模糊图片
     }
 
     return (
-        // <BannerWrapper ref={boxRef as any}>
-        // background: `url('${bgImageUrl}') center center / 6000px
         <BannerWrapper style={{ background: `url('${bgImageUrl}') center center / 6000px` }}>
             {/* banner */}
             <div className="banners">
@@ -63,19 +62,20 @@ const Banner: FC<IProps> = (props: IProps) => {
                     ))
                 }
             </div>
+
             {/* control */}
             <div className="control">
                 <div className="left"
                     onClick={e => changeCurIndex(false)}
-                    onMouseEnter={e => setSsControlling(true)}
-                    onMouseLeave={e => setSsControlling(false)}
+                    onMouseEnter={e => setIsControlling(true)}
+                    onMouseLeave={e => setIsControlling(false)}
                 >
                     <IconArrowLeft width={40} height={40} />
                 </div>
                 <div className="right"
                     onClick={e => changeCurIndex(true)}
-                    onMouseEnter={e => setSsControlling(true)}
-                    onMouseLeave={e => setSsControlling(false)}
+                    onMouseEnter={e => setIsControlling(true)}
+                    onMouseLeave={e => setIsControlling(false)}
                 >
                     <IconArrowRight width={40} height={40} />
                 </div>
