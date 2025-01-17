@@ -21,3 +21,5 @@
 ![](./docs/screenshots/8.png)
 
 ![](./docs/screenshots/9.png)
+
+`声明: 该项目仅为个人学习项目，不涉及任何商业用途，也禁止任何人用于商业用途`
