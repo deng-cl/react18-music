@@ -41,27 +41,6 @@ export const fetchSongsPageDataAction = createAsyncThunk("fetch_songs_page_data_
 
         dispatch(changeLoadingAction(false))
     })
-
-    // fetchSongsInfo("华语").then((res: any) => {
-    //     dispatch(changeChineseAction(res.playlists))
-    //     dispatch(changeLoadingAction(false))
-    // })
-
-    // fetchSongsInfo("古风").then((res: any) => {
-    //     dispatch(changeAncientAction(res.playlists))
-    // })
-
-    // fetchSongsInfo("欧美").then((res: any) => {
-    //     dispatch(changeEAAction(res.playlists))
-    // })
-
-    // fetchSongsInfo("流行").then((res: any) => {
-    //     dispatch(changePopularAction(res.playlists))
-    // })
-
-    // fetchSongsInfo("全部").then((res: any) => {
-    //     dispatch(changeEntireAction(res.playlists))
-    // })
 })
 
 
@@ -71,7 +50,7 @@ const initialState: IState = {
     ancient: [],
     popular: [],
     EA: [],
-    filterFields: ["华语"],
+    filterFields: ["流行"],
 
     songsInfoInEntire: {}
 }

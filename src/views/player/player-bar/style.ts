@@ -73,6 +73,7 @@ export const PlayerBarWrapper = styled.div`
     }
 
     > .current-play-menu {
+        width: 400px;
         position: absolute;
         top: -302px;
         right: 0;

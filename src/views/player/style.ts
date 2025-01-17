@@ -68,9 +68,12 @@ export const PlayerWrapper = styled.div`
             transform: translateY(30%);
             .line {
                 transition: all 200ms ease;
-                height: 18px;
                 line-height: 18px;
-                margin: 4px 0;
+                text-align: center;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin: 8px 0;
                 color: ${props => props.theme.textColor.secondary};
                 font-size: ${props => props.theme.textSize.small};
 
