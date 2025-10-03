@@ -1,5 +1,8 @@
 # coderkxh-music(React18+TS)
 
+<img width="1575" height="662" alt="image" src="https://github.com/user-attachments/assets/5c657b82-6896-4031-947c-017a392acd82" />
+
+
 下面是项目中部分页面的截图
 
 ## 项目截图
